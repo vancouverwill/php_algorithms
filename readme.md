@@ -1,2 +1,4 @@
-A modest collection of PHP algorithms
+php_algorithms
+==============
 
+php_algorithms

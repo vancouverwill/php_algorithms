@@ -1,4 +1,6 @@
 <?php
+error_reporting(E_ALL);
+
 /**
 * @author William Melbourne 
 * @source 
