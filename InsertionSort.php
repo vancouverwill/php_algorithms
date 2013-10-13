@@ -7,33 +7,28 @@
  * 
  * @author Will Melbourne <willmelbourne@gmail.com>
  */
-class SelectionSort {
+class InsertionSort {
     
     private $array;
     private $size;
     
+    
     /**
-     * the selection sort algorithm
+     * the insertion sort algorithm
      * 
      * @param int[] $input_array input_array
      */
-    public function selection_sort($input_array)
+    public function insertion_sort($input_array)
     {
         $this->array = $input_array;
         $this->size = count($input_array);
-                
-        for ($index = 0; $index < count($input_array); $index++) {
-            $min = $index;
-            for ($j = $index + 1; $j < $this->size; $j++)
-            {
-                if ($this->array[$j] < $this->array[$min]) $min = $j;
-            }
-            $this->exch($index, $min);
-            
-             assert($this->isSorted(0, $index));
-        }
         
-         assert($this->isSorted(0, $this->size - 1));
+        for ($index = 0; $index < count($input_array); $index++) {
+            for ($j = $index; $j > 0 && $this->array[$j] < $this->array[$j - 1]; $j--) {
+                $this->exch($j, $j -1);
+            }
+            assert($this->isSorted(0, $index));
+        }
     }
    
     /**
@@ -60,6 +55,7 @@ class SelectionSort {
         $this->array[$j] = $swap;
      }
     
+     
     public function isSorted( $lo = 0, $hi = null)
     {
         if ($hi === null)  $hi = $this->size - 1; 
@@ -69,6 +65,7 @@ class SelectionSort {
         return true;
     }
     
+    
      public function show() 
     {
         $string = "";
@@ -77,17 +74,13 @@ class SelectionSort {
         }
         echo $string . '<br/>';
     }
-    
-    public function getSize(){
-        return $this->size;
-    }
 }
 
-$obj = new SelectionSort();
-$obj->selection_sort(array(5, 3, 5, 1, 4, 6 ,9, 7, 5));
+$obj = new InsertionSort();
+$obj->insertion_sort(array(5, 3, 5, 1, 4, 6 ,9, 7, 5));
 $obj->show();
 
-if ($obj->isSorted(0, $obj->getSize() - 1)) {
+if ($obj->isSorted()) {
     echo 'SUCCESS: sorted <br/>';
 }
 else {

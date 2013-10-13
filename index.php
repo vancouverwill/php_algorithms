@@ -9,3 +9,5 @@
 <a href="QuickSort.php">Quick Sort</a> <br/>
 
 <a href="SelectionSort.php">Selection Sort</a> <br/>
+
+<a href="InsertionSort.php">Insertion Sort</a> <br/>
