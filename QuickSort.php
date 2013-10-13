@@ -1,4 +1,10 @@
 <?php
+
+/**
+ * Pick a random element and partition the array, such that all numbers that are less than 
+ * it come before all elements that are greater than it Then do that for each half, then each 
+ * quar- ter, etc O(n log n) expected, O(n^2) worst case
+ */
 error_reporting(E_ALL);
 
 class  QuickSort 
@@ -7,14 +13,19 @@ class  QuickSort
     private $array;
     private $size;
     
+    private $debug = true;
+    
     public function quick_sort( $input_array)
     {
         $array = $input_array;
         $this->array = $input_array;
         $this->size = count($input_array);
-//        shuffle($this->array);
+        
+        if (!$debug) {
+            shuffle($this->array);
+        }        
         $this->sort( 0, count($array) -1);
-//      
+     
     }
     
     private function sort( $lo, $hi){
