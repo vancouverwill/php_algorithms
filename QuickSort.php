@@ -17,29 +17,37 @@ class  QuickSort
     
     public function quick_sort( $input_array)
     {
-        $array = $input_array;
+
         $this->array = $input_array;
         $this->size = count($input_array);
         
-        if (!$debug) {
+        echo 'Initial Array : ';
+        $this->show();
+        
+        if ($this->debug == FALSE) {
             shuffle($this->array);
         }        
-        $this->sort( 0, count($array) -1);
+        $this->sort( 0, count($this->array) -1);
      
     }
+    
     
     private function sort( $lo, $hi){
         if ($hi <= $lo) return;
         $j = $this->partition( $lo, $hi); 
         $this->sort( $lo, $j - 1);
         $this->sort( $j + 1, $hi);
-//          $j = $this->partition();
-//        echo $j;
-//        assert($this->isSorted( $lo, $hi));
-        if (!$this->isSorted( $lo, $hi)) {
+
+//        assert($this->is_sorted( $lo, $hi));
+        if (!$this->is_sorted( $lo, $hi)) {
+             echo 'Not Sorted <br/>';
             echo 'lo-' . $lo . ' hi:' . $hi . '<br/>';
             $this->show_between( $lo, $hi);
-            exit;
+//            exit;
+        }
+        else {
+            echo 'sorted <br/>';
+            $this->show();
         }
 
     }
@@ -63,6 +71,52 @@ class  QuickSort
 
         while (true) {
             // find item on lo to swap
+            while($this->less($this->array[$i], $comparator)) {
+                if ($i == $hi) break;
+                $i++;
+            }
+
+            // find item on hi to swap
+            while($this->less($comparator, $this->array[$j])) {
+                if ($j == $lo) break;
+                $j--;
+            }
+
+            // check if pointers cross
+            if (($i) >= ($j)) break;
+            
+             $this->exch($i, $j);
+        }
+        
+        // put v = a[j] into position
+        $this->exch( $lo, $j);
+       
+//        $this->class_array = $array;
+        $result = $j;
+        
+        return $result;
+    }
+
+    
+    /**
+     * 
+     * @param type $array
+     * @param type $lo - low pointer
+     * @param type $hi - high pointer
+     */
+    private function partition_old($lo, $hi)
+    {
+        echo 'part';
+        $this->show_between($lo, $hi);
+        
+//        $lo = 0;
+//        $hi = $this->size - 1;
+        $i = $lo + 1;
+        $j = $hi;
+        $comparator = $this->array[$lo];
+
+        while (true) {
+            // find item on lo to swap
             while($this->less($this->array[$i++], $comparator)) {
                 if ($i == $hi) break;
             }
@@ -73,7 +127,7 @@ class  QuickSort
             }
 
             // check if pointers cross
-            if ($i >= $j) break;
+            if (($i - 1) >= ($j + 1)) break;
             
              $this->exch($i - 1, $j + 1);
         }
@@ -107,12 +161,12 @@ class  QuickSort
 //        return $array;
     }
     
-    private function show() 
+    public function show() 
     {
 //        echo($this->array);
         $string = "";
         foreach ($this->array as $key => $value) {
-            $string .= $value . "-";
+            $string .= $value . " ";
         }
         echo $string . '<br/>';
     }
@@ -120,13 +174,13 @@ class  QuickSort
     private function show_between( $lo, $hi) 
     {
         $string = "";
-        for ( $i = $lo; $i < $hi; $i++) {
+        for ( $i = $lo; $i <= $hi; $i++) {
             $string .= $this->array[$i] . " ";
         }
         echo $string . '<br/>';
     }
     
-    private function isSorted( $lo, $hi)
+    private function is_sorted( $lo, $hi)
     {
         for ( $i = $lo; $i < $hi - 1; $i++) {
             if ($this->less($this->array[$i + 1], $this->array[$i])) return false;
@@ -136,10 +190,10 @@ class  QuickSort
     
     public function test_is_sorted() {
         $this->array = array(1, 2, 3, 4, 5);
-//        $this->isSorted(, 3);
+//        $this->is_sorted(, 3);
         
         $lo = 0; $hi = 3;
-        if (!$this->isSorted( $lo, $hi)) {
+        if (!$this->is_sorted( $lo, $hi)) {
             echo 'lo-' . $lo . ' hi:' . $hi . '<br/>';
             $this->show_between( $lo, $hi);
             exit;
@@ -149,7 +203,7 @@ class  QuickSort
         }
         
         $lo = 3; $hi = 5;
-        if (!$this->isSorted( $lo, $hi)) {
+        if (!$this->is_sorted( $lo, $hi)) {
             echo 'lo-' . $lo . ' hi:' . $hi . '<br/>';
             $this->show_between( $lo, $hi);
             exit;
@@ -159,7 +213,7 @@ class  QuickSort
         }
         
         $lo = 0; $hi = 5;
-        if (!$this->isSorted( $lo, $hi)) {
+        if (!$this->is_sorted( $lo, $hi)) {
             echo 'lo-' . $lo . ' hi:' . $hi . '<br/>';
             $this->show_between( $lo, $hi);
             exit;
@@ -172,4 +226,12 @@ class  QuickSort
 
 $obj = new QuickSort();
 //$obj->test_is_sorted();
-$obj->quick_sort(array(5, 3, 5, 1, 4, 6 ,9, 7, 5));
+
+$sample_array = array(5, 3, 5, 1, 4, 6 ,9, 7, 5);
+$array_full = array( 25, 37, 45, 84, 74, 16, 99, 64, 15, 14, 26, 43);
+$array_short = array( 25, 37, 45, 84, 74);
+$array_short2 = array( 16, 99, 64, 15, 14);
+
+
+$obj->quick_sort($array_short2);
+$obj->show();
