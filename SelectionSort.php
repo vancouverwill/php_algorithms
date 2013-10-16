@@ -60,6 +60,7 @@ class SelectionSort {
         $this->array[$j] = $swap;
      }
     
+     
     public function isSorted( $lo = 0, $hi = null)
     {
         if ($hi === null)  $hi = $this->size - 1; 
@@ -68,8 +69,9 @@ class SelectionSort {
         }
         return true;
     }
+   
     
-     public function show() 
+    public function show() 
     {
         $string = "";
         foreach ($this->array as $key => $value) {
@@ -94,5 +96,5 @@ else {
     echo 'FAIL: unsorted <br/>';
 }
 
-$obj->show();
+
 

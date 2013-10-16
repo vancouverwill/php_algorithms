@@ -87,5 +87,5 @@ else {
     echo 'FAIL: unsorted <br/>';
 }
 
-$obj->show();
+
 
