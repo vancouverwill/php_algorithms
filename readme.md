@@ -8,4 +8,4 @@ TO DO
 ============
 
 -create compare sort to show difference in speed between different algorithms
--
+-bottom up mergesort

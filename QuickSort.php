@@ -129,7 +129,8 @@ class  QuickSort
     
     private function is_sorted( $lo, $hi)
     {
-        for ( $i = $lo; $i < $hi - 1; $i++) {
+        if ($hi === null)  $hi = $this->size - 1; 
+        for ( $i = $lo; $i < $hi; $i++) {
             if ($this->less($this->array[$i + 1], $this->array[$i])) return false;
         }
         return true;
@@ -179,13 +180,14 @@ $obj = new QuickSort();
 
 $sample_array = array(5, 3, 5, 1, 4, 6 ,9, 7, 5);
 $array_full = array( 25, 37, 45, 84, 74, 16, 99, 64, 15, 14, 26, 43);
+$array_full2 = array (25, 37, 45, 84, 74, 16, 99, 64, 15, 14, 26, 43);
 $array_short = array( 25, 37, 45, 84, 74);
 $array_short2 = array( 16, 99, 64, 15, 14);
 
 
-$obj->intialize($array_full);
+$obj->intialize($array_full2);
 echo 'Initial Array : ';
 $obj->show();
-$obj->quick_sort($array_full);
+$obj->quick_sort();
 echo 'Final Array : ';
 $obj->show(); 
