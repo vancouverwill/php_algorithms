@@ -35,34 +35,13 @@ class MergeSort {
         assert($this->is_sorted());
     }
     
-    private function sort_old($lo, $hi)
+    private function sort($lo, $hi)
     {
         if ($hi <= $lo) return;
         $mid = $lo + floor(($hi - $lo) / 2);
-//        $this->sort($lo, $mid);
-//        $this->sort($mid + 1, $hi);
+        $this->sort($lo, $mid);
+        $this->sort($mid + 1, $hi);
         $this->merge($lo, $mid, $hi);
-    }
-    
-    
-     private function sort() {
-    	
-//    	compareCount = 0;
-//    	exchCount = 0;
-//    	mergeCount = 0;
-    	
-    	
-//        int N = a.length;
-//        Comparable[] aux = new Comparable[N];
-        for ($n = 1; $n < $this->size; $n = $n + $n) {
-            for ($i = 0; $i < $this->size - $n; $i += $n + $n) {
-                $lo = $i;
-                $m  = $i + $n - 1;
-                $hi = min($i + $n + $n - 1, $this->size - 1);
-                $this->merge($lo, $m, $hi);
-                
-            }
-        }
     }
     
     

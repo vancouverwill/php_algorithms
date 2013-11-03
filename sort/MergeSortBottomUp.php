@@ -10,6 +10,9 @@ class MergeSort {
     private $aux_array;
     private $size;
     
+    private $debug = TRUE;
+    private $merge_count;
+    
     /**
      *  setup the class
      * @param type $input_array
@@ -18,6 +21,7 @@ class MergeSort {
     {
         $this->array = $input_array;
         $this->size = count($input_array);
+        $this->merge_count = 0;
     }
     
     /**
@@ -31,18 +35,40 @@ class MergeSort {
         assert($this->is_sorted());
     }
     
-    private function sort($lo, $hi)
+    private function sort_old($lo, $hi)
     {
         if ($hi <= $lo) return;
         $mid = $lo + floor(($hi - $lo) / 2);
-        $this->sort($lo, $mid);
-        $this->sort($mid + 1, $hi);
+//        $this->sort($lo, $mid);
+//        $this->sort($mid + 1, $hi);
         $this->merge($lo, $mid, $hi);
+    }
+    
+    
+     private function sort() {
+    	
+//    	compareCount = 0;
+//    	exchCount = 0;
+//    	mergeCount = 0;
+    	
+    	
+//        int N = a.length;
+//        Comparable[] aux = new Comparable[N];
+        for ($n = 1; $n < $this->size; $n = $n + $n) {
+            for ($i = 0; $i < $this->size - $n; $i += $n + $n) {
+                $lo = $i;
+                $m  = $i + $n - 1;
+                $hi = min($i + $n + $n - 1, $this->size - 1);
+                $this->merge($lo, $m, $hi);
+                
+            }
+        }
     }
     
     
     private function merge( $lo, $mid, $hi)
     {
+        $this->merge_count++;
         // precondition: $this->array[lo .. mid] and $this->array[mid+1 .. hi] are sorted subarrays
         assert($this->is_sorted( $lo, $mid));
         assert($this->is_sorted( $mid + 1, $hi));
@@ -115,10 +141,13 @@ class MergeSort {
 }
 
 $array_short2 = array( 2378, 50000, 4323, 16, 99, 64, 15, 14, 300, 43000);
+$exercise_array = array(55, 48, 44, 42, 24, 67, 41, 29, 99, 98, 84, 52 );
+
+$ex_array = array(77, 74, 27, 82, 87, 99, 20, 34, 13, 81);
 
 $obj = new MergeSort();
 
-$obj->intialize($array_short2);
+$obj->intialize($ex_array);
 echo 'Initial Array : ';
 $obj->show();
 $obj->merge_sort();
