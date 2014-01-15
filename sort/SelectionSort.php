@@ -11,18 +11,30 @@ class SelectionSort {
     
     private $array;
     private $size;
-    
+
+
+    /**
+     *  setup the class
+     * @param type $input_array
+     */
+    public function intialize( $input_array)
+    {
+        $this->array = $input_array;
+        $this->size = count($input_array);
+    }
+
+
     /**
      * the selection sort algorithm
      * 
      * @param int[] $input_array input_array
      */
-    public function selection_sort($input_array)
+    public function selection_sort()
     {
-        $this->array = $input_array;
-        $this->size = count($input_array);
+//        $this->array = $input_array;
+//        $this->size = count($input_array);
                 
-        for ($index = 0; $index < count($input_array); $index++) {
+        for ($index = 0; $index < $this->size; $index++) {
             $min = $index;
             for ($j = $index + 1; $j < $this->size; $j++)
             {
@@ -55,6 +67,10 @@ class SelectionSort {
     
      private function exch( $i, $j)
     {
+//        var_dump($i);
+//        var_dump($j);
+//        var_dump($this->array);
+
         $swap = $this->array[$i];
         $this->array[$i] = $this->array[$j];
         $this->array[$j] = $swap;
@@ -84,10 +100,16 @@ class SelectionSort {
         return $this->size;
     }
 }
+$starting_array = array(5, 3, 5, 1, 4, 6 ,9, 7, 5);
 
 $obj = new SelectionSort();
-$obj->selection_sort(array(5, 3, 5, 1, 4, 6 ,9, 7, 5));
+
+$obj->intialize($starting_array);
 $obj->show();
+$obj->selection_sort();
+$obj->show();
+
+
 
 if ($obj->isSorted(0, $obj->getSize() - 1)) {
     echo 'SUCCESS: sorted <br/>';
