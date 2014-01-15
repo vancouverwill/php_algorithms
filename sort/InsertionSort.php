@@ -11,19 +11,29 @@ class InsertionSort {
     
     private $array;
     private $size;
-    
-    
+
+
+    /**
+     *  setup the class
+     * @param type $input_array
+     */
+    public function intialize( $input_array)
+    {
+        $this->array = $input_array;
+        $this->size = count($input_array);
+    }
+
     /**
      * the insertion sort algorithm
      * 
      * @param int[] $input_array input_array
      */
-    public function insertion_sort($input_array)
+    public function insertion_sort()
     {
-        $this->array = $input_array;
-        $this->size = count($input_array);
+//        $this->array = $input_array;
+//        $this->size = count($input_array);
         
-        for ($index = 0; $index < count($input_array); $index++) {
+        for ($index = 0; $index < $this->size; $index++) {
             for ($j = $index; $j > 0 && $this->array[$j] < $this->array[$j - 1]; $j--) {
                 $this->exch($j, $j -1);
             }
@@ -77,7 +87,9 @@ class InsertionSort {
 }
 
 $obj = new InsertionSort();
-$obj->insertion_sort(array(5, 3, 5, 1, 4, 6 ,9, 7, 5));
+$obj->intialize(array(5, 3, 5, 1, 4, 6 ,9, 7, 5));
+$obj->show();
+$obj->insertion_sort();
 $obj->show();
 
 if ($obj->isSorted()) {

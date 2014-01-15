@@ -4,7 +4,7 @@
  * Quick menu to flip between the algorithms
  */
 ?>
-<a href="sort/binary_search.php">binary search</a> <br/>
+<a href="binary_search.php">binary search</a> <br/>
 
 <a href="sort/QuickSort.php">Quick Sort</a> <br/>
 
