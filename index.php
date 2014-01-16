@@ -11,3 +11,9 @@
 <a href="sort/SelectionSort.php">Selection Sort</a> <br/>
 
 <a href="sort/InsertionSort.php">Insertion Sort</a> <br/>
+
+<h2></h2>
+
+<a href="priority_queues/MaxPriorityQueueBinaryHeap.php">Max Priority Queue Binary Heap</a> <br/>
+<a href="priority_queues/MinPriorityQueueBinaryHeap.php">Min Priority Queue Binary Heap</a> <br/>
+

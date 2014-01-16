@@ -88,7 +88,15 @@ class MaxPriorityQueueBinaryHeap {
         
         $this->isMaxHeap();
     }
-    
+
+    public function insert_array($array)
+    {
+        if (is_array($array)) {
+            foreach($array AS $value) {
+                $this->insert($value);
+            }
+        }
+    }
     
     /**
      * Delete and return the largest key on the priority queue.
@@ -181,7 +189,7 @@ $pq->insert(125);
 $pq->insert(25);
 $pq->insert(5);
 
-echo $pq->size() . "<br/>";
+echo "size:" . $pq->size() . "<br/>";
 
 echo $pq->max() . "<br/>";
 $pq->delMax();
