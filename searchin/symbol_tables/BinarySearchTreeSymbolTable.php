@@ -1,8 +1,9 @@
 <?php
 
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * A binary tree has smaller values to the left and larger values to the right.
+ * 
+ *
  */
 class BinarySearchTreeSymbolTable {
     private $root; // Node
