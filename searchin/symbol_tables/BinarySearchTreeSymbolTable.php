@@ -2,7 +2,7 @@
 
 /*
  * A binary tree has smaller values to the left and larger values to the right.
- * 
+ *
  *
  */
 class BinarySearchTreeSymbolTable {
