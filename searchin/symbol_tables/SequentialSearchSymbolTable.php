@@ -3,6 +3,8 @@
  *
  * Sequential search in an unordered linked list
  *
+ * based on the JAVA example
+ *
  * Created by PhpStorm.
  * User: will
  * Date: 2014-01-15
@@ -14,11 +16,21 @@ class SequentialSearchSymbolTable
     private $N;     // int number of key-value pairs
     private $first; // Node the linked list of key-value pairs
 
+    function __construct()
+    {
+        $this->N = 0;
+
+        $this->first = new Node(3, $this->first, 'red');
+        $this->N++;
+        echo $this->first->getKey();
+    }
+
 
     public function size()
     {
         return $this->N;
     }
+
 
     public function isEmpty()
     {
@@ -31,14 +43,54 @@ class SequentialSearchSymbolTable
     }
 
 
+    public function contains($key)
+    {
+        return $this->get($key) != null;
+    }
+
+
+    public function get($key)
+    {
+        for ($x = $this->first; $x != null; $x = $x->getNext()) {
+            if ($key == $x->getKey()) return $x->getVal();
+        }
+        return null;
+    }
+
+
     public function put($key, $value) {
         if ($value == null) { delete($key); return; }
-        for ($x = $this->first; $x != null; $x = $x->getNext()) {
-
+        if ($this->N > 0) {
+            for ($x = $this->first; $x != null; $x = $x->getNext()) {
+                if ($key == $x->getKey()) {
+                    $x->setVal($value);
+                    return; }
+            }
         }
-        $this->first = new Node()
+        $this->first = new Node($key, $this->first, $value);
+        $this->N++;
+    }
+
+
+    public function delete($key) {
+
+    }
+
+    public function keys()
+    {
+        $set = array();
+
+        if ($this->N > 0) {
+            for ($x = $this->first; $x != null; $x = $x->getNext()) {
+                array_push($set, $x->getkey());
+            }
+        }
+        return $set;
     }
 }
+
+
+
 
 class Node {
     private $key;
@@ -77,8 +129,34 @@ class Node {
         return $this->val;
     }
 
+    /**
+     * @param mixed $val
+     */
+    public function setVal($val)
+    {
+        $this->val = $val;
+    }
+
+
+
 
 }
+
+
+$temp = new SequentialSearchSymbolTable();
+echo $temp->size();
+$temp->put(1, "orange");
+$temp->put(2, "red");
+$temp->put(3, "yellow");
+$temp->put(4, "blue");
+$temp->put(5, "orange");
+
+
+foreach($temp->keys() AS $key) {
+    echo $key . "<br/>";
+}
+
+//echo $temp->size();
 
 
 

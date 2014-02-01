@@ -17,3 +17,7 @@
 <a href="priority_queues/MaxPriorityQueueBinaryHeap.php">Max Priority Queue Binary Heap</a> <br/>
 <a href="priority_queues/MinPriorityQueueBinaryHeap.php">Min Priority Queue Binary Heap</a> <br/>
 
+
+
+<a href="searchin/symbol_tables/SequentialSearchSymbolTable.php">Sequential Search Symbol Table</a> <br/>
+

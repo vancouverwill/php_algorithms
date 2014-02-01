@@ -36,7 +36,7 @@ error_reporting(E_ALL);
 		// $sampleInts = arrau(1, 2, 3,4,5 10, 20, 40, 80, 160, 200);
 		$array = array( 0, 1 , 1, 2, 3, 5, 8, 13, 21, 34, 55, 89);
 
-		$result = binary_search(55, $array);
+		$result = binary_search(34, $array);
                 
                 echo $result;
 	}
