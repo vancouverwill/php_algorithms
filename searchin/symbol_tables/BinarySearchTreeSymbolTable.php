@@ -30,7 +30,8 @@ class BinarySearchTreeSymbolTable {
      */
     public function size_all()
     {
-            return $this->size($this->root);
+            $size = $this->size($this->root);
+        return $size;
     }
 
     private function size($node)
@@ -102,7 +103,45 @@ class BinarySearchTreeSymbolTable {
         $nodeX->N = 1 + $this->size($nodeX->left) + $this->size($nodeX->right);
 
         return $nodeX;
+    }
 
+    /***********************************************************************
+     *  Min, max, floor, and ceiling
+     ***********************************************************************/
+
+    public  function min()
+    {
+        if ($this->isEmpty()) return null;
+        $minNode = $this->min_recursive($this->root);
+        return $minNode->key;
+    }
+
+    private function min_recursive($nodeX)
+    {
+        if ($nodeX->left == null) {
+            return $nodeX;
+        }
+        else {
+            return $this->min_recursive($nodeX->left);
+        }
+    }
+
+
+    public function max()
+    {
+        if ($this->isEmpty()) return null;
+        $maxNode = $this->max_recursive($this->root);
+        return $maxNode->key;
+    }
+
+    private function max_recursive($nodeX)
+    {
+        if ($nodeX->right == null) {
+            return $nodeX;
+        }
+        else {
+            return $this->max_recursive($nodeX->right);
+        }
     }
 
 
@@ -113,7 +152,7 @@ class BinarySearchTreeSymbolTable {
 
     public function select($k)
     {
-        if ($k < 0 || $k >= $this->size_all()) return null;
+        if ($k < 0 ||$k >= $this->size_all()) return null;
         $x = $this->select_recursive($this->root, $k);
         return $x->key;
     }
@@ -122,15 +161,15 @@ class BinarySearchTreeSymbolTable {
     {
         if ($nodeX == null) return null;
         $t = $this->size($nodeX->left);
-        if ($t > $k) return $this->select($nodeX->left, $k);
-        if ($t < $k) return $this->select($nodeX->right, $k - $t - 1);
+        if ($t > $k) return $this->select_recursive($nodeX->left, $k);
+        if ($t < $k) return $this->select_recursive($nodeX->right, $k - $t - 1);
         else    return $nodeX;
     }
 
 
     public function rank($key)
     {
-        $this->rank_recursive($key, $this->root);
+        return $this->rank_recursive($key, $this->root);
     }
 
     private function rank_recursive($key, $nodeX)
@@ -141,11 +180,34 @@ class BinarySearchTreeSymbolTable {
             return $this->rank_recursive($key, $nodeX->left);
         }
         elseif ($cmp > 0 ) {
-            return 1 + $this->size($nodeX->left) + $this->rank($key, $nodeX->right);
+            return 1 + $this->size($nodeX->left) + $this->rank_recursive($key, $nodeX->right);
         }
         else {
             return $this->size($nodeX->left);
         }
+    }
+
+
+    /***********************************************************************
+     *  Range count and range search.
+     ***********************************************************************/
+
+    public function keys()
+    {
+        $queue = new SplQueue();
+        $this->keys_recursive($this->root, $queue, $this->min(), $this->max());
+        return $queue;
+    }
+
+
+    private function keys_recursive($nodeX, $queue, $lo, $hi)
+    {
+        if ($nodeX == null) return;
+        $cmplo = $this->compareTo($lo, $nodeX->key);
+        $cmphi = $this->compareTo($hi, $nodeX->key);
+        if ($cmplo < 0) $this->keys($nodeX->left, $queue, $lo, $hi);
+        if ($cmplo <= 0 && $cmphi >= 0) $queue->push($nodeX->key);
+        if ($cmplo > 0) $this->keys($nodeX->right, $queue, $lo, $hi);
     }
 
 
@@ -158,10 +220,22 @@ class BinarySearchTreeSymbolTable {
             print "Not in symetric order";
             return false;
         }
+        if (!$this->isSizeConsistent($this->root)) {
+            print "Ranks not consistent";
+            return false;
+        }
+        if (!$this->isRankConsistent()) {
+            print "Ranks not consistent";
+            return false;
+        }
+
+
+
         // isSizeConsistent
 //        isRankConsistent
 
-        return $this->isBinarySearchTreeSymbolTableRecursive($this->root, null, null);
+        return $this->isBinarySearchTreeSymbolTableRecursive($this->root, null, null) && $this->isSizeConsistent($this->root) && $this->isRankConsistent();
+//        return $this->isBinarySearchTreeSymbolTableRecursive($this->root, null, null) && $this->isSizeConsistent($this->root);
     }
 
     // does this binary tree satisfy symmetric order?
@@ -169,12 +243,21 @@ class BinarySearchTreeSymbolTable {
     // is the tree rooted at x a BinarySearchTreeSymbolTable with all keys strictly between min and max
     // (if min or max is null, treat as empty constraint)
     // Credit: Bob Dondero's elegant solution
-    private function isBinarySearchTreeSymbolTableRecursive($node, $minKey, $maxKey)
+    private function isBinarySearchTreeSymbolTableRecursive($nodeX, $minKey, $maxKey)
     {
-        if ($node == null) return true;
-        if ($minKey != null && $node->getKey() <= $minKey) return false;
-        if ($maxKey != null && $node->getKey() >= $maxKey) return false;
-        return $this->isBinarySearchTreeSymbolTableRecursive($node->getLeft(), $minKey, $node->getKey()) && $this->isBinarySearchTreeSymbolTableRecursive($node->getRight(), $node->getKey(), $maxKey);
+        if ($nodeX == null) return true;
+        if ($minKey != null && $nodeX->getKey() <= $minKey) return false;
+        if ($maxKey != null && $nodeX->getKey() >= $maxKey) return false;
+        return $this->isBinarySearchTreeSymbolTableRecursive($nodeX->getLeft(), $minKey, $nodeX->getKey()) && $this->isBinarySearchTreeSymbolTableRecursive($nodeX->getRight(), $nodeX->getKey(), $maxKey);
+    }
+
+
+    // are the size fields correct?
+    private function isSizeConsistent($nodeX)
+    {
+        if ($nodeX == null) return true;
+        if ($nodeX->N  != $this->size($nodeX->left) + 1 + $this->size($nodeX->right)) { return false; }
+        return $this->isSizeConsistent($nodeX->left) && $this->isSizeConsistent($nodeX->right);
     }
 
 
@@ -183,12 +266,12 @@ class BinarySearchTreeSymbolTable {
      * @param Node $node
      * @return recursive
      */
-    private function isSizeConsistent($node)
-    {
-        if ($node == null) return true;
-        if ($node->getNum() != $this->size($node->getLeft()) + $this->size($node->getRight()) + 1) return false;
-        return $this->isSizeConsistent($node->getLeft()) && $this->isSizeConsistent($node->getRight());
-    }
+//    private function isSizeConsistent($node)
+//    {
+//        if ($node == null) return true;
+//        if ($node->getNum() != $this->size($node->getLeft()) + $this->size($node->getRight()) + 1) return false;
+//        return $this->isSizeConsistent($node->getLeft()) && $this->isSizeConsistent($node->getRight());
+//    }
 
 
 
@@ -270,11 +353,11 @@ $symbolTable->put("rain", 3);
 $symbolTable->put("rain", 4);
 $symbolTable->put("rain", 3);
 //$symbolTable->put("shine", 4);
-//$symbolTable->put("cloud", 5);
-//$symbolTable->put("cloud", 7);
-//$symbolTable->put("cloud", 9);
+$symbolTable->put("cloud", 5);
+$symbolTable->put("cloud", 7);
+$symbolTable->put("cloud", 9);
 
 echo "<h2>Size:" . $symbolTable->size_all() . "</h2>";
-
-echo "<h2>get shine:" . $symbolTable->get("sun") . "</h2>";
+//
+echo "<h2>get sun:" . $symbolTable->get("sun") . "</h2>";
 echo "<h2>get rain:" . $symbolTable->get("rain") . "</h2>";
