@@ -3,7 +3,9 @@
  *
  * Sequential search in an unordered linked list
  *
- * based on the JAVA example
+ * In this one I tried using a node with private key, value and next as a test in using in creating a Node in PHP.
+ *
+ * based on the JAVA example http://algs4.cs.princeton.edu/34hash/SequentialSearchST.java.html
  *
  * Created by PhpStorm.
  * User: will
@@ -20,9 +22,9 @@ class SequentialSearchSymbolTable
     {
         $this->N = 0;
 
-        $this->first = new Node(3, $this->first, 'red');
-        $this->N++;
-        echo $this->first->getKey();
+//        $this->first = new Node(3, $this->first, 'red');
+//        $this->N++;
+//        echo $this->first->getKey();
     }
 
 
@@ -78,14 +80,40 @@ class SequentialSearchSymbolTable
 
     public function keys()
     {
-        $set = array();
+        $array = array();
 
         if ($this->N > 0) {
             for ($x = $this->first; $x != null; $x = $x->getNext()) {
-                array_push($set, $x->getkey());
+                array_push($array, $x->getkey());
             }
         }
-        return $set;
+        return $array;
+    }
+
+
+    public function values()
+    {
+        $array = array();
+
+        if ($this->N > 0) {
+            for ($x = $this->first; $x != null; $x = $x->getNext()) {
+                array_push($array, $x->getVal());
+            }
+        }
+        return $array;
+    }
+
+    public function keys_values()
+    {
+        $array = array();
+
+        if ($this->N > 0) {
+            for ($x = $this->first; $x != null; $x = $x->getNext()) {
+//                array_push($array, $x->getVal());
+                $array[$x->getkey()] = $x->getVal();
+            }
+        }
+        return $array;
     }
 }
 
@@ -142,18 +170,72 @@ class Node {
 
 }
 
+?>
 
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bootstrap 101 Template</title>
+
+    <!-- Bootstrap -->
+    <link href="/bower_components/bootstrap-css/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <h1>Hello, world!</h1>
+
+<?php
 $temp = new SequentialSearchSymbolTable();
-echo $temp->size();
+echo "size is " . $temp->size();
 $temp->put(1, "orange");
 $temp->put(2, "red");
 $temp->put(3, "yellow");
 $temp->put(4, "blue");
-$temp->put(5, "orange");
+$temp->put(5, "white");
+$temp->put(5, "sdfdsf");
+$temp->put(5, "jljk");
+$temp->put(5, "sdfduiouisf");
 
+echo "<br/>";
+echo "<br/>";
+echo "<br/>";
+
+echo "<h2>keys</h2><br/>";
 
 foreach($temp->keys() AS $key) {
     echo $key . "<br/>";
+}
+
+echo "<h2>keys and values</h2><br/>";
+
+
+foreach($temp->keys_values() AS $key => $value) {
+    echo $key . '-' . $value . "<br/>";
+}
+
+echo "<h2>keys and values</h2><br/>";
+
+
+$temp->put(5, "white");
+
+foreach($temp->keys_values() AS $key => $value) {
+    echo $key . '-' . $value . "<br/>";
+}
+
+echo "<h2>values</h2><br/>";
+
+
+foreach($temp->values() AS $value) {
+    echo $value . "<br/>";
 }
 
 //echo $temp->size();
@@ -196,3 +278,12 @@ first = new Node(key, val, first); // Search miss: add new node.
 }
  */
 
+
+?>
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://code.jquery.com/jquery.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="/bower_components/bootstrap-css/js/bootstrap.min.js"></script>
+  </body>
+</html>
