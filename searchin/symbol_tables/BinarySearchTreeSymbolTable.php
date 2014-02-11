@@ -205,9 +205,9 @@ class BinarySearchTreeSymbolTable {
         if ($nodeX == null) return;
         $cmplo = $this->compareTo($lo, $nodeX->key);
         $cmphi = $this->compareTo($hi, $nodeX->key);
-        if ($cmplo < 0) $this->keys($nodeX->left, $queue, $lo, $hi);
+        if ($cmplo < 0) $this->keys_recursive($nodeX->left, $queue, $lo, $hi);
         if ($cmplo <= 0 && $cmphi >= 0) $queue->push($nodeX->key);
-        if ($cmplo > 0) $this->keys($nodeX->right, $queue, $lo, $hi);
+        if ($cmphi > 0) $this->keys_recursive($nodeX->right, $queue, $lo, $hi);
     }
 
 
@@ -283,6 +283,7 @@ class BinarySearchTreeSymbolTable {
         for ($i = 0; $i < $this->size_all(); $i++) {
             if ($i != $this->rank($this->select($i))) return false;
         }
+
         foreach ($this->keys() AS $key) {
             if ($this->compareTo($key, $this->select($this->rank($key))) != 0) return false;
         }
@@ -355,9 +356,10 @@ $symbolTable->put("rain", 3);
 //$symbolTable->put("shine", 4);
 $symbolTable->put("cloud", 5);
 $symbolTable->put("cloud", 7);
-$symbolTable->put("cloud", 9);
+//$symbolTable->put("cloud", 9);
 
 echo "<h2>Size:" . $symbolTable->size_all() . "</h2>";
 //
 echo "<h2>get sun:" . $symbolTable->get("sun") . "</h2>";
 echo "<h2>get rain:" . $symbolTable->get("rain") . "</h2>";
+echo "<h2>get cloud:" . $symbolTable->get("cloud") . "</h2>";
