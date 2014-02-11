@@ -73,7 +73,7 @@ class BinarySearchTreeSymbolTable {
         $cmp = $this->compareTo($key, $nodeX->getKey());
         if ($cmp < 0) return $this->get_recursive($nodeX->left, $key);
         if ($cmp > 0) return $this->get_recursive($nodeX->right, $key);
-        else return $nodeX->value;
+        else return $nodeX->val;
     }
 
 
@@ -225,14 +225,14 @@ class BinarySearchTreeSymbolTable {
 
 class Node {
     public $key;       //assorted by key
-    public $value;     //associated data
+    public $val;     //associated data
     public $left;      //left subtree
     public $right;     //right subtree
     public $N;         //number of nodes in subtree
     
-    public function __construct($key, $value, $N) {
+    public function __construct($key, $val, $N) {
         $this->key = $key;
-        $this->value = $value;
+        $this->val = $val;
         $this->N = $N;
     }
 
@@ -267,8 +267,14 @@ $symbolTable = new BinarySearchTreeSymbolTable();
 $symbolTable->put("snow", 1);
 $symbolTable->put("sun", 2);
 $symbolTable->put("rain", 3);
-$symbolTable->put("shine", 4);
-$symbolTable->put("cloud", 5);
-$symbolTable->put("cloud", 7);
+$symbolTable->put("rain", 4);
+$symbolTable->put("rain", 3);
+//$symbolTable->put("shine", 4);
+//$symbolTable->put("cloud", 5);
+//$symbolTable->put("cloud", 7);
+//$symbolTable->put("cloud", 9);
 
-echo $symbolTable->size_all();
+echo "<h2>Size:" . $symbolTable->size_all() . "</h2>";
+
+echo "<h2>get shine:" . $symbolTable->get("sun") . "</h2>";
+echo "<h2>get rain:" . $symbolTable->get("rain") . "</h2>";
