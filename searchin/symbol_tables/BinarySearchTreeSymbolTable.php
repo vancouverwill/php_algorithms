@@ -7,7 +7,9 @@
  *
  * A symbol table implemented with a binary search tree.
  *
- * http://algs4.cs.princeton.edu/32bst/BST.java.html
+ * example in JAVA : http://algs4.cs.princeton.edu/32bst/BST.java.html
+ *
+ * explanation : http://algs4.cs.princeton.edu/32bst/
  *
  */
 class BinarySearchTreeSymbolTable {
@@ -25,22 +27,30 @@ class BinarySearchTreeSymbolTable {
 
 
     /**
+     * return number of key-value pairs in BST
      * @param node $node
      * @return mixed
      */
+    //
     public function size_all()
     {
             $size = $this->size($this->root);
         return $size;
     }
 
-    private function size($node)
+
+    /**
+     * return number of key-value pairs in BST rooted at $nodeX
+     * @param $node
+     * @return int
+     */
+    private function size($nodeX)
     {
-        if ($node == null) {
+        if ($nodeX == null) {
             return 0;
         }
         else {
-            return $node->getNum();
+            return $nodeX->getNum();
         }
     }
 
@@ -105,6 +115,23 @@ class BinarySearchTreeSymbolTable {
         return $nodeX;
     }
 
+
+    /***********************************************************************
+     *  Delete
+     ***********************************************************************/
+
+    public function delete_min()
+    {
+        if ($this->isEmpty()) throw new NoSuchElementException("Symbol table underflow");
+        $this->root = $this->delete_min_recursive($this->root);
+    }
+
+    private function delete_min_recursive($nodeX)
+    {
+        //todo
+    }
+
+    //todo
     /***********************************************************************
      *  Min, max, floor, and ceiling
      ***********************************************************************/
