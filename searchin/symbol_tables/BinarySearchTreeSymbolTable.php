@@ -120,27 +120,35 @@ class BinarySearchTreeSymbolTable {
      *  Delete
      ***********************************************************************/
 
+
     /**
-     * f the left link of the root is null, the smallest key in a BST is the key at the root;
+     * If the left link of the root is null, the smallest key in a BST is the key at the root;
      * if the left link is not null, the smallest key in the BST is the smallest key in the subtree rooted at the node referenced by the left link.
      * @throws NoSuchElementException
      */
-    public function delete_min()
+    public function deleteMin()
     {
         if ($this->isEmpty()) throw new NoSuchElementException("Symbol table underflow");
-        $this->root = $this->delete_min_recursive($this->root);
+        $this->root = $this->deleteMinRecursive($this->root);
+        assert($this->check());
     }
 
-    private function delete_min_recursive($nodeX)
+
+    private function deleteMinRecursive($nodeX)
     {
-        //todo
+        if ($nodeX->left == null) return $nodeX->right;
+        $nodeX->left = $this->deleteMinRecursive($nodeX->left);
+        $nodeX->N = $this->size($nodeX->left) + $this->size($nodeX->right) + 1;
+        return $nodeX;
     }
 
-    //todo
+
+    //todo deleteMaxRecursive
     /***********************************************************************
      *  Min, max, floor, and ceiling
      ***********************************************************************/
 
+    
     public  function min()
     {
         if ($this->isEmpty()) return null;
