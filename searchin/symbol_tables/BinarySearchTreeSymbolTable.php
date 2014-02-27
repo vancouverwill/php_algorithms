@@ -1,7 +1,7 @@
 <?php
 
 /*
- * A binary tree has smaller values to the left and larger values to the right.
+ * A binary tree has smaller values to the left and larger values to the right. With this simple logic it keeps and maintains the order between nodes.
  *
  * Here I have implemented the Node with public fields so don't have to use accessors or setters.
  *
@@ -120,6 +120,11 @@ class BinarySearchTreeSymbolTable {
      *  Delete
      ***********************************************************************/
 
+    /**
+     * f the left link of the root is null, the smallest key in a BST is the key at the root;
+     * if the left link is not null, the smallest key in the BST is the smallest key in the subtree rooted at the node referenced by the left link.
+     * @throws NoSuchElementException
+     */
     public function delete_min()
     {
         if ($this->isEmpty()) throw new NoSuchElementException("Symbol table underflow");
@@ -171,12 +176,61 @@ class BinarySearchTreeSymbolTable {
         }
     }
 
+    /**
+     * find the node smaller than equal to the search key
+     * @param $key
+     * @return null
+     */
+    public function floor($key)
+    {
+        $nodeX = $this->floorRecursive($this->root, $key);
+        if ($nodeX == null) return null;
+        else return $nodeX->key;
+    }
+
+    private function floorRecursive($nodeX, $key)
+    {
+        if ($nodeX == null) return null;
+        $cmp = $this->compareTo($key, $nodeX->key);
+        if ($cmp == 0) return $nodeX;
+        if ($cmp < 0) return $this->floorRecursive($nodeX->left, $key);
+        $t = $this->floorRecursive($nodeX->right, $key);
+        if ($t != null) return $t;
+        else return $nodeX;
+    }
+
+
+    public function ceiling($key)
+    {
+        $nodeX = $this->ceilingRecursive($this->root, $key);
+        if ($nodeX == null) return null;
+        else return $nodeX->key;
+    }
+
+
+    private function ceilingRecursive($nodeX, $key)
+    {
+        if ($nodeX == null) return null;
+        $cmp = $this->compareTo($key, $nodeX->key);
+        if ($cmp == 0) return $nodeX;
+        if ($cmp < 0) {
+            $t = $this->ceilingRecursive($nodeX->left, $key);
+            if ($t != null) return $t;
+            else return $nodeX;
+        }
+        return $this->ceilingRecursive($nodeX->right, $key);
+    }
+
 
     /***********************************************************************
      *  Rank and selection
      ***********************************************************************/
 
-
+    /**
+     *  select the key of rank k (the key such that precisely k other keys in the BST are smaller)
+     * @param $k
+     * @return null
+     */
     public function select($k)
     {
         if ($k < 0 ||$k >= $this->size_all()) return null;
