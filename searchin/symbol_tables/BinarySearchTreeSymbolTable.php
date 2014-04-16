@@ -148,7 +148,7 @@ class BinarySearchTreeSymbolTable {
      *  Min, max, floor, and ceiling
      ***********************************************************************/
 
-    
+
     public  function min()
     {
         if ($this->isEmpty()) return null;
