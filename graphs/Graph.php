@@ -66,11 +66,12 @@ class DepthFirstSearch
     private $count;
 
 
+
     /**
      * @param $G MyGraph
      * @param $s SplInt
      */
-    public function DepthFirstSearch( $G, $s)
+    public function __construct( $G, $s)
     {
         $this->marked = new SplFixedArray($G.V());
         $this->dfs($G, $s);
@@ -93,7 +94,24 @@ class DepthFirstSearch
             if (!$this->marked[$w]) {
                 $this->dfs($G, $w);
             }
+        }
     }
+
+
+    /**
+     * @return \SplInt
+     */
+    public function getCount()
+    {
+        return $this->count;
+    }
+
+    /**
+     * @return \booean[]
+     */
+    public function getMarked()
+    {
+        return $this->marked;
     }
 
 }
@@ -111,3 +129,5 @@ $graph->addEdge(3, 5);
 echo $graph->getE();
 echo '<br/>';
 echo $graph->getV();
+
+new DepthFirstSearch($graph, $graph->getV());
