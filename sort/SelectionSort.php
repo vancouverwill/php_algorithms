@@ -29,7 +29,7 @@ class SelectionSort {
      * 
      * @param int[] $input_array input_array
      */
-    public function selection_sort()
+    public function selectionSort()
     {
 //        $this->array = $input_array;
 //        $this->size = count($input_array);
@@ -106,7 +106,7 @@ $obj = new SelectionSort();
 
 $obj->intialize($starting_array);
 $obj->show();
-$obj->selection_sort();
+$obj->selectionSort();
 $obj->show();
 
 

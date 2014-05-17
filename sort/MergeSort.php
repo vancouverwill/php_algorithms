@@ -51,7 +51,6 @@ class MergeSort {
         // precondition: $this->array[lo .. mid] and $this->array[mid+1 .. hi] are sorted subarrays
         assert($this->is_sorted( $lo, $mid));
         assert($this->is_sorted( $mid + 1, $hi));
-        
 
         // copy to $this->aux_array[]
         for ( $k = $lo; $k <= $hi; $k++) {
