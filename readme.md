@@ -10,5 +10,6 @@ them I have implemented and tested them in PHP.
 TO DO 
 ============
 
--create compare sort to show difference in speed between different algorithms
--bottom up mergesort
+* create compare sort to show difference in speed between different algorithms
+* bottom up mergesort
+* bubble sort
