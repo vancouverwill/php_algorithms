@@ -67,9 +67,13 @@ class ContractionAlgorithm {
         // need  to loop through all edges at a vertice so we delete any self loops
         foreach ($this->vertices[$a] AS $k => $edge) {
             if ($edge->equals($a, $b)) {
-
-
                 unset($this->vertices[$a][$k]);
+            }
+        }
+
+        foreach ($this->vertices[$b] AS $k => $edge) {
+            if ($edge->equals($a, $b)) {
+                unset($this->vertices[$b][$k]);
             }
         }
     }
@@ -94,10 +98,12 @@ class ContractionAlgorithm {
 
             $key = 1;
 
+//            $edgeLo;
+
 //            merge (or “contract” ) u and v into a single vertex
 //            remove self-loops
             $this->deleteEdgesBetweenVertices($this->edges[$key]->lo, $this->edges[$key]->hi);
-//            find vertex which is free hanging by looking for the vertex with just one loop
+//            find vertex which is free hanging by looking for the vertex with least edges
             // find the vertex from this edge which has the fewest edges touching it and call this lo and the other one hi
             if (count($this->vertices[$this->edges[$key]->lo]) < count($this->vertices[$this->edges[$key]->hi])) {
                 $lo = $this->edges[$key]->lo;
@@ -109,18 +115,32 @@ class ContractionAlgorithm {
             }
 
             // all the edges incident to lo, update their vertex from lo to hi
-            foreach($this->edges[$lo] AS $key => $edge) {
-                $otherEnd = $edge->other($lo);
-                foreach($this->edges[$otherEnd] AS $key => $otherEdge) {
-                    $otherEdge->updatePoint($lo, $hi);
-                }
-                $edge->updatePoint($lo, $hi);
+//            foreach($this->edges[$lo] AS $key => $edge) {
+//                $otherEnd = $edge->other($lo);
+//                foreach($this->edges[$otherEnd] AS $key => $otherEdge) {
+//                    $otherEdge->updatePoint($lo, $hi);
+//                }
+//                $edge->updatePoint($lo, $hi);
+//            }
+
+            foreach($this->edges AS $key => $edge) {
+                $edge->updatePointIfExists($lo, $hi);
             }
+
+            foreach($this->vertices[$lo] AS $edge) {
+                $opposingPoint = $edge->other($lo);
+
+
+                foreach($this->vertices[$opposingPoint] AS $opposingEdge) {
+                    $edge->updatePointIfExists($lo, $hi);
+                }
+            }
+
             //  now delete that free hanging vertex with no edges (lo)
             $this->vertices[$lo] = null;
             //finally remove the edge off the edge array
             //            delete edge off of edges list
-            $this->
+            $this->deleteEdgeFromEdges($lo, $hi);
 
         }
     }
@@ -159,9 +179,9 @@ class Edge {
     }
 
 
-    public function updatePoint($old, $new)
+    public function updatePointIfExists($old, $new)
     {
-        if ($this->low == $old) {
+        if ($this->lo == $old) {
             $this->old = $new;
         }
         elseif ($this->hi == $old) {
@@ -174,7 +194,7 @@ class Edge {
 
 
     public function other($a) {
-        if ($this->low == $a) {
+        if ($this->lo == $a) {
             return $this->old;
         }
         elseif ($this->hi == $a) {
@@ -215,7 +235,8 @@ fclose($handle);
 
 $var = 20;
 
-$ContractionAlgorithm->deleteEdge(1, 3);
+//$ContractionAlgorithm->deleteEdge(1, 3);
 
+$ContractionAlgorithm->randomContractionAlogrithm();
 
 $var = 20;
