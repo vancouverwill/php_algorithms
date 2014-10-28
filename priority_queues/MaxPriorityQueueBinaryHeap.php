@@ -1,8 +1,14 @@
 <?php
 
+
+
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * a max priority queue could
+ *
+ * array representation
+ *
+ *
+ *
  */
 class MaxPriorityQueueBinaryHeap {
     private $pq;
