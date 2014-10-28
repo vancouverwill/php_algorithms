@@ -58,104 +58,8 @@ class MyGraph {
 }
 
 
-class DepthFirstSearch
-{
-    /** @var  booean[] */
-    private $marked;
-    /** @var  SplInt */
-    private $count;
 
 
-
-    /**
-     * @param $G MyGraph
-     * @param $s SplInt
-     */
-    public function __construct( $G, $s)
-    {
-        $this->marked = new SplFixedArray($G.V());
-        $this->dfs($G, $s);
-    }
-
-    /**
-     * @param $G MyGraph
-     * @param $v SplInt
-     */
-    private function dfs($G, $v)
-    {
-        $this->count++;
-        $this->marked[$v] = true;
-
-        /** @var [] $adjacentArray */
-        $adjacentArray = $G->adj($v);
-
-
-        foreach ($adjacentArray AS $w) {
-            if (!$this->marked[$w]) {
-                $this->dfs($G, $w);
-            }
-        }
-    }
-
-
-    /**
-     * @return \SplInt
-     */
-    public function getCount()
-    {
-        return $this->count;
-    }
-
-    /**
-     * @return \booean[]
-     */
-    public function getMarked()
-    {
-        return $this->marked;
-    }
-
-}
-
-
-class BreathFirstSearch {
-    private $marked;        // Is a shortest path to this vertex known?
-    private $edgeTo;        // last vertex on known path to this vertex
-    private $s;             // source
-
-
-    public function  BreathFirstPaths(MyGraph $graph, $s)
-    {
-        for ($i = 0; $i < $graph->getV(); $i++) {
-            $this->marked = FALSE;
-        }
-
-        $this->s = $s;
-    }
-
-
-    private function bfs(MyGraph $graph, $s)
-    {
-        $queue = new SplQueue();
-        $this->marked[$s] = true;
-        $queue->enqueue($s);
-
-        while ($queue->count() > 0) {
-            $v = $queue->dequeue();
-
-            foreach ($graph->adj($v) AS $w) {
-                if (!$this->marked[$w]);
-                $this->marked[$w] = true;
-                $this->edgeTo[$w] = $v;
-                $queue->enqueue($w);
-            }
-        }
-    }
-
-    public function hasPathTo($v)
-    {
-        return $this->marked[$v];
-    }
-}
 
 $graph = new MyGraph(6);
 
@@ -171,4 +75,5 @@ echo $graph->getE();
 echo '<br/>';
 echo $graph->getV();
 
+require_once("./DepthFirstSearch.php");
 new DepthFirstSearch($graph, $graph->getV());
