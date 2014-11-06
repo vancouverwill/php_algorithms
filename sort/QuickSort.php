@@ -9,7 +9,6 @@ error_reporting(E_ALL);
 
 class  QuickSort 
 {
-    // todo make this object oriented
     private $array;
     private $size;
     
