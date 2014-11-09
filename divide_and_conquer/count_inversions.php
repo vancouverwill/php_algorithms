@@ -90,7 +90,7 @@ $array= array(6,3,5,2,4,1);
 $CountInversions = new CountInversions();
 $CountInversions->countSortInit($array);
 
-//var_dump($CountInversions->getTotal());
+var_dump($CountInversions->getTotal());
 //
 //echo '<br/>';
 //echo '<br/>';
@@ -98,9 +98,11 @@ $CountInversions->countSortInit($array);
 //
 //var_dump($CountInversions->getInputArray());
 
+@set_time_limit(60*60*24);
+
 $integerArray = array();
-//$handle = fopen("IntegerArray.txt", "r");
-$handle = fopen("IntegerArraySmall.txt", "r");
+$handle = fopen("IntegerArray.txt", "r");
+//$handle = fopen("IntegerArrayVerySmall.txt", "r");
 if ($handle) {
     while (($line = fgets($handle)) !== false) {
         // process the line read.
@@ -115,7 +117,7 @@ fclose($handle);
 $CountInversions = new CountInversions();
 $CountInversions->countSortInit($integerArray);
 
-//var_dump($CountInversions->getTotal());
+var_dump($CountInversions->getTotal());
 //
 //echo '<br/>';
 //echo '<br/>';
