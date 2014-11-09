@@ -1,3 +1,12 @@
+TO DO
+============
+
+*  Randomized Selection
+* create compare sort to show difference in speed between different algorithms
+* bottom up mergesort
+* bubble sort
+
+
 working on sequential search symbol table
 
 binaryheapsort

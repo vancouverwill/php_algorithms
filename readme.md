@@ -42,9 +42,4 @@ and there exists constants c1, c2 n0 > 0 such that
  c1 * f(n) <= T(n) <= c2 * f(n)
 
 
-TO DO 
-============
 
-* create compare sort to show difference in speed between different algorithms
-* bottom up mergesort
-* bubble sort
