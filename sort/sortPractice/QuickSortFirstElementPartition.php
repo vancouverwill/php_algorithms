@@ -7,40 +7,43 @@
  */
 
 class QuickSortFirstElementPartition {
-    private    $array;
+    private     $array;
+    private     $noComparisons;
 
    public function __construct($array)
     {
         $this->array = $array;
     }
 
+
     public function initializeSort()
     {
+        $this->noComparisons = 0;
         $this->recursiveSort(0, count($this->array) -1);
     }
+
 
     private function recursiveSort($lo, $hi)
     {
         if ($hi <= $lo) return FALSE;
 
-//        $mid = floor(($hi - $lo) / 2) + $lo;
+        $arraySize = $hi - $lo + 1;
+        $this->noComparisons += $arraySize - 1;
 
-        $mid = $this->partition( $lo, $hi);
+        $mid = $this->partition($lo, $hi);
         $this->recursiveSort($lo, $mid);
         $this->recursiveSort($mid + 1, $hi);
-
-//        $this->
     }
 
 
     private function partition($lo, $hi)
     {
-        $p = $this->array[$lo];
+        $partitionElement = $this->array[$lo];
         $i = $lo + 1;
         $j = $lo + 1;
 
         while ($j <= $hi) {
-            if ($this->array[$j] < $p) {
+            if ($this->array[$j] < $partitionElement) {
                 $this->exch( $i, $j);
                 $i++;
             }
@@ -52,12 +55,14 @@ class QuickSortFirstElementPartition {
         return $i - 1;
     }
 
+
     private function exch($i, $j)
     {
         $temp = $this->array[$i];
         $this->array[$i] = $this->array[$j];
         $this->array[$j] = $temp;
     }
+
 
     public function displayArray()
     {
@@ -66,6 +71,12 @@ class QuickSortFirstElementPartition {
         {
             echo $this->array[$i] . ', ';
         }
+    }
+
+
+    public function getNoComparisons()
+    {
+        return $this->noComparisons;
     }
 }
 
@@ -78,3 +89,8 @@ $quickSort->displayArray();
 $quickSort->initializeSort();
 
 $quickSort->displayArray();
+
+echo '<br/>';
+echo '<br/>';
+
+echo $quickSort->getNoComparisons();
