@@ -19,13 +19,13 @@ A sparse graph is m is close to O(n)
 A dense graph m is close to Θ(n)
 
 
-Adjacency Matrix
+## Adjacency Matrix
 
 Represent G by a n * n matrix A where A(ij) = 1 if G has an edge i <-> j
 An adjacency matrix  uses n^2 space
 
 
-Adjacency List
+## Adjacency List
 
 Array or list of vertices and array or list of edges.
 Each edge points to it's endpoints.
@@ -62,3 +62,10 @@ Each vertex points to edges incident to it.
 - compute topological ordering of a directed acyclic graph
 - compute connected components in directed graphs
 - works with a stack data structure LIFO
+
+
+# Strongly Connected Components
+
+- Reflexive : Every vertex v is strongly connected to itself.
+- Symmetric : If v is strongly connected to w, then w is strongly connected to v.
+- Transitive : If v is strongly connected to w and w is strongly connected to x, then v is also strongly connected to x.
