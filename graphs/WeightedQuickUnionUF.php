@@ -11,7 +11,7 @@ class WeightedQuickUnionUF {
     private $sz; // @array number of objects in subtree rooted at i
     private $count; // int number of components
 
-    public function create_fixed_size($N) {
+    public function createFixedSize($N) {
         $this->count = $N;
         $this->id = array();
         $this->sz = array();
@@ -21,14 +21,21 @@ class WeightedQuickUnionUF {
         }
     }
 
-    public function intialize_with_variable_size()
+    public function reset()
+    {
+        $this->count = 0;
+        $this->id = null;
+        $this->sz = null;
+    }
+
+    public function intializeWithVariableSize()
     {
         $this->count = 0;
         $this->id = array();
         $this->sz = array();
     }
 
-    public function add_new_vertice($i)
+    public function addNewVertice($i)
     {
         if ($this->find($i)) return FALSE;
         $this->count++;
@@ -36,9 +43,15 @@ class WeightedQuickUnionUF {
         $this->sz[$i] = 1;
     }
 
-    public function count()
+    public function countComponents()
     {
         return $this->count;
+    }
+
+
+    public function countPoints()
+    {
+        return count($this->id);
     }
 
     /**
@@ -58,7 +71,7 @@ class WeightedQuickUnionUF {
 
     public function connected($p, $q)
     {
-        return $this->find($p) == $this->find($q);
+        return $this->find($p) === $this->find($q);
     }
 
     public function union($p, $q)
