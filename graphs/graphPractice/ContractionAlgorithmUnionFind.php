@@ -25,7 +25,7 @@ class ContractionAlgorithmUnionFind {
     {
         $this->edges = array();
         $this->points = new WeightedQuickUnionUF();
-        $this->points->intialize_with_variable_size();
+        $this->points->intializeWithVariableSize();
     }
 
 //    public function addEdge($lo, $hi)
@@ -38,8 +38,9 @@ class ContractionAlgorithmUnionFind {
         $edge = new Edge($a, $b);
         $this->addEdge($edge);
 
-        $this->points->add_new_vertice($a);
-        $this->points->add_new_vertice($b);
+        $this->points->addNewVertice($a);
+        $this->points->addNewVertice($b);
+        $this->points->union($a, $b);
 //        $this->addEdgeToVertice($a, $edge);
 //        $this->addEdgeToVertice($b, $edge);
     }
@@ -66,8 +67,11 @@ class ContractionAlgorithmUnionFind {
         // if they have the same root then delete the edge so we don't have to search it again
         // remove the edge from the list
         // join edge lo and edge hi points together in the $points
-        while ($this->points->count() > 2) {
+
+        $tempCounter = 0;
+        while ($this->points->countPoints() > 2) {
             $randEdgeKey = array_rand($this->edges);
+            $count = $this->points->countPoints();
 //            $randEdgeA = $randEdge
             $randEdgeA = $this->edges[$randEdgeKey]->lo;
             $randEdgeB = $this->edges[$randEdgeKey]->hi;
@@ -79,6 +83,10 @@ class ContractionAlgorithmUnionFind {
                 $this->points->union($randEdgeA, $randEdgeB);
                 unset($this->edges[$randEdgeKey]);
             }
+
+            $tempCounter++;
+
+            if ($tempCounter > 10) exit;
         }
 
         // create counter to start counting remaining edges
@@ -127,10 +135,18 @@ class Edge {
 echo "<pre>";
 $integerArray = array();
 
-$ContractionAlgorithm = new ContractionAlgorithmUnionFind();
+$ContractionAlgorithm2 = new ContractionAlgorithmUnionFind();
 
+//$ContractionAlgorithm2 = new ContractionAlgorithm();
+
+$ContractionAlgorithm2->addTwoVertices(0, 2);
+$ContractionAlgorithm2->addTwoVertices(2, 1);
+$ContractionAlgorithm2->addTwoVertices(3, 1);
+$ContractionAlgorithm2->addTwoVertices(0, 3);
+
+    $temp = 1;
 //$handle = fopen("kargerMinCutPractice.txt", "r");
-$handle = fopen("kargerMinCut.txt", "r");
+/*$handle = fopen("kargerMinCut.txt", "r");
 if ($handle) {
     while (($line = fgets($handle)) !== false) {
         // process the line read.
@@ -152,9 +168,9 @@ if ($handle) {
 } else {
     // error opening the file.
 }
-fclose($handle);
+fclose($handle);*/
 
-echo $ContractionAlgorithm->contract() . "<br/>";
+echo $ContractionAlgorithm2->contract() . "<br/>";
 
 //for($i = 0; $i < 1; $i++) {
 //    $temp = clone $ContractionAlgorithm;

@@ -1,5 +1,8 @@
 <?php
 /**
+ * this was how I first envisioned doing the contraction algorithm with an adjacency list being an array of vertices each listing an array of edges
+ *
+ * Contraction Algorithm using two Adjacency Lists
  * Created by PhpStorm.
  * User: will_melbourne
  * Date: 2014-05-26
@@ -71,12 +74,21 @@ class ContractionAlgorithm {
             }
         }
 
+        if (count($this->vertices[$a]) == 0) {
+            unset($this->vertices[$a]);
+        }
+
         foreach ($this->vertices[$b] AS $k => $edge) {
             if ($edge->equals($a, $b)) {
                 unset($this->vertices[$b][$k]);
             }
         }
+
+        if (count($this->vertices[$b]) == 0) {
+            unset($this->vertices[$b]);
+        }
     }
+
 
     public function deleteEdgeFromEdges($a, $b)
     {
@@ -89,30 +101,54 @@ class ContractionAlgorithm {
         }
     }
 
+
+    public function getNumberEdgesLeft()
+    {
+        return count($this->edges);
+    }
+
     public function randomContractionAlogrithm()
     {
         //While there are more than 2 vertices:
-        while(count($this->vertices > 2)) {
+        while(count($this->vertices) > 2) {
 //           pick a remaining edge (u,v) uniformly at random
             $key = array_rand($this->edges);
 
-            $key = 1;
+//            $key = 1;
 
 //            $edgeLo;
 
 //            merge (or “contract” ) u and v into a single vertex
 //            remove self-loops
             $this->deleteEdgesBetweenVertices($this->edges[$key]->lo, $this->edges[$key]->hi);
+
+            $this->deleteEdgeFromEdges($this->edges[$key]->lo, $this->edges[$key]->hi);
+
+            /* if both vertics have at least 1 edge start reassigning points
+
+                find vertice with most edges off of it, set as $hi and the other as $lo
+
+               for each edge off of $lo {
+                    $other = reassign whichever point which was set to low to set to hi (return in functon other end and label $other)
+                    add an edge on to high vertice from $hi to $other
+                    get vertice at $other and find any edge which points to lo and reassgin to point to hi
+                }
+            }
+            */
+
+
+
+
 //            find vertex which is free hanging by looking for the vertex with least edges
             // find the vertex from this edge which has the fewest edges touching it and call this lo and the other one hi
-            if (count($this->vertices[$this->edges[$key]->lo]) < count($this->vertices[$this->edges[$key]->hi])) {
+            /*if (count($this->vertices[$this->edges[$key]->lo]) < count($this->vertices[$this->edges[$key]->hi])) {
                 $lo = $this->edges[$key]->lo;
                 $hi = $this->edges[$key]->hi;
             }
             else {
                 $hi = $this->edges[$key]->lo;
                 $lo = $this->edges[$key]->hi;
-            }
+            }*/
 
             // all the edges incident to lo, update their vertex from lo to hi
 //            foreach($this->edges[$lo] AS $key => $edge) {
@@ -123,7 +159,7 @@ class ContractionAlgorithm {
 //                $edge->updatePoint($lo, $hi);
 //            }
 
-            foreach($this->edges AS $key => $edge) {
+            /*foreach($this->edges AS $key => $edge) {
                 $edge->updatePointIfExists($lo, $hi);
             }
 
@@ -134,13 +170,12 @@ class ContractionAlgorithm {
                 foreach($this->vertices[$opposingPoint] AS $opposingEdge) {
                     $edge->updatePointIfExists($lo, $hi);
                 }
-            }
+            } */
 
             //  now delete that free hanging vertex with no edges (lo)
-            $this->vertices[$lo] = null;
+            /*($this->vertices[$lo] = null;*/
             //finally remove the edge off the edge array
-            //            delete edge off of edges list
-            $this->deleteEdgeFromEdges($lo, $hi);
+
 
         }
     }
@@ -179,6 +214,14 @@ class Edge {
     }
 
 
+    /**
+     *
+     * Point end of edge to new point
+     *
+     * @param $old
+     * @param $new
+     * @return bool
+     */
     public function updatePointIfExists($old, $new)
     {
         if ($this->lo == $old) {
@@ -210,7 +253,22 @@ $integerArray = array();
 
 $ContractionAlgorithm = new ContractionAlgorithm();
 
-$handle = fopen("kargerMinCutPractice.txt", "r");
+$ContractionAlgorithm->addTwoVertices(0, 1);
+$ContractionAlgorithm->addTwoVertices(0, 2);
+$ContractionAlgorithm->addTwoVertices(0, 3);
+$ContractionAlgorithm->addTwoVertices(3, 2);
+
+
+$ContractionAlgorithm2 = new ContractionAlgorithm();
+
+$ContractionAlgorithm2->addTwoVertices(2, 1);
+$ContractionAlgorithm2->addTwoVertices(0, 2);
+$ContractionAlgorithm2->addTwoVertices(0, 3);
+$ContractionAlgorithm2->addTwoVertices(3, 1);
+
+
+
+/* $handle = fopen("kargerMinCutPractice.txt", "r");
 if ($handle) {
     while (($line = fgets($handle)) !== false) {
         // process the line read.
@@ -231,12 +289,18 @@ if ($handle) {
 } else {
     // error opening the file.
 }
-fclose($handle);
+fclose($handle); */
 
+//$var = 20;
+
+//$ContractionAlgorithm->deleteEdgeFromEdges(2, 3);
+//$ContractionAlgorithm->deleteEdgesBetweenVertices(2, 3);
+//
+//$ContractionAlgorithm->deleteEdgeFromEdges(0, 1);
+//$ContractionAlgorithm->deleteEdgesBetweenVertices(0, 1);
+
+$ContractionAlgorithm2->randomContractionAlogrithm();
+//
 $var = 20;
 
-//$ContractionAlgorithm->deleteEdge(1, 3);
-
-$ContractionAlgorithm->randomContractionAlogrithm();
-
-$var = 20;
+echo ($ContractionAlgorithm2->getNumberEdgesLeft());
