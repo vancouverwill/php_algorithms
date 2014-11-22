@@ -19,5 +19,5 @@
 
 
 
-<a href="searchin/symbol_tables/SequentialSearchSymbolTable.php">Sequential Search Symbol Table</a> <br/>
+<a href="collections/symbol_tables/SequentialSearchSymbolTable.php">Sequential Search Symbol Table</a> <br/>
 

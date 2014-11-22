@@ -81,23 +81,23 @@ class Node {
 <body>
 <h1>Hello, world!</h1>
 
-<?php
+    <?php
 
-$stack = new Stack();
+    $stack = new Stack();
 
-$stack->push("red");
-$stack->push("orange");
-$stack->push("yellow");
+    $stack->push("red");
+    $stack->push("orange");
+    $stack->push("yellow");
 
-echo $stack->size() . '<br/>';
-echo $stack->isEmpty() . '<br/>';
+    echo $stack->size() . '<br/>';
+    echo $stack->isEmpty() . '<br/>';
 
 
-while(!$stack->isEmpty()) {
-    echo '' . $stack->pop() . '<br/>';
-}
+    while(!$stack->isEmpty()) {
+        echo '' . $stack->pop() . '<br/>';
+    }
 
-?>
+    ?>
 
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 <script src="https://code.jquery.com/jquery.js"></script>

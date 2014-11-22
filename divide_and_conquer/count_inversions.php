@@ -84,19 +84,13 @@ class CountInversions {
 }
 
 //$array= array(4,6,3,8,2,9,11,1,5,13);
-
 $array= array(6,3,5,2,4,1);
 
 $CountInversions = new CountInversions();
 $CountInversions->countSortInit($array);
 
 var_dump($CountInversions->getTotal());
-//
-//echo '<br/>';
-//echo '<br/>';
-//echo '<br/>';
-//
-//var_dump($CountInversions->getInputArray());
+
 
 @set_time_limit(60*60*24);
 
@@ -118,9 +112,3 @@ $CountInversions = new CountInversions();
 $CountInversions->countSortInit($integerArray);
 
 var_dump($CountInversions->getTotal());
-//
-//echo '<br/>';
-//echo '<br/>';
-//echo '<br/>';
-//
-//var_dump($CountInversions->getInputArray());

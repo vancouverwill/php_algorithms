@@ -43,3 +43,8 @@ and there exists constants c1, c2 n0 > 0 such that
 
 
 
+# Data Structures
+
+-Organize data so that it can be accessed quickly
+- Different data structures support different sets of operations => suitable for different types of tasks
+- Rule of thumb - choose the "minimal" data structure that supports all the operations that you need.
