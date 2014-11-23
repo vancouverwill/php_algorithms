@@ -377,13 +377,13 @@ $ContractionAlgorithm->setN(count($uniqueNumbers));
 
 $n = $ContractionAlgorithm->getN();
 
-$n = 5;
+$n = 2;
 //$ContractionAlgorithm->randomContractionAlogrithm();
 
 $smallestAmountConnections = INF;
 $temp = log($n, 2);
 
-for ($i = 0; $i < ($n * $n * floor(log($n, 2))); $i++) {
+//for ($i = 0; $i < ($n * $n * floor(log($n, 2))); $i++) {
 //for ($i = 0; $i < 2; $i++) {
 
     $temp = clone $ContractionAlgorithm;
@@ -395,7 +395,7 @@ for ($i = 0; $i < ($n * $n * floor(log($n, 2))); $i++) {
 //    else {
         if ($temp->getNumberConnectionsLeft() < $smallestAmountConnections) {
             $smallestAmountConnections = $temp->getNumberConnectionsLeft();
-        }
+//        }
 //    }
 
     unset($temp);

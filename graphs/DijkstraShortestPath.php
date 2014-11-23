@@ -7,7 +7,7 @@
  *
  **/
 
-// todo finish dirsktas notes
+// todo finish Dijksta notes
 
 class DijkstaShortestPath {
 
