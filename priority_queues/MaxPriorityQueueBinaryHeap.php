@@ -3,7 +3,7 @@
 
 
 /*
- * a max priority queue could
+ * a max priority queue
  *
  * array representation
  *
@@ -24,7 +24,7 @@ class MaxPriorityQueueBinaryHeap {
             $this->pq = array();
         }
         
-        $N = 0;
+        $this->N = 0;
     }
     
     public function size()
@@ -174,7 +174,7 @@ class MaxPriorityQueueBinaryHeap {
       * 
       * 
       */
-     private function isMaxHeap($k = 1)
+     public function isMaxHeap($k = 1)
      {
          if($k > $this->N) {return true;}
          $left = 2 * $k;
@@ -196,6 +196,7 @@ $pq->insert(25);
 $pq->insert(5);
 
 echo "size:" . $pq->size() . "<br/>";
+echo "isMaxHeap:" . $pq->isMaxHeap() . "<br/>";
 
 echo $pq->max() . "<br/>";
 $pq->delMax();

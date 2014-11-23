@@ -3,33 +3,35 @@
 
 
 /*
- * a min priority queue
+ * an indexed min priority queue
  *
- * gives us delMin and insert in logarthimic time
+ * as well as the normal functions from a min priority queue we now get delete at index and change key at index functionality
  *
- * gives us min, size, is empty in constant time
+ * gives us delMin and insert in logarthimic time and min, size, is empty in constant time
  *
  * array representation
  *
  *
  *
  */
-class MinPriorityQueueBinaryHeap {
-    private $pq;
+class IndexedMinPriorityQueueBinaryHeap {
+    private $pq;  /** @var  SplFixedArray int - binary heap using 1-based indexing */
+    private $qp;  /** @var  SplFixedArray int - inverse of pq - qp[pq[i]] = pq[qp[i]] = i */
+    private $keys;  /** @var  SplFixedArray object - keys[i] = priority of i */
+    private $NMAX; // max number of elements on priority queue
     private $N; //number of items on priority queue so far
     private $debug = TRUE;
 
+
     public function __construct($capacity)
     {
-        if ($this->debug = FALSE) {
-            $this->pq = new SplFixedArray($capacity + 1);
-        }
-        else {
-//            $this->pq = array();
-            $this->pq = new SplFixedArray($capacity + 1);
-        }
-
+        $this->NMAX = $capacity;
+        $this->pq = new SplFixedArray($capacity + 1);
+        $this->qp = new SplFixedArray($capacity + 1);
+        $this->keys = new SplFixedArray($capacity + 1);
         $this->N = 0;
+
+        for ($i = 0; $i <= $this->NMAX; $i++) $this->qp[$i] = -1;
     }
 
 
@@ -50,16 +52,38 @@ class MinPriorityQueueBinaryHeap {
     }
 
 
+    public function contains($i)
+    {
+        if ($i < 0 || $i >= $this->NMAX) {
+            throw new InvalidArgumentException("Out of bounds");
+        }
+        return ($this->qp[$i] != -1);
+    }
+
+
     /**
      *
-     * Return the smallest key on the priority queue.
+     * Return the index associated with the smallest key on the priority queue.
      * @return type
      * @throws Exception
      */
-    public function min()
+    public function minIndex()
     {
         if ($this->isEmpty()) throw new Exception ("Priority queue underflow");
         return $this->pq[1];
+    }
+
+
+    /**
+     *
+     * Return the index associated with the smallest key on the priority queue.
+     * @return type
+     * @throws Exception
+     */
+    public function minKey()
+    {
+        if ($this->isEmpty()) throw new Exception ("Priority queue underflow");
+        return $this->keys[$this->pq[1]];
     }
 
 
@@ -84,23 +108,26 @@ class MinPriorityQueueBinaryHeap {
 
 
     /**
-     * Add a new key to the priority queue.
+     * Add a new $key with index $i to the priority queue.
      */
-    public function insert($x)
+    public function insert($i, $key)
     {
         // double size of array if necessary
-        if ($this->N >= count($this->pq) - 1) {
-            $this->resize(2 * count($this->pq));
-        }
+//        if ($this->N >= count($this->pq) - 1) {
+//            $this->resize(2 * count($this->pq));
+//        }
 
         // add x, and percolate it up to maintain heap invariant
         $this->N++;
-        $this->pq[$this->N] = $x;
+        $this->pq[$i] = $this->N;
+        $this->qp[$this->N] = $i;
+        $this->keys[$i] = $key;
         $this->swim($this->N);
         assert($this->isMinHeap());
 
         $temp = $this->isMinHeap();
     }
+
 
     public function insert_array($array)
     {
@@ -110,6 +137,7 @@ class MinPriorityQueueBinaryHeap {
             }
         }
     }
+
 
     /**
      * Delete and return the largest key on the priority queue.
@@ -121,12 +149,27 @@ class MinPriorityQueueBinaryHeap {
         $min = $this->pq[1];
         $this->exch(1, $this->N--);
         $this->sink(1);
-        $this->pq[$this->N + 1] = null; // to avoid loiterig and help with garbage collection
-        if ($this->N > 0 && $this->N == ((count($this->pq) - 1) /4)) {
-            $this->resize(count($this->pq) / 2);
-        }
+        $this->pq[$this->N + 1] = -1; // to avoid loiterig and help with garbage collection
+        $this->qp[$min] = -1; // to avoid loiterig and help with garbage collection
+
         assert($this->isMinHeap());
         return $min;
+    }
+
+
+    /**
+     * Delete the key associated with index i
+     * @param $i
+     */
+    public function delete($i)
+    {
+        if ($i < 0 || $i >= $this->NMAX) {
+            throw new InvalidArgumentException("Out of bounds");
+        }
+        if ($this->contains($i)) {
+            throw new InvalidArgumentException("index is not in the priority queue");
+        }
+
     }
 
     /***********************************************************************

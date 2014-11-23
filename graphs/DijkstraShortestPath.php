@@ -8,3 +8,16 @@
  **/
 
 // todo finish dirsktas notes
+
+class DijkstaShortestPath {
+
+    private $distTo;
+    private $directedEdge;
+    private $pq;
+
+    public function DijkstaShortestPath()
+    {
+
+    }
+
+}

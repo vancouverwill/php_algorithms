@@ -377,7 +377,7 @@ $ContractionAlgorithm->setN(count($uniqueNumbers));
 
 $n = $ContractionAlgorithm->getN();
 
-//$n = 300;
+$n = 5;
 //$ContractionAlgorithm->randomContractionAlogrithm();
 
 $smallestAmountConnections = INF;
