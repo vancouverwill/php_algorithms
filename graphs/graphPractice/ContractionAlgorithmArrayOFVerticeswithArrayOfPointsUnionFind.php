@@ -338,9 +338,10 @@ $ContractionAlgorithm = new ContractionAlgorithmSimplified(200);
 
 $startTime = microtime(true);
 
-$handle = fopen("kargerMinCut.txt", "r");
+//$handle = fopen("kargerMinCut.txt", "r");
 //$handle = fopen("./kargerMinCutPracticev1ans2.txt", "r");
 //$handle = fopen("./kargerMinCutPracticev2ans3.txt", "r");
+$handle = fopen("./kargerMinCutPracticev3ans1.txt", "r");
 //$handle = fopen("kargerMinCutPractice.txt", "r");
 
 $uniqueNumbers = array();
@@ -349,8 +350,8 @@ if ($handle) {
         // process the line read.
         $integerArray[] = (int)$line;
 
-        $pieces = explode("\t", $line);
-//        $pieces = explode(" ", $line);
+//        $pieces = explode("\t", $line);
+        $pieces = explode(" ", $line);
 
         $a = (int)$pieces[0];
         if (!in_array($a, $uniqueNumbers)) {
@@ -377,13 +378,15 @@ $ContractionAlgorithm->setN(count($uniqueNumbers));
 
 $n = $ContractionAlgorithm->getN();
 
-$n = 2;
+//$n = 2;
 //$ContractionAlgorithm->randomContractionAlogrithm();
 
 $smallestAmountConnections = INF;
 $temp = log($n, 2);
 
-//for ($i = 0; $i < ($n * $n * floor(log($n, 2))); $i++) {
+$temp2 = $n * $n * floor(log($n, 2));
+
+for ($i = 0; $i < ($n * $n * floor(log($n, 2))); $i++) {
 //for ($i = 0; $i < 2; $i++) {
 
     $temp = clone $ContractionAlgorithm;
@@ -395,7 +398,7 @@ $temp = log($n, 2);
 //    else {
         if ($temp->getNumberConnectionsLeft() < $smallestAmountConnections) {
             $smallestAmountConnections = $temp->getNumberConnectionsLeft();
-//        }
+        }
 //    }
 
     unset($temp);

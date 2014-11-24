@@ -6,6 +6,8 @@
  * Time: 9:55 PM
  */
 
+require_once("./DirectedEdge.php");
+
 class EdgeWeightedDiGraph
 {
     private $v; /** @var  int */
@@ -43,23 +45,29 @@ class EdgeWeightedDiGraph
     }
 
 
+    /**
+     * Return the edges incident from vertex v as an Iterable.
+     * @param $v
+     * @return mixed
+     * @throws InvalidArgumentException
+     */
     public function adj($v)
     {
         if ($v < 0 || $v >= $this->v) throw new InvalidArgumentException();
         return $this->adj[$v];
     }
-}
 
-class DirectedEdge
-{
-    private $to;
-    private $from;
-    private $weight;
-
-    public function directedEdge($from, $to, $weight)
+    public function edges()
     {
-        $this->from = $from;
-        $this->to = $to;
-        $this->weight = $weight;
+        $edges = new SplStack();
+
+        for ($v = 0; $v < $this->v; $v++) {
+            foreach($this->adj($v) as $key => $edge) {
+                $edges->push($edge);
+            }
+        }
+
+        return $edges;
     }
 }
+
