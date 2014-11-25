@@ -166,7 +166,7 @@ class IndexedMinPriorityQueueBinaryHeap {
         if ($i < 0 || $i >= $this->NMAX) {
             throw new InvalidArgumentException("Out of bounds");
         }
-        if ($this->contains($i)) {
+        if (!$this->contains($i)) {
             throw new InvalidArgumentException("index is not in the priority queue");
         }
 
@@ -242,6 +242,32 @@ class IndexedMinPriorityQueueBinaryHeap {
         if ($left <= $this->N && $this->less($left, $k)) return FALSE;
         if ($right <= $this->N && $this->less($right, $k)) return FALSE;
         return $this->isMinHeap($left) && $this->isMinHeap($right);
+    }
+
+
+    public function decreaseKey($i, $key)
+    {
+        if ($i < 0 || $i >= $this->NMAX) {
+            throw new InvalidArgumentException("Out of bounds");
+        }
+        if (!$this->contains($i)) {
+            throw new InvalidArgumentException("index is not in the priority queue");
+        }
+        $this->keys[$i] = $key;
+        $this->swim{$this->qp[$i]};
+    }
+
+
+    public function increaseeKey($i, $key)
+    {
+        if ($i < 0 || $i >= $this->NMAX) {
+            throw new InvalidArgumentException("Out of bounds");
+        }
+        if (!$this->contains($i)) {
+            throw new InvalidArgumentException("index is not in the priority queue");
+        }
+        $this->keys[$i] = $key;
+        $this->sink{$this->qp[$i]};
     }
 
 }

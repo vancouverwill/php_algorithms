@@ -15,7 +15,7 @@ class EdgeWeightedDiGraph
     private $adj; /** @var SplFixedArray fixed array of ??? */
 
 
-    public function DiGraph($v)
+    public function EdgeWeightedDiGraph($v)
     {
         $this->v = $v;
         $this->e = 0;
@@ -40,8 +40,8 @@ class EdgeWeightedDiGraph
 
     public function addEdge(DirectedEdge $e)
     {
-        $v = $e->from();
-        $this->adj[$v]->add($e);
+        $v = $e->getFrom();
+        $this->adj[$v]->push($e);
     }
 
 
@@ -70,4 +70,59 @@ class EdgeWeightedDiGraph
         return $edges;
     }
 }
+
+
+
+$handle = fopen("dijskstrasDataSmall.txt", "r");
+
+$uniqueNumbers = array();
+
+if ($handle) {
+    while (($line = fgets($handle)) !== false) {
+
+        $nodes = explode(" ", $line);
+
+        foreach ($nodes AS $node) {
+            $nodeInfo = explode(",", $node);
+
+            $nodeIndex = $nodeInfo[0];
+            if (!in_array($nodeIndex, $uniqueNumbers)) {
+                $uniqueNumbers[] = $nodeIndex;
+            }
+        }
+    }
+} else {
+    // error opening the file.
+}
+fclose($handle);
+
+
+$graph = new EdgeWeightedDiGraph(max($uniqueNumbers) + 1);
+$handle = fopen("./dijskstrasDataSmall.txt", "r");
+
+if ($handle) {
+    while (($line = fgets($handle)) !== false) {
+        // process the line read.
+        $integerArray[] = (int)$line;
+
+        $nodes = explode(" ", $line);
+
+        $fromIndex = $nodes[0];
+
+        for ($i = 1; $i < count($nodes); $i++) {
+            $nodeInfo = explode(",", $nodes[$i]);
+
+            $nodeIndex = $nodeInfo[0];
+            $nodeWeight = $nodeInfo[1];
+
+            $edge = new DirectedEdge($fromIndex, $nodeIndex, $nodeWeight);
+
+            $graph->addEdge($edge);
+        }
+    }
+} else {
+    // error opening the file.
+}
+fclose($handle);
+
 

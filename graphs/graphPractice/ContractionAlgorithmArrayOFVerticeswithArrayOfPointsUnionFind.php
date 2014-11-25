@@ -366,8 +366,6 @@ if ($handle) {
                 }
             }
         }
-
-
     }
 } else {
     // error opening the file.
