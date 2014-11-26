@@ -41,7 +41,11 @@ class EdgeWeightedDiGraph
     public function addEdge(DirectedEdge $e)
     {
         $v = $e->getFrom();
+        $before = count($this->adj[$v]);
         $this->adj[$v]->push($e);
+        $after = count($this->adj[$v]);
+//        $temp = $this->adj[$v]->pop();
+//        $temp2 = $this->adj[$v]->next();
     }
 
 
@@ -72,8 +76,26 @@ class EdgeWeightedDiGraph
 }
 
 
+$REQUEST_URI = $_SERVER['REQUEST_URI'];
 
-$handle = fopen("dijskstrasDataSmall.txt", "r");
+$pathVariables = explode("/", $REQUEST_URI);
+
+
+//var_dump($_SERVER);
+
+$lastElementInArray = $pathVariables[count($pathVariables) - 1];
+
+if (strpos($lastElementInArray, "?") != FALSE) {
+    $lastElementInArrayWithoutGetVariables = explode("?", $lastElementInArray)[0];
+}
+else {
+    exit;
+}
+
+var_dump($lastElementInArrayWithoutGetVariables);
+
+
+$handle = fopen($lastElementInArrayWithoutGetVariables, "r");
 
 $uniqueNumbers = array();
 
@@ -98,7 +120,7 @@ fclose($handle);
 
 
 $graph = new EdgeWeightedDiGraph(max($uniqueNumbers) + 1);
-$handle = fopen("./dijskstrasDataSmall.txt", "r");
+$handle = fopen($lastElementInArrayWithoutGetVariables, "r");
 
 if ($handle) {
     while (($line = fgets($handle)) !== false) {
@@ -124,5 +146,46 @@ if ($handle) {
     // error opening the file.
 }
 fclose($handle);
+
+$graph->adj(1);
+
+
+$temp = $graph->adj(1);
+
+//        $temp1 = (SplStack)$temp;
+$temp->rewind();
+
+$size = count($graph->adj(1));
+
+$beta = $temp->next();
+$beta = $temp->valid();
+$beta = $temp->current();
+//
+//$size = count($temp);
+//$size1 = $temp->pop();
+
+$graph->adj(1)->rewind();
+
+while ($graph->adj(1)->valid()) {
+    $alpha = $graph->adj(1)->current();
+    $beta = $graph->adj(1)->next();
+//    $graphamma = 1;
+}
+
+$size = count($graph->adj(1));
+
+$graph->adj(1)->rewind();
+
+while ($graph->adj(1)->valid()) {
+    $alpha = $graph->adj(1)->current();
+    $beta = $graph->adj(1)->pop();
+    $graphamma = 1;
+}
+
+$size = count($graph->adj(1));
+
+$temp = $graph->adj(1);
+
+$temp = $graph->adj(1);
 
 
