@@ -6,7 +6,7 @@
  * Time: 10:15 PM
  */
 
-class QuickSortLastElementPartition {
+class QuickSortMedianElementPartition {
 
     private $array;
     private     $noComparisons;
@@ -38,7 +38,13 @@ class QuickSortLastElementPartition {
 
     private function partition($lo, $hi)
     {
-        $this->exch($lo, $hi);
+        if (($hi - $lo + 1) % 2 == 0) {
+            $median 
+        }
+        else {
+            $median = floor(($hi - $lo + 1)/2) + $lo;
+        }
+        $this->exch($lo, $median);
         $p = $this->array[$lo];
         $i = $lo + 1;
         $j = $lo + 1;
@@ -77,7 +83,7 @@ class QuickSortLastElementPartition {
     }
 }
 
-function lastTest() {
+function medianTest() {
 //$array = array(20, 15, 1, 4, 6, 2);
 $array= array(10,20,4,3,5,19,11,12,1,7,8,2);
 

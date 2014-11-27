@@ -8,6 +8,7 @@
 
 require_once("./QuickSortFirstElementPartition.php");
 require_once("./QuickSortLastElementPartition.php");
+require_once("./QuickSortMedianElementPartition.php");
 
 
 $REQUEST_URI = $_SERVER['REQUEST_URI'];
@@ -66,3 +67,15 @@ $quickSortLAst->startSort();
 $quickSortLAst->displayArray();
 
 var_dump($quickSortLAst->getNoComparisons());
+
+
+
+$quickSortMedian = new QuickSortMedianElementPartition($unsortedArray);
+
+$quickSortMedian->displayArray();
+
+$quickSortMedian->startSort();
+
+$quickSortMedian->displayArray();
+
+var_dump($quickSortMedian->getNoComparisons());
