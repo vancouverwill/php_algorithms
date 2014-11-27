@@ -16,7 +16,7 @@ class QuickSortFirstElementPartition {
     }
 
 
-    public function initializeSort()
+    public function startSort()
     {
         $this->noComparisons = 0;
         $this->recursiveSort(0, count($this->array) -1);
@@ -28,22 +28,22 @@ class QuickSortFirstElementPartition {
         if ($hi <= $lo) return FALSE;
 
         $arraySize = $hi - $lo + 1;
-        $this->noComparisons += $arraySize - 1;
+        $this->noComparisons += ($arraySize - 1);
 
-        $mid = $this->partition($lo, $hi);
-        $this->recursiveSort($lo, $mid);
-        $this->recursiveSort($mid + 1, $hi);
+        $par = $this->partition($lo, $hi);
+        $this->recursiveSort($lo, $par - 1);
+        $this->recursiveSort($par + 1, $hi);
     }
 
 
     private function partition($lo, $hi)
     {
-        $partitionElement = $this->array[$lo];
+        $p = $this->array[$lo];
         $i = $lo + 1;
         $j = $lo + 1;
 
         while ($j <= $hi) {
-            if ($this->array[$j] < $partitionElement) {
+            if ($this->array[$j] < $p) {
                 $this->exch( $i, $j);
                 $i++;
             }
@@ -80,17 +80,23 @@ class QuickSortFirstElementPartition {
     }
 }
 
-$array= array(10,20,4,3,5,19,11,12,1,7,8,2);
 
-$quickSort = new QuickSortFirstElementPartition($array);
 
-$quickSort->displayArray();
+function test()
+{
+    $array= array(10,20,4,3,5,19,11,12,1,7,8,2);
 
-$quickSort->initializeSort();
+    $quickSort = new QuickSortFirstElementPartition($array);
 
-$quickSort->displayArray();
+    $quickSort->displayArray();
 
-echo '<br/>';
-echo '<br/>';
+    $quickSort->startSort();
 
-echo $quickSort->getNoComparisons();
+    $quickSort->displayArray();
+
+    echo '<br/>';
+    echo '<br/>';
+
+    echo $quickSort->getNoComparisons();
+}
+
