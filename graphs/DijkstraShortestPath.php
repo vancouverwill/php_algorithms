@@ -40,31 +40,17 @@ class DijkstraShortestPath {
         $this->pq = new IndexedMinPriorityQueueBinaryHeap($G->getV());
         $this->pq->insert($s, $this->distTo[$s]);
 
-//        $temp = $G->adj(0);
-//
-////        $temp1 = (SplStack)$temp;
-//
-//        $beta = $temp->next();
-//
-//        while ($temp->valid()) {
-//            $alpha = $temp->current();
-//            $beta = $temp->next();
-//            $gamma = 1;
-//        }
 
         while(!$this->pq->isEmpty()) {
             $v = $this->pq->delMin();
             $G->adj($v)->rewind();
+
             while ($G->adj($v)->valid()) {
                 $edge = $G->adj($v)->current();
                 $this->relax($edge);
                 $G->adj($v)->next();
             }
 
-//            foreach (!$G->adj($v)->isEmpty()) {
-//                $edge1 = $G->adj($v)->pop();
-//                $this->relax($edge);
-//            }
         }
     }
 
@@ -98,12 +84,13 @@ class DijkstraShortestPath {
 
 
 
+$spaceSymbol = "\t";
+
+
 $REQUEST_URI = $_SERVER['REQUEST_URI'];
 
 $pathVariables = explode("/", $REQUEST_URI);
 
-
-//var_dump($_SERVER);
 
 $lastElementInArray = $pathVariables[count($pathVariables) - 1];
 
@@ -124,7 +111,7 @@ $uniqueNumbers = array();
 if ($handle) {
     while (($line = fgets($handle)) !== false) {
 
-        $nodes = explode(" ", $line);
+        $nodes = explode($spaceSymbol, $line);
 
         foreach ($nodes AS $node) {
             $nodeInfo = explode(",", $node);
@@ -137,6 +124,7 @@ if ($handle) {
     }
 } else {
     // error opening the file.
+    exit("error opening the file.");
 }
 fclose($handle);
 
@@ -149,7 +137,7 @@ if ($handle) {
         // process the line read.
         $integerArray[] = (int)$line;
 
-        $nodes = explode(" ", $line);
+        $nodes = explode($spaceSymbol, $line);
 
         $fromIndex = $nodes[0];
 
@@ -157,6 +145,9 @@ if ($handle) {
             $nodeInfo = explode(",", $nodes[$i]);
 
             $nodeIndex = $nodeInfo[0];
+            if (!isset($nodeInfo[1])) {
+                continue; // this is the end of the row
+            }
             $nodeWeight = (int)$nodeInfo[1];
 
             $edge = new DirectedEdge($fromIndex, $nodeIndex, $nodeWeight);
@@ -169,12 +160,25 @@ if ($handle) {
 }
 fclose($handle);
 
-$dijkstras = new DijkstraShortestPath($graph, 14);
-
-$temp = 2;
-
-echo $dijkstras->distTo(6);
+$dijkstras = new DijkstraShortestPath($graph, 1);
 
 
-
-
+echo $dijkstras->distTo(7);
+echo ",";
+echo $dijkstras->distTo(37);
+echo ",";
+echo $dijkstras->distTo(59);
+echo ",";
+echo $dijkstras->distTo(82);
+echo ",";
+echo $dijkstras->distTo(99);
+echo ",";
+echo $dijkstras->distTo(115);
+echo ",";
+echo $dijkstras->distTo(133);
+echo ",";
+echo $dijkstras->distTo(165);
+echo ",";
+echo $dijkstras->distTo(188);
+echo ",";
+echo $dijkstras->distTo(197);

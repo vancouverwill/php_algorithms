@@ -146,47 +146,6 @@ function test() {
     }
     fclose($handle);
 
-    $graph->adj(1);
-
-
-    $temp = $graph->adj(1);
-
-    //        $temp1 = (SplStack)$temp;
-    $temp->rewind();
-
-    $size = count($graph->adj(1));
-
-    $beta = $temp->next();
-    $beta = $temp->valid();
-    $beta = $temp->current();
-    //
-    //$size = count($temp);
-    //$size1 = $temp->pop();
-
-    $graph->adj(1)->rewind();
-
-    while ($graph->adj(1)->valid()) {
-        $alpha = $graph->adj(1)->current();
-        $beta = $graph->adj(1)->next();
-    //    $graphamma = 1;
-    }
-
-    $size = count($graph->adj(1));
-
-    $graph->adj(1)->rewind();
-
-    while ($graph->adj(1)->valid()) {
-        $alpha = $graph->adj(1)->current();
-        $beta = $graph->adj(1)->pop();
-        $graphamma = 1;
-    }
-
-    $size = count($graph->adj(1));
-
-    $temp = $graph->adj(1);
-
-    $temp = $graph->adj(1);
-
 }
 
 //test();
