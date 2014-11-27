@@ -254,7 +254,7 @@ class IndexedMinPriorityQueueBinaryHeap {
             throw new InvalidArgumentException("index is not in the priority queue");
         }
         $this->keys[$i] = $key;
-        $this->swim{$this->qp[$i]};
+        $this->swim($this->qp[$i]);
     }
 
 
@@ -267,41 +267,44 @@ class IndexedMinPriorityQueueBinaryHeap {
             throw new InvalidArgumentException("index is not in the priority queue");
         }
         $this->keys[$i] = $key;
-        $this->sink{$this->qp[$i]};
+        $this->sink($this->qp[$i]);
     }
 
 }
 
-//sample usage
 
-$pq = new IndexedMinPriorityQueueBinaryHeap(5);
-$pq->insert(1, 15);
-$pq->insert(2, 175);
-$pq->insert(3, 125);
-$pq->insert(4, 25);
-$pq->insert(5 , 5);
+function showSampleUsage() {
+    $pq = new IndexedMinPriorityQueueBinaryHeap(5);
+    $pq->insert(1, 15);
+    $pq->insert(2, 175);
+    $pq->insert(3, 125);
+    $pq->insert(4, 25);
+    $pq->insert(5 , 5);
 
-echo "size:" . $pq->size() . "<br/>";
-echo "isMinHeap:" . $pq->isMinHeap() . "<br/>";
+    echo "size:" . $pq->size() . "<br/>";
+    echo "isMinHeap:" . $pq->isMinHeap() . "<br/>";
 
-echo "index:" . $pq->minIndex() . "<br/>";
-echo "key" . $pq->minKey() . "<br/>";
-$pq->delMin();
+    echo "index:" . $pq->minIndex() . "<br/>";
+    echo "key" . $pq->minKey() . "<br/>";
+    $pq->delMin();
 
-echo "index:" . $pq->minIndex() . "<br/>";
-echo "key" . $pq->minKey() . "<br/>";
-$pq->delMin();
+    echo "index:" . $pq->minIndex() . "<br/>";
+    echo "key" . $pq->minKey() . "<br/>";
+    $pq->delMin();
 
-echo "index:" . $pq->minIndex() . "<br/>";
-echo "key" . $pq->minKey() . "<br/>";
-$pq->delMin();
+    echo "index:" . $pq->minIndex() . "<br/>";
+    echo "key" . $pq->minKey() . "<br/>";
+    $pq->delMin();
 
-echo "index:" . $pq->minIndex() . "<br/>";
-echo "key" . $pq->minKey() . "<br/>";
-$pq->delMin();
+    echo "index:" . $pq->minIndex() . "<br/>";
+    echo "key" . $pq->minKey() . "<br/>";
+    $pq->delMin();
 
-echo "index:" . $pq->minIndex() . "<br/>";
-echo "key" . $pq->minKey() . "<br/>";
-$pq->delMin();
+    echo "index:" . $pq->minIndex() . "<br/>";
+    echo "key" . $pq->minKey() . "<br/>";
+    $pq->delMin();
+}
+
+
 
 

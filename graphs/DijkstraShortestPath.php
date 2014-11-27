@@ -17,7 +17,7 @@ require_once('./EdgeWeightedDiGraph.php');
 class DijkstraShortestPath {
 
     private $distTo;    /** @var  SplFixedArray int  distance  of shortest s->v path */
-    private $directedEdge; /** @var  SplFixedArray DirectedEdge last edge on shortest s->v path */
+    private $edgeTo; /** @var  SplFixedArray DirectedEdge last edge on shortest s->v path */
     private $pq;            /** @var IndexedMinPriorityQueueBinaryHeap  priority queue of vertices */
 
 
@@ -30,7 +30,7 @@ class DijkstraShortestPath {
         }
 
         $this->distTo = new SplFixedArray($G->getV());
-        $this->directedEdge = new SplFixedArray($G->getV());
+        $this->edgeTo = new SplFixedArray($G->getV());
 
         for ($v = 0; $v < $G->getV(); $v++) {
             $this->distTo[$v] = INF;
@@ -40,25 +40,25 @@ class DijkstraShortestPath {
         $this->pq = new IndexedMinPriorityQueueBinaryHeap($G->getV());
         $this->pq->insert($s, $this->distTo[$s]);
 
-        $temp = $G->adj(0);
-
-//        $temp1 = (SplStack)$temp;
-
-        $beta = $temp->next();
-
-        while ($temp->valid()) {
-            $alpha = $temp->current();
-            $beta = $temp->next();
-            $gamma = 1;
-        }
+//        $temp = $G->adj(0);
+//
+////        $temp1 = (SplStack)$temp;
+//
+//        $beta = $temp->next();
+//
+//        while ($temp->valid()) {
+//            $alpha = $temp->current();
+//            $beta = $temp->next();
+//            $gamma = 1;
+//        }
 
         while(!$this->pq->isEmpty()) {
-            $v = $this->pq->delMin();  ******* shouldn't be reuturning 0 when we have 1 -5 on graph'
-
-            while ($G->valid()) {
-                $edge1 = $G->current();
-                $beta = $G->pop();
+            $v = $this->pq->delMin();
+            $G->adj($v)->rewind();
+            while ($G->adj($v)->valid()) {
+                $edge = $G->adj($v)->current();
                 $this->relax($edge);
+                $G->adj($v)->next();
             }
 
 //            foreach (!$G->adj($v)->isEmpty()) {
@@ -157,7 +157,7 @@ if ($handle) {
             $nodeInfo = explode(",", $nodes[$i]);
 
             $nodeIndex = $nodeInfo[0];
-            $nodeWeight = $nodeInfo[1];
+            $nodeWeight = (int)$nodeInfo[1];
 
             $edge = new DirectedEdge($fromIndex, $nodeIndex, $nodeWeight);
 
@@ -169,9 +169,11 @@ if ($handle) {
 }
 fclose($handle);
 
-$dijkstras = new DijkstraShortestPath($graph, 0);
+$dijkstras = new DijkstraShortestPath($graph, 14);
 
 $temp = 2;
+
+echo $dijkstras->distTo(6);
 
 
 

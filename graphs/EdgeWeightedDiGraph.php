@@ -76,116 +76,119 @@ class EdgeWeightedDiGraph
 }
 
 
-$REQUEST_URI = $_SERVER['REQUEST_URI'];
+function test() {
 
-$pathVariables = explode("/", $REQUEST_URI);
+    $REQUEST_URI = $_SERVER['REQUEST_URI'];
+
+    $pathVariables = explode("/", $REQUEST_URI);
+
+    $lastElementInArray = $pathVariables[count($pathVariables) - 1];
+
+    if (strpos($lastElementInArray, "?") != FALSE) {
+        $lastElementInArrayWithoutGetVariables = explode("?", $lastElementInArray)[0];
+    }
+    else {
+        exit;
+    }
+
+    var_dump($lastElementInArrayWithoutGetVariables);
 
 
-//var_dump($_SERVER);
+    $handle = fopen($lastElementInArrayWithoutGetVariables, "r");
 
-$lastElementInArray = $pathVariables[count($pathVariables) - 1];
+    $uniqueNumbers = array();
 
-if (strpos($lastElementInArray, "?") != FALSE) {
-    $lastElementInArrayWithoutGetVariables = explode("?", $lastElementInArray)[0];
-}
-else {
-    exit;
-}
+    if ($handle) {
+        while (($line = fgets($handle)) !== false) {
 
-var_dump($lastElementInArrayWithoutGetVariables);
+            $nodes = explode(" ", $line);
 
+            foreach ($nodes AS $node) {
+                $nodeInfo = explode(",", $node);
 
-$handle = fopen($lastElementInArrayWithoutGetVariables, "r");
-
-$uniqueNumbers = array();
-
-if ($handle) {
-    while (($line = fgets($handle)) !== false) {
-
-        $nodes = explode(" ", $line);
-
-        foreach ($nodes AS $node) {
-            $nodeInfo = explode(",", $node);
-
-            $nodeIndex = $nodeInfo[0];
-            if (!in_array($nodeIndex, $uniqueNumbers)) {
-                $uniqueNumbers[] = $nodeIndex;
+                $nodeIndex = $nodeInfo[0];
+                if (!in_array($nodeIndex, $uniqueNumbers)) {
+                    $uniqueNumbers[] = $nodeIndex;
+                }
             }
         }
+    } else {
+        // error opening the file.
     }
-} else {
-    // error opening the file.
-}
-fclose($handle);
+    fclose($handle);
 
 
-$graph = new EdgeWeightedDiGraph(max($uniqueNumbers) + 1);
-$handle = fopen($lastElementInArrayWithoutGetVariables, "r");
+    $graph = new EdgeWeightedDiGraph(max($uniqueNumbers) + 1);
+    $handle = fopen($lastElementInArrayWithoutGetVariables, "r");
 
-if ($handle) {
-    while (($line = fgets($handle)) !== false) {
-        // process the line read.
-        $integerArray[] = (int)$line;
+    if ($handle) {
+        while (($line = fgets($handle)) !== false) {
+            // process the line read.
+            $integerArray[] = (int)$line;
 
-        $nodes = explode(" ", $line);
+            $nodes = explode(" ", $line);
 
-        $fromIndex = $nodes[0];
+            $fromIndex = $nodes[0];
 
-        for ($i = 1; $i < count($nodes); $i++) {
-            $nodeInfo = explode(",", $nodes[$i]);
+            for ($i = 1; $i < count($nodes); $i++) {
+                $nodeInfo = explode(",", $nodes[$i]);
 
-            $nodeIndex = $nodeInfo[0];
-            $nodeWeight = $nodeInfo[1];
+                $nodeIndex = $nodeInfo[0];
+                $nodeWeight = (int)$nodeInfo[1];
 
-            $edge = new DirectedEdge($fromIndex, $nodeIndex, $nodeWeight);
+                $edge = new DirectedEdge($fromIndex, $nodeIndex, $nodeWeight);
 
-            $graph->addEdge($edge);
+                $graph->addEdge($edge);
+            }
         }
+    } else {
+        // error opening the file.
     }
-} else {
-    // error opening the file.
+    fclose($handle);
+
+    $graph->adj(1);
+
+
+    $temp = $graph->adj(1);
+
+    //        $temp1 = (SplStack)$temp;
+    $temp->rewind();
+
+    $size = count($graph->adj(1));
+
+    $beta = $temp->next();
+    $beta = $temp->valid();
+    $beta = $temp->current();
+    //
+    //$size = count($temp);
+    //$size1 = $temp->pop();
+
+    $graph->adj(1)->rewind();
+
+    while ($graph->adj(1)->valid()) {
+        $alpha = $graph->adj(1)->current();
+        $beta = $graph->adj(1)->next();
+    //    $graphamma = 1;
+    }
+
+    $size = count($graph->adj(1));
+
+    $graph->adj(1)->rewind();
+
+    while ($graph->adj(1)->valid()) {
+        $alpha = $graph->adj(1)->current();
+        $beta = $graph->adj(1)->pop();
+        $graphamma = 1;
+    }
+
+    $size = count($graph->adj(1));
+
+    $temp = $graph->adj(1);
+
+    $temp = $graph->adj(1);
+
 }
-fclose($handle);
 
-$graph->adj(1);
-
-
-$temp = $graph->adj(1);
-
-//        $temp1 = (SplStack)$temp;
-$temp->rewind();
-
-$size = count($graph->adj(1));
-
-$beta = $temp->next();
-$beta = $temp->valid();
-$beta = $temp->current();
-//
-//$size = count($temp);
-//$size1 = $temp->pop();
-
-$graph->adj(1)->rewind();
-
-while ($graph->adj(1)->valid()) {
-    $alpha = $graph->adj(1)->current();
-    $beta = $graph->adj(1)->next();
-//    $graphamma = 1;
-}
-
-$size = count($graph->adj(1));
-
-$graph->adj(1)->rewind();
-
-while ($graph->adj(1)->valid()) {
-    $alpha = $graph->adj(1)->current();
-    $beta = $graph->adj(1)->pop();
-    $graphamma = 1;
-}
-
-$size = count($graph->adj(1));
-
-$temp = $graph->adj(1);
-
-$temp = $graph->adj(1);
+//test();
 
 
