@@ -51,6 +51,19 @@ class DiGraph
         return $this->adj[$v];
     }
 
+
+    public function reverseAdj($v)
+    {
+        $reverseAdj = new SplStack();
+
+        foreach ($this->adj($v) AS $w) {
+            $reverseAdj->push($w);
+        }
+
+        return $reverseAdj;
+    }
+
+
     public function reverse()
     {
         $r = new DiGraph($this->v);

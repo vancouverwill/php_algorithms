@@ -61,10 +61,21 @@ class DepthFirstOrder
         $this->post[$v] = $this->postCounter++;
     }
 
+    public function preOrder()
+    {
+        return $this->preOrder;
+    }
+
+
+    public function postOrder()
+    {
+        return $this->postOrder;
+    }
+
     /**
      * return vertices in reverse postorder as an Iterable
      */
-    public function reversePost()
+    public function reversePostOrder()
     {
         $reverse = new SplStack();
 
@@ -79,3 +90,59 @@ class DepthFirstOrder
     }
 
 }
+
+
+function exampleDepthFirstOrder()
+{
+    $filename = "DiGraphTestData1.txt";
+//$filename = "KosarajuSCCLargeDataSet.txt";
+
+
+
+    $handle = fopen($filename, "r");
+    $uniqueNumbers = array();
+    if ($handle) {
+        while (($line = fgets($handle)) !== false) {
+
+            $vertices = explode(" ", $line);
+            foreach($vertices AS $vertice) {
+                $uniqueNumbers[(int)$vertice] = true;
+            }
+        }
+    } else {
+        // error opening the file.
+        "no file exists";
+    }
+    fclose($handle);
+
+    $digraph = new DiGraph(count($uniqueNumbers));
+
+    $handle = fopen($filename, "r");
+
+    if ($handle) {
+        while (($line = fgets($handle)) !== false) {
+
+            $vertices = explode(" ", $line);
+            $digraph->addEdge((int)$vertices[0] - 1, (int)$vertices[1] - 1);
+        }
+    } else {
+        // error opening the file.
+        "no file exists";
+    }
+    fclose($handle);
+
+    $example = new DepthFirstOrder(($digraph));
+
+    foreach ($example->preOrder() AS $item) {
+        echo $item . " ";
+    }
+
+    echo "<br/>";
+    echo "<br/>";
+
+    foreach ($example->postOrder() AS $item) {
+        echo $item . " ";
+    }
+}
+
+exampleDepthFirstOrder();
