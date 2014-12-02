@@ -13,17 +13,11 @@
 class MaxPriorityQueueBinaryHeap {
     private $pq;
     private $N; //size
-    private $debug = TRUE;
-    
+
     public function __construct($capacity)
     {
-        if ($this->debug = FALSE) {
-            $this->pq = new SplFixedArray($capacity + 1);
-        }
-        else {
-            $this->pq = array();
-        }
-        
+        $this->pq = new SplFixedArray($capacity + 1);
+
         $this->N = 0;
     }
     
@@ -63,16 +57,12 @@ class MaxPriorityQueueBinaryHeap {
     private function resize($capacity)
     {
         assert($capacity > 0);
-        if ($this->debug = FALSE) {
         $temp = new SplFixedArray($capacity);
         for ($i = 1; $i <= $this->N; $i++) {
             $temp[$i] = $this->pq[$i];
         }
         $this->pq = $temp;
-        }
-        else {
-            
-        }
+
     }
     
     
@@ -186,8 +176,8 @@ class MaxPriorityQueueBinaryHeap {
              
 }
 
-//sample usage
-
+function sampleUsageMaxPriorityQueue()
+{
 $pq = new MaxPriorityQueueBinaryHeap(10);
 $pq->insert(15);
 $pq->insert(175);
@@ -208,5 +198,5 @@ echo $pq->max() . "<br/>";
 $pq->delMax();
 echo $pq->max() . "<br/>";
 $pq->delMax();
-
+}
 

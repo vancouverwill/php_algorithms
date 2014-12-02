@@ -21,7 +21,7 @@ if (strpos($lastElementInArray, "?") != FALSE) {
     $lastElementInArrayWithoutGetVariables = explode("?", $lastElementInArray)[0];
 }
 else {
-    exit("no file name give");
+    $lastElementInArrayWithoutGetVariables = $lastElementInArray;
 }
 
 
@@ -47,11 +47,11 @@ fclose($handle);
 
 $quickSort = new QuickSortFirstElementPartition($unsortedArray);
 
-$quickSort->displayArray();
+//$quickSort->displayArray();
 
 $quickSort->startSort();
 
-$quickSort->displayArray();
+//$quickSort->displayArray();
 
 var_dump($quickSort->getNoComparisons());
 
@@ -60,11 +60,11 @@ var_dump($quickSort->getNoComparisons());
 
 $quickSortLAst = new QuickSortLastElementPartition($unsortedArray);
 
-$quickSortLAst->displayArray();
+//$quickSortLAst->displayArray();
 
 $quickSortLAst->startSort();
 
-$quickSortLAst->displayArray();
+//$quickSortLAst->displayArray();
 
 var_dump($quickSortLAst->getNoComparisons());
 
@@ -72,10 +72,10 @@ var_dump($quickSortLAst->getNoComparisons());
 
 $quickSortMedian = new QuickSortMedianElementPartition($unsortedArray);
 
-$quickSortMedian->displayArray();
+//$quickSortMedian->displayArray();
 
 $quickSortMedian->startSort();
 
-$quickSortMedian->displayArray();
+//$quickSortMedian->displayArray();
 
 var_dump($quickSortMedian->getNoComparisons());

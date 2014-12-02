@@ -17,17 +17,10 @@
 class MinPriorityQueueBinaryHeap {
     private $pq;
     private $N; //number of items on priority queue so far
-    private $debug = TRUE;
 
     public function __construct($capacity)
     {
-        if ($this->debug = FALSE) {
             $this->pq = new SplFixedArray($capacity + 1);
-        }
-        else {
-//            $this->pq = array();
-            $this->pq = new SplFixedArray($capacity + 1);
-        }
 
         $this->N = 0;
     }
@@ -70,16 +63,11 @@ class MinPriorityQueueBinaryHeap {
     private function resize($capacity)
     {
         assert($capacity > 0);
-        if ($this->debug = FALSE) {
             $temp = new SplFixedArray($capacity);
             for ($i = 1; $i <= $this->N; $i++) {
                 $temp[$i] = $this->pq[$i];
             }
             $this->pq = $temp;
-        }
-        else {
-
-        }
     }
 
 
@@ -193,27 +181,27 @@ class MinPriorityQueueBinaryHeap {
 
 }
 
-//sample usage
+function sampleUsageMinPriorityQueue()
+{
+    $pq = new MinPriorityQueueBinaryHeap(5);
+    $pq->insert(15);
+    $pq->insert(175);
+    $pq->insert(125);
+    $pq->insert(25);
+    $pq->insert(5);
 
-$pq = new MinPriorityQueueBinaryHeap(5);
-$pq->insert(15);
-$pq->insert(175);
-$pq->insert(125);
-$pq->insert(25);
-$pq->insert(5);
+    echo "size:" . $pq->size() . "<br/>";
+    echo "isMinHeap:" . $pq->isMinHeap() . "<br/>";
 
-echo "size:" . $pq->size() . "<br/>";
-echo "isMinHeap:" . $pq->isMinHeap() . "<br/>";
-
-echo $pq->min() . "<br/>";
-$pq->delMin();
-echo $pq->min() . "<br/>";
-$pq->delMin();
-echo $pq->min() . "<br/>";
-$pq->delMin();
-echo $pq->min() . "<br/>";
-$pq->delMin();
-echo $pq->min() . "<br/>";
-$pq->delMin();
-
+    echo $pq->min() . "<br/>";
+    $pq->delMin();
+    echo $pq->min() . "<br/>";
+    $pq->delMin();
+    echo $pq->min() . "<br/>";
+    $pq->delMin();
+    echo $pq->min() . "<br/>";
+    $pq->delMin();
+    echo $pq->min() . "<br/>";
+    $pq->delMin();
+}
 

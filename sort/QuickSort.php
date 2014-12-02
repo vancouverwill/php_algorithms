@@ -173,20 +173,29 @@ class  QuickSort
             echo 'SUCCESS';
         }
     }
+
+    public function getSortedArray()
+    {
+        return $this->array;
+    }
 }
+
+function test()
+{
 
 $obj = new QuickSort();
 
-$sample_array = array(5, 3, 5, 1, 4, 6 ,9, 7, 5);
-$array_full = array( 25, 37, 45, 84, 74, 16, 99, 64, 15, 14, 26, 43);
-$array_full2 = array (25, 37, 45, 84, 74, 16, 99, 64, 15, 14, 26, 43);
-$array_short = array( 25, 37, 45, 84, 74);
-$array_short2 = array( 16, 99, 64, 15, 14);
+    $sample_array = array(5, 3, 5, 1, 4, 6 ,9, 7, 5);
+    $array_full = array( 25, 37, 45, 84, 74, 16, 99, 64, 15, 14, 26, 43);
+    $array_full2 = array (25, 37, 45, 84, 74, 16, 99, 64, 15, 14, 26, 43);
+    $array_short = array( 25, 37, 45, 84, 74);
+    $array_short2 = array( 16, 99, 64, 15, 14);
 
 
-$obj->intialize($array_full2);
-echo 'Initial Array : ';
-$obj->show();
-$obj->quick_sort();
-echo 'Final Array : ';
-$obj->show(); 
+    $obj->intialize($array_full2);
+    echo 'Initial Array : ';
+    $obj->show();
+    $obj->quick_sort();
+    echo 'Final Array : ';
+    $obj->show();
+}
