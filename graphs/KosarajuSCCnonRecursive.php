@@ -27,8 +27,8 @@
  */
 
 require_once("./DiGraph.php");
-require_once("./DepthFirstOrder.php");
-//require_once("./DepthFirstOrderNonRecursive.php");
+//require_once("./DepthFirstOrder.php");
+require_once("./DepthFirstOrderNonRecursive.php");
 
  
 class KosarajuSCCnonRecursive
@@ -41,13 +41,16 @@ class KosarajuSCCnonRecursive
     private $currentComponentSize;  /** @var SplMaxHeap */
 
 
-    public function KosarajuSCC(DiGraph $G)
+    public function KosarajuSCCnonRecursive(DiGraph $G)
     {
         $this->marked = new SplFixedArray($G->getV());
         $this->id = new SplFixedArray($G->getV());
         $this->count = 0;
         $reverseGraph = $G->reverse();;
-        $order = new DepthFirstOrder($reverseGraph);
+        $order = new DepthFirstOrderNonRecursive($reverseGraph);
+
+
+        $this->dfsStack = new SplStack();
 
 
         $this->currentComponentSize = 0;
@@ -55,7 +58,7 @@ class KosarajuSCCnonRecursive
 
         foreach ($order->reversePostOrder() AS $s) {
             if (!$this->marked[$s]) {
-                $this->dfs($G, $s);
+                $this->dfsNonRecursive($G, $s);
                 $this->stronglyConnectedComponents->insert($this->currentComponentSize);
                 $this->count++;
                 $this->currentComponentSize = 0;
@@ -80,6 +83,38 @@ class KosarajuSCCnonRecursive
                 $this->dfs($G, $w);
             }
             $G->adj($v)->next();
+        }
+    }
+
+
+    public function dfsNonRecursive($G, $v)
+    {
+        $this->dfsStack->push($v);
+
+        $this->dfsStack->rewind();
+
+        $this->marked[$v] = true;
+
+        while ($this->dfsStack->valid() && !$this->dfsStack->isEmpty()) {
+
+            $w = $this->dfsStack->pop();
+
+            $this->marked[$w] = true;
+            if (!isset($this->id[$w])) {
+                $this->currentComponentSize++;
+                $this->id[$w] = $this->count;
+            }
+
+            $G->adj($w)->rewind();
+            while ($G->adj($w)->valid()) {
+                $x = $G->adj($w)->current();
+                if (!$this->marked[$x]) {
+                    $this->dfsStack->push($x);
+                }
+                $G->adj($w)->next();
+            }
+
+
         }
     }
 
@@ -140,7 +175,7 @@ if ($handle) {
 fclose($handle);
 
 
-$kosaraju = new KosarajuSCC($digraph);
+$kosaraju = new KosarajuSCCnonRecursive($digraph);
 
 
 echo "count is " . $kosaraju->count() . "<br/>" . "<br/>";

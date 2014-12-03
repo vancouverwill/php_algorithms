@@ -27,8 +27,8 @@
  */
 
 require_once("./DiGraph.php");
-//require_once("./DepthFirstOrder.php");
-require_once("./DepthFirstOrderNonRecursive.php");
+require_once("./DepthFirstOrder.php");
+//require_once("./DepthFirstOrderNonRecursive.php");
 
  
 class KosarajuSCC
@@ -47,7 +47,8 @@ class KosarajuSCC
         $this->id = new SplFixedArray($G->getV());
         $this->count = 0;
         $reverseGraph = $G->reverse();;
-        $order = new DepthFirstOrderNonRecursive($reverseGraph);
+        $order = new DepthFirstOrder($reverseGraph);
+//        $order = new DepthFirstOrderNonRecursive($reverseGraph);
 
 
         $this->currentComponentSize = 0;
