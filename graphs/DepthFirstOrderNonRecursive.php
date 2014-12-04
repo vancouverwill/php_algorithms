@@ -168,7 +168,7 @@ class DepthFirstOrderNonRecursive
     public function dumpStack()
     {
         if ($this->debug == FALSE) return;
-        
+
         foreach ($this->dfsStack AS $stack) {
             echo $stack . ", ";
         }
@@ -263,4 +263,4 @@ function exampleDepthFirstOrderNonRecursive()
     }
 }
 
-exampleDepthFirstOrderNonRecursive();
+//exampleDepthFirstOrderNonRecursive();

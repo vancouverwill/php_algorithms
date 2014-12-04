@@ -62,6 +62,71 @@ class QuickSortMedianElementPartition {
     }
 
 
+    public function testPartition()
+    {
+        $this->array = array(4,5,6,7);
+
+        $value = $this->getMedianParitionIndex(0,2);
+
+        if ($value == 1) {
+            echo "OKAY" . "<br/>";
+        }
+        else {
+            echo "FAILED" . "<br/>";
+        }
+
+        $value = $this->getMedianParitionIndex(0,1);
+
+        if ($value == 0) {
+            echo "OKAY" . "<br/>";
+        }
+        else {
+            echo "FAILED" . "<br/>";
+        }
+
+
+        $value = $this->getMedianParitionIndex(1,2);
+
+        if ($value == 1) {
+            echo "OKAY" . "<br/>";
+        }
+        else {
+            echo "FAILED" . "<br/>";
+        }
+
+
+        $value = $this->getMedianParitionIndex(0,3);
+
+        if ($value == 1) {
+            echo "OKAY" . "<br/>";
+        }
+        else {
+            echo "FAILED" . "<br/>";
+        }
+
+
+        $this->array = array(8,1,6,7,);
+
+        $value = $this->getMedianParitionIndex(0,3);
+
+        if ($value == 3) {
+            echo "OKAY" . "<br/>";
+        }
+        else {
+            echo "FAILED" . "<br/>";
+        }
+
+        $value = $this->getMedianParitionIndex(0,1);
+
+        if ($value == 1) {
+            echo "OKAY" . "<br/>";
+        }
+        else {
+            echo "FAILED" . "<br/>";
+        }
+    }
+
+
     private function getMedianParitionValue($lo, $hi)
     {
         $median = ceil(($hi - $lo + 1)/2) + $lo;
@@ -97,9 +162,21 @@ class QuickSortMedianElementPartition {
     }
 
 
+    /**
+     *
+     * this assumes that all items are unique
+     *
+     * if the two items are so close that the medium is also the lower value then return that
+     *
+     * @param $lo
+     * @param $hi
+     * @return float
+     */
     private function getMedianParitionIndex($lo, $hi)
     {
-        $median = ceil(($hi - $lo + 1)/2) + $lo;
+        $median = floor(($hi - $lo)/2) + $lo;
+
+        if ($median == $lo) return $lo;
 
         $array = array();
 
@@ -108,27 +185,27 @@ class QuickSortMedianElementPartition {
         $array[2] = $hi;
 
         // find lowest
-        $min = 0;
+        $minIndex = 0;
         for ($j = 0 + 1; $j <= 2; $j++)
         {
-            if ($this->array[$array[$j]] < $this->array[$array[$min]]) $min = $j;
+            if ($this->array[$array[$j]] < $this->array[$array[$minIndex]]) $minIndex = $j;
         }
 
-        $temp = $array[$min];
-        $array[$min] = $array[0];
+        $temp = $array[$minIndex];
+        $array[$minIndex] = $array[0];
         $array[0] = $temp;
 
         //find second lowest i.e. middle
 
         if ($this->array[$array[1]] < $this->array[$array[2]]) {
-            $medianValue = $array[1];
+            $medianIndex = $array[1];
         }
         else {
-            $medianValue = $array[2];
+            $medianIndex = $array[2];
         }
 
 
-        return $medianValue;
+        return $medianIndex;
     }
 
 
@@ -186,3 +263,6 @@ $sort->displayArray();
 
 
 //medianTest();
+
+//$testSort = new QuickSortMedianElementPartition(null);
+//$testSort->testPartition();

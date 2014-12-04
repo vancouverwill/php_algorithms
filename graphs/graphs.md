@@ -59,7 +59,7 @@ Each vertex points to edges incident to it.
 
 # Depth First Search DFS
 - explores aggressively like a maze, only backtracks when necessary
-- compute topological ordering of a directed acyclic graph
+- compute topological ordering of a directed acyclic graph //todo explain topological
 - compute connected components in directed graphs
 - works with a stack data structure LIFO
 
@@ -69,3 +69,7 @@ Each vertex points to edges incident to it.
 - Reflexive : Every vertex v is strongly connected to itself.
 - Symmetric : If v is strongly connected to w, then w is strongly connected to v.
 - Transitive : If v is strongly connected to w and w is strongly connected to x, then v is also strongly connected to x.
+
+
+# Radius
+

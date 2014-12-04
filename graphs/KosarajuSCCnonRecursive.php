@@ -137,8 +137,8 @@ class KosarajuSCCnonRecursive
     }
 }
 
-$filename = "DiGraphTestData1.txt";
-//$filename = "KosarajuSCCLargeDataSet.txt";
+//$filename = "DiGraphTestData1.txt";
+$filename = "KosarajuSCCLargeDataSet.txt";
 
 
 
