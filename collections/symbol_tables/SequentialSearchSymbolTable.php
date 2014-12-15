@@ -21,10 +21,6 @@ class SequentialSearchSymbolTable
     function __construct()
     {
         $this->N = 0;
-
-//        $this->first = new Node(3, $this->first, 'red');
-//        $this->N++;
-//        echo $this->first->getKey();
     }
 
 
@@ -78,6 +74,7 @@ class SequentialSearchSymbolTable
 
     }
 
+
     public function keys()
     {
         $array = array();
@@ -103,13 +100,13 @@ class SequentialSearchSymbolTable
         return $array;
     }
 
+
     public function keys_values()
     {
         $array = array();
 
         if ($this->N > 0) {
             for ($x = $this->first; $x != null; $x = $x->getNext()) {
-//                array_push($array, $x->getVal());
                 $array[$x->getkey()] = $x->getVal();
             }
         }
@@ -194,16 +191,16 @@ class Node {
     <h1>Hello, world!</h1>
 
 <?php
-$temp = new SequentialSearchSymbolTable();
-echo "size is " . $temp->size();
-$temp->put(1, "orange");
-$temp->put(2, "red");
-$temp->put(3, "yellow");
-$temp->put(4, "blue");
-$temp->put(5, "white");
-$temp->put(5, "sdfdsf");
-$temp->put(5, "jljk");
-$temp->put(5, "sdfduiouisf");
+$testObject = new SequentialSearchSymbolTable();
+echo "size is " . $testObject->size();
+$testObject->put(1, "orange");
+$testObject->put(2, "red");
+$testObject->put(3, "yellow");
+$testObject->put(4, "blue");
+$testObject->put(5, "white");
+$testObject->put(5, "sdfdsf");
+$testObject->put(5, "jljk");
+$testObject->put(5, "sdfduiouisf");
 
 echo "<br/>";
 echo "<br/>";
@@ -211,34 +208,33 @@ echo "<br/>";
 
 echo "<h2>keys</h2><br/>";
 
-foreach($temp->keys() AS $key) {
+foreach($testObject->keys() AS $key) {
     echo $key . "<br/>";
 }
 
 echo "<h2>keys and values</h2><br/>";
 
 
-foreach($temp->keys_values() AS $key => $value) {
+foreach($testObject->keys_values() AS $key => $value) {
     echo $key . '-' . $value . "<br/>";
 }
 
 echo "<h2>keys and values</h2><br/>";
 
 
-$temp->put(5, "white");
+$testObject->put(5, "white");
 
-foreach($temp->keys_values() AS $key => $value) {
+foreach($testObject->keys_values() AS $key => $value) {
     echo $key . '-' . $value . "<br/>";
 }
 
 echo "<h2>values</h2><br/>";
 
 
-foreach($temp->values() AS $value) {
+foreach($testObject->values() AS $value) {
     echo $value . "<br/>";
 }
 
-//echo $temp->size();
 
 
 

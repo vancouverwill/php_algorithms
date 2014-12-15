@@ -42,81 +42,15 @@ class DepthFirstOrderNonRecursive
         for ($v = 0; $v < $G->getV(); $v++) {
 //        for ($v = $G->getV() - 1; $v >= 0; $v--) {
             if (!$this->marked[$v]) {
-                $this->dfs2($G, $v);
+                $this->dfs($G, $v);
 //                $this->dfsStack->push($v);
             }
         }
 
-//        $this->dfsStack->rewind();
-//        while ($this->dfsStack->valid() && !$this->dfsStack->isEmpty()) {
-//
-////            $wPeek = $this->dfsStack->pee
-////            $w = $this->dfsStack->current();
-//            $w = $this->dfsStack->pop();
-//
-//            if ($this->marked[$w]) {
-////                if (!isset($this->post[$w])) {
-////                    $this->postOrder->enqueue($w);
-////                    $this->post[$w] = $this->postCounter++;
-////                }
-//                continue;
-//            }
-//            $this->marked[$w] = true;
-//            $this->pre[$w] = $this->preCounter++;
-//            $this->preOrder->enqueue($w);
-//
-////            foreach($G->adj($w) as $index => $x) {
-//            foreach($G->reverseAdj($w) as $index => $x) {
-////                if (!$this->marked[$x]) {
-////                    $this->marked[$x] = true;
-//                    $this->dfsStack->push($x);
-////                }
-//            }
-//
-////            $temp = $this->dfsStack->pop();
-//
-////            $this->postOrder->enqueue($w);
-////            $this->post[$w] = $this->postCounter++;
-//        }
     }
 
 
-//    public function dfs1($G, $v) {
-//
-//
-//        $this->dfsStack->push($v);
-//
-//        $this->dfsStack->rewind();
-//
-//        while ($this->dfsStack->valid() && !$this->dfsStack->isEmpty()) {
-//
-////            $w = $this->dfsStack->current();
-//            $w = $this->dfsStack->pop();
-//
-//            if ($this->marked[$w]) {
-//
-//                continue;
-//            }
-//            $this->marked[$w] = true;
-//            $this->pre[$w] = $this->preCounter++;
-//            $this->preOrder->enqueue($w);
-//
-//            foreach($G->reverseAdj($w) as $index => $x) {
-////                if (!$this->marked[$x]) {
-////                    $this->marked[$x] = true;
-//                $this->dfsStack->push($x);
-////                }
-//            }
-//
-////            $temp = $this->dfsStack->pop();
-//
-//            $this->postOrder->enqueue($w);
-//            $this->post[$w] = $this->postCounter++;
-//        }
-//    }
-
-
-    public function dfs2($G, $v) {
+    public function dfs($G, $v) {
 
 
         $this->dfsStack->push($v);
@@ -149,19 +83,11 @@ class DepthFirstOrderNonRecursive
             }
 
             if ($count == 0) {
-                $temp = $this->dfsStack->pop();
-
                 if (!isset($this->post[$w])) {
                     $this->postOrder->enqueue($w);
                     $this->post[$w] = $this->postCounter++;
                 }
             }
-
-//            $temp = $this->dfsStack->top();
-
-//            $temp = $this->dfsStack->pop();
-
-
         }
     }
 
@@ -214,8 +140,6 @@ function exampleDepthFirstOrderNonRecursive()
     $filename = "DiGraphTestData1.txt";
 //$filename = "KosarajuSCCLargeDataSet.txt";
 
-
-
     $handle = fopen($filename, "r");
     $uniqueNumbers = array();
     if ($handle) {
@@ -263,4 +187,4 @@ function exampleDepthFirstOrderNonRecursive()
     }
 }
 
-//exampleDepthFirstOrderNonRecursive();
+exampleDepthFirstOrderNonRecursive();

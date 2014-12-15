@@ -124,8 +124,6 @@ class IndexedMinPriorityQueueBinaryHeap {
         $this->keys[$i] = $key;
         $this->swim($this->N);
         assert($this->isMinHeap());
-
-        $temp = $this->isMinHeap();
     }
 
 

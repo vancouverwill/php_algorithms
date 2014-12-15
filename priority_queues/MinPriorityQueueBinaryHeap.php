@@ -86,8 +86,6 @@ class MinPriorityQueueBinaryHeap {
         $this->pq[$this->N] = $x;
         $this->swim($this->N);
         assert($this->isMinHeap());
-
-        $temp = $this->isMinHeap();
     }
 
     public function insert_array($array)

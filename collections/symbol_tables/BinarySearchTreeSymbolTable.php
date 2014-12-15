@@ -3,7 +3,7 @@
 /*
  * A binary tree has smaller values to the left and larger values to the right. With this simple logic it keeps and maintains the order between nodes.
  *
- * Here I have implemented the Node with public fields so don't have to use accessors or setters.
+ * Here I have implemented the Node with public fields so don't have to use getters or setters.
  *
  * A symbol table implemented with a binary search tree.
  *
@@ -72,18 +72,18 @@ class BinarySearchTreeSymbolTable {
     // return value associated with the given key, or null if no such key exists
     public function get($key)
     {
-        return $this->get_recursive($this->root, $key);
+        return $this->getRecursive($this->root, $key);
     }
 
 
-//    private function get_recursive($nodeX = 'root', $key)
-    private function get_recursive($nodeX, $key)
+//    private function getRecursive($nodeX = 'root', $key)
+    private function getRecursive($nodeX, $key)
     {
-//        if ($nodeX == 'root') { $this->get_recursive($this->root, $key) } // might be able to use this to get away with out to get funciton
+//        if ($nodeX == 'root') { $this->getRecursive($this->root, $key) } // might be able to use this to get away with out to get funciton
         if ($nodeX == null) { return null; }
         $cmp = $this->compareTo($key, $nodeX->getKey());
-        if ($cmp < 0) return $this->get_recursive($nodeX->left, $key);
-        if ($cmp > 0) return $this->get_recursive($nodeX->right, $key);
+        if ($cmp < 0) return $this->getRecursive($nodeX->left, $key);
+        if ($cmp > 0) return $this->getRecursive($nodeX->right, $key);
         else return $nodeX->val;
     }
 
@@ -97,17 +97,17 @@ class BinarySearchTreeSymbolTable {
             $this->delete($key);
             return;
         }
-        $this->root = $this->put_recursive($this->root, $key, $val);
+        $this->root = $this->putRecursive($this->root, $key, $val);
         assert($this->check());
     }
 
 
-    private function put_recursive($nodeX, $key, $val)
+    private function putRecursive($nodeX, $key, $val)
     {
         if ($nodeX == null) { return new Node($key, $val, 1); }
         $cmp = $this->compareTo($key, $nodeX->getKey());
-        if ($cmp < 0) $nodeX->left = $this->put_recursive($nodeX->left, $key, $val);
-        if ($cmp > 0) $nodeX->right = $this->put_recursive($nodeX->right, $key, $val);
+        if ($cmp < 0) $nodeX->left = $this->putRecursive($nodeX->left, $key, $val);
+        elseif ($cmp > 0) $nodeX->right = $this->putRecursive($nodeX->right, $key, $val);
         else $nodeX->val = $val;
 
         $nodeX->N = 1 + $this->size($nodeX->left) + $this->size($nodeX->right);
@@ -152,17 +152,17 @@ class BinarySearchTreeSymbolTable {
     public  function min()
     {
         if ($this->isEmpty()) return null;
-        $minNode = $this->min_recursive($this->root);
+        $minNode = $this->minRecursive($this->root);
         return $minNode->key;
     }
 
-    private function min_recursive($nodeX)
+    private function minRecursive($nodeX)
     {
         if ($nodeX->left == null) {
             return $nodeX;
         }
         else {
-            return $this->min_recursive($nodeX->left);
+            return $this->minRecursive($nodeX->left);
         }
     }
 
@@ -170,17 +170,17 @@ class BinarySearchTreeSymbolTable {
     public function max()
     {
         if ($this->isEmpty()) return null;
-        $maxNode = $this->max_recursive($this->root);
+        $maxNode = $this->maxRecursive($this->root);
         return $maxNode->key;
     }
 
-    private function max_recursive($nodeX)
+    private function maxRecursive($nodeX)
     {
         if ($nodeX->right == null) {
             return $nodeX;
         }
         else {
-            return $this->max_recursive($nodeX->right);
+            return $this->maxRecursive($nodeX->right);
         }
     }
 
@@ -242,34 +242,34 @@ class BinarySearchTreeSymbolTable {
     public function select($k)
     {
         if ($k < 0 ||$k >= $this->size_all()) return null;
-        $x = $this->select_recursive($this->root, $k);
+        $x = $this->selectRecursive($this->root, $k);
         return $x->key;
     }
 
-    private function select_recursive($nodeX, $k)
+    private function selectRecursive($nodeX, $k)
     {
         if ($nodeX == null) return null;
         $t = $this->size($nodeX->left);
-        if ($t > $k) return $this->select_recursive($nodeX->left, $k);
-        if ($t < $k) return $this->select_recursive($nodeX->right, $k - $t - 1);
+        if ($t > $k) return $this->selectRecursive($nodeX->left, $k);
+        elseif ($t < $k) return $this->selectRecursive($nodeX->right, $k - $t - 1);
         else    return $nodeX;
     }
 
 
     public function rank($key)
     {
-        return $this->rank_recursive($key, $this->root);
+        return $this->rankRecursive($key, $this->root);
     }
 
-    private function rank_recursive($key, $nodeX)
+    private function rankRecursive($key, $nodeX)
     {
         if ($nodeX == null) return 0;
         $cmp = $this->compareTo($key, $nodeX->key);
         if ($cmp < 0) {
-            return $this->rank_recursive($key, $nodeX->left);
+            return $this->rankRecursive($key, $nodeX->left);
         }
         elseif ($cmp > 0 ) {
-            return 1 + $this->size($nodeX->left) + $this->rank_recursive($key, $nodeX->right);
+            return 1 + $this->size($nodeX->left) + $this->rankRecursive($key, $nodeX->right);
         }
         else {
             return $this->size($nodeX->left);
@@ -284,19 +284,19 @@ class BinarySearchTreeSymbolTable {
     public function keys()
     {
         $queue = new SplQueue();
-        $this->keys_recursive($this->root, $queue, $this->min(), $this->max());
+        $this->keysRecursive($this->root, $queue, $this->min(), $this->max());
         return $queue;
     }
 
 
-    private function keys_recursive($nodeX, $queue, $lo, $hi)
+    private function keysRecursive($nodeX, $queue, $lo, $hi)
     {
         if ($nodeX == null) return;
         $cmplo = $this->compareTo($lo, $nodeX->key);
         $cmphi = $this->compareTo($hi, $nodeX->key);
-        if ($cmplo < 0) $this->keys_recursive($nodeX->left, $queue, $lo, $hi);
+        if ($cmplo < 0) $this->keysRecursive($nodeX->left, $queue, $lo, $hi);
         if ($cmplo <= 0 && $cmphi >= 0) $queue->push($nodeX->key);
-        if ($cmphi > 0) $this->keys_recursive($nodeX->right, $queue, $lo, $hi);
+        if ($cmphi > 0) $this->keysRecursive($nodeX->right, $queue, $lo, $hi);
     }
 
 

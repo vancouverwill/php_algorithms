@@ -44,8 +44,7 @@ class EdgeWeightedDiGraph
         $before = count($this->adj[$v]);
         $this->adj[$v]->push($e);
         $after = count($this->adj[$v]);
-//        $temp = $this->adj[$v]->pop();
-//        $temp2 = $this->adj[$v]->next();
+
     }
 
 

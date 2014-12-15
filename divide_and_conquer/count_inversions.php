@@ -59,7 +59,6 @@ class CountInversions {
             elseif ($tempArray[$i] < $tempArray[$j]) { $this->inputArray[$k++] =  $tempArray[$i++]; }
             else  { $this->inputArray[$k++] =  $tempArray[$j++];
                 $inversions += ($mid + 1) - $i; }
-//            else ($tempArray[$j] < $tempArray[$i]) { $this->inputArray[$k++] =  $tempArray[$j++]; }
         }
         return $inversions;
     }
@@ -83,7 +82,6 @@ class CountInversions {
 
 }
 
-//$array= array(4,6,3,8,2,9,11,1,5,13);
 $array= array(6,3,5,2,4,1);
 
 $CountInversions = new CountInversions();

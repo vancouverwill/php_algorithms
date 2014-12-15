@@ -19,8 +19,6 @@ function findPair($sortedArray, $desiredNumber)
 
 //    for ($lo < count($desiredNumber - 1); $hi >= 0;) {
     for ($lo < (count($sortedArray) - 1); $hi >= 0;) {
-
-        $temp =  count($desiredNumber - 1);
         if ($sortedArray[$lo] + $sortedArray[$hi] > $desiredNumber) {
             $hi--;
         }
