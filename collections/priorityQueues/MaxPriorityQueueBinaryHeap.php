@@ -1,15 +1,11 @@
 <?php
-
-
-
-/*
+/**
  * a max priority queue
  *
- * array representation
+ * using an array representation i.e. an array of all the items not connected nodes
  *
- *
- *
- */
+ **/
+
 class MaxPriorityQueueBinaryHeap {
     private $pq;
     private $N; //size
@@ -20,12 +16,14 @@ class MaxPriorityQueueBinaryHeap {
 
         $this->N = 0;
     }
-    
+
+
     public function size()
     {
         return $this->N;
     }
-    
+
+
     public function isEmpty()
     {
         if ($this->N == 0) {

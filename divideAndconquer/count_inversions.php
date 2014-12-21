@@ -19,10 +19,9 @@
 
 class CountInversions {
 
-    /** @var  array */
-    private $inputArray;
-    /** @var  int */
-    private $total;
+
+    private $inputArray; /** @var  array */
+    private $total; /** @var  int */
 
     public function countSortInit($array){
         $this->inputArray = $array;

@@ -1,6 +1,5 @@
 <?php
-
-/*
+/**
  * A binary tree has smaller values to the left and larger values to the right. With this simple logic it keeps and maintains the order between nodes.
  *
  * Here I have implemented the Node with public fields so don't have to use getters or setters.
@@ -11,7 +10,8 @@
  *
  * explanation : http://algs4.cs.princeton.edu/32bst/
  *
- */
+ **/
+
 class BinarySearchTreeSymbolTable {
     private $root; // Node
     
@@ -28,7 +28,6 @@ class BinarySearchTreeSymbolTable {
 
     /**
      * return number of key-value pairs in BST
-     * @param node $node
      * @return mixed
      */
     //
@@ -41,8 +40,8 @@ class BinarySearchTreeSymbolTable {
 
     /**
      * return number of key-value pairs in BST rooted at $nodeX
-     * @param $node
-     * @return int
+     * @param $nodeX
+     * @return mixed
      */
     private function size($nodeX)
     {
@@ -69,17 +68,18 @@ class BinarySearchTreeSymbolTable {
         }
     }
 
-    // return value associated with the given key, or null if no such key exists
+    /**
+     * return value associated with the given key, or null if no such key exists
+     *
+     */
     public function get($key)
     {
         return $this->getRecursive($this->root, $key);
     }
 
 
-//    private function getRecursive($nodeX = 'root', $key)
     private function getRecursive($nodeX, $key)
     {
-//        if ($nodeX == 'root') { $this->getRecursive($this->root, $key) } // might be able to use this to get away with out to get funciton
         if ($nodeX == null) { return null; }
         $cmp = $this->compareTo($key, $nodeX->getKey());
         if ($cmp < 0) return $this->getRecursive($nodeX->left, $key);

@@ -1,5 +1,16 @@
+Binary Heap or Heap Data Structure
+
+Used to calculate min or max and to keep priority order.
+
 A binary heap only guarantees that elements on lower levels have smaller values for max-heap and higher values for min-heap.
 
+Complete tree. Perfectly balanced, except for bottom level.
+
+Property - Height of complete tree with N nodes is lg N
+
+For a balanced tree height only increases when N is a power of 2
+
+Binary Heap - Parents keys no smaller than children's keys
 
 ### Background:
 

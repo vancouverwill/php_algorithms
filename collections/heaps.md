@@ -16,6 +16,8 @@ applications    - sorting - HeapSort
 
 ## Conceptually - think of a heap as a tree. rooted and binary (balanced) as much as possible
 
-Heap Property - At every node x, Key[x] <= all keys of x's children
+Min Heap Property - At every node x, Key[x] <= all keys of x's children
+
+Max Heap is the opposite
 
 Consequence - object at root must always have minimum value

@@ -87,13 +87,6 @@ class MergeSort {
     }
 
     
-    private function exch( $i, $j)
-    {
-        $swap = $this->array[$i];
-        $this->array[$i] = $this->array[$j];
-        $this->array[$j] = $swap;        
-    }
-    
     public function is_sorted( $lo = 0, $hi = null)
     {
         if ($hi === null)  $hi = $this->size - 1; 

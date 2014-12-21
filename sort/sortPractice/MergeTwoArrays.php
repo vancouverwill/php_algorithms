@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * super simple usage of the last part of the mergeSort recursive function i.e. merge()
+ */
 
 $arrayI = array(0, 2, 4, 6, 8);
 $arrayJ = array(0, 1, 3, 5, 7);
@@ -13,8 +16,7 @@ $i = 0; $j = 0;
 
 show($final_array);
 
-//for ($k = 0; $k < count($arrayI) + count($arrayJ); $k++)
-for ($k = 0; $k < 10; $k++)
+for ($k = 0; $k < count($arrayI) + count($arrayJ); $k++)
 {
     if ($i >= count($arrayI)) 
         $final_array[$k] = $arrayJ[$j++];
@@ -25,7 +27,7 @@ for ($k = 0; $k < 10; $k++)
     else                                
         $final_array[$k] = $arrayJ[$j++];
 }
-echo 'finished';
+echo 'finished' . PHP_EOL;
 
 show($final_array);
 

@@ -1,13 +1,10 @@
 <?php
-
-
-
 /*
  * an indexed min priority queue
  *
  * as well as the normal functions from a min priority queue we now get delete at index and change key at index functionality
  *
- * gives us delMin and insert in logarthimic time and min, size, is empty in constant time
+ * gives us delMin and insert in logarithmic time and min, size, is empty in constant time
  *
  * array representation
  *
@@ -20,7 +17,6 @@ class IndexedMinPriorityQueueBinaryHeap {
     private $keys;  /** @var  SplFixedArray object - keys[i] = priority of i */
     private $NMAX; // max number of elements on priority queue
     private $N; //number of items on priority queue so far
-    private $debug = TRUE;
 
 
     public function __construct($capacity)
@@ -31,7 +27,9 @@ class IndexedMinPriorityQueueBinaryHeap {
         $this->keys = new SplFixedArray($capacity + 1);
         $this->N = 0;
 
-        for ($i = 0; $i <= $this->NMAX; $i++) $this->qp[$i] = -1;
+        for ($i = 0; $i <= $this->NMAX; $i++) {
+            $this->qp[$i] = -1;
+        }
     }
 
 
@@ -45,8 +43,7 @@ class IndexedMinPriorityQueueBinaryHeap {
     {
         if ($this->N == 0) {
             return true;
-        }
-        else {
+        } else {
             return false;
         }
     }
@@ -69,7 +66,9 @@ class IndexedMinPriorityQueueBinaryHeap {
      */
     public function minIndex()
     {
-        if ($this->isEmpty()) throw new Exception ("Priority queue underflow");
+        if ($this->isEmpty()) {
+            throw new Exception("Priority queue underflow");
+        }
         return $this->pq[1];
     }
 
@@ -82,28 +81,10 @@ class IndexedMinPriorityQueueBinaryHeap {
      */
     public function minKey()
     {
-        if ($this->isEmpty()) throw new Exception ("Priority queue underflow");
+        if ($this->isEmpty()) {
+            throw new Exception("Priority queue underflow");
+        }
         return $this->keys[$this->pq[1]];
-    }
-
-
-    /**
-     * helper function to double the size of the heap array
-     * @param type $capacity
-     */
-    private function resize($capacity)
-    {
-        assert($capacity > 0);
-        if ($this->debug = FALSE) {
-            $temp = new SplFixedArray($capacity);
-            for ($i = 1; $i <= $this->N; $i++) {
-                $temp[$i] = $this->pq[$i];
-            }
-            $this->pq = $temp;
-        }
-        else {
-
-        }
     }
 
 
@@ -112,11 +93,6 @@ class IndexedMinPriorityQueueBinaryHeap {
      */
     public function insert($i, $key)
     {
-        // double size of array if necessary
-//        if ($this->N >= count($this->pq) - 1) {
-//            $this->resize(2 * count($this->pq));
-//        }
-
         // add x, and percolate it up to maintain heap invariant
         $this->N++;
         $this->qp[$i] = $this->N;
@@ -127,28 +103,20 @@ class IndexedMinPriorityQueueBinaryHeap {
     }
 
 
-//    public function insert_array($array)
-//    {
-//        if (is_array($array)) {
-//            foreach($array AS $value) {
-//                $this->insert($value);
-//            }
-//        }
-//    }
-
-
     /**
      * Delete and return the largest key on the priority queue.
      * @throws Exception if priority queue is empty.
      */
     public function delMin()
     {
-        if ($this->isEmpty()) { throw new Exception("Priority queue underflow"); }
+        if ($this->isEmpty()) {
+            throw new Exception("Priority queue underflow");
+        }
         $min = $this->pq[1];
         $this->exch(1, $this->N--);
         $this->sink(1);
-        $this->pq[$this->N + 1] = -1; // to avoid loiterig and help with garbage collection
-        $this->qp[$min] = -1; // to avoid loiterig and help with garbage collection
+        $this->pq[$this->N + 1] = -1; // to avoid loitering and help with garbage collection
+        $this->qp[$min] = -1; // to avoid loitering and help with garbage collection
 
         assert($this->isMinHeap());
         return $min;
@@ -158,6 +126,7 @@ class IndexedMinPriorityQueueBinaryHeap {
     /**
      * Delete the key associated with index i
      * @param $i
+     * @throws InvalidArgumentException
      */
     public function delete($i)
     {
@@ -181,7 +150,8 @@ class IndexedMinPriorityQueueBinaryHeap {
      * Helper functions to restore the heap invariant.
      **********************************************************************/
 
-    private function swim($k) {
+    private function swim($k)
+    {
         while ($k > 1 && $this->less($k, floor($k/2))) {
             $this->exch($k, floor($k/2));
             $k = floor($k/2);
@@ -189,11 +159,16 @@ class IndexedMinPriorityQueueBinaryHeap {
     }
 
 
-    private function sink($k) {
-        while(2 * $k <= $this->N) {
+    private function sink($k)
+    {
+        while (2 * $k <= $this->N) {
             $j = 2 * $k;
-            if ($j < $this->N && $this->less($j + 1, $j)) $j++;
-            if (!$this->less($j, $k)) { break; }
+            if ($j < $this->N && $this->less($j + 1, $j)) {
+                $j++;
+            }
+            if (!$this->less($j, $k)) {
+                break;
+            }
             $this->exch($k, $j);
             $k = $j;
         }
@@ -205,18 +180,17 @@ class IndexedMinPriorityQueueBinaryHeap {
      * @param int $j exhange number 2
      * @return boolean
      */
-    private function less( $i, $j)
+    private function less($i, $j)
     {
-        if ($this->keys[$this->pq[$i]] < $this->keys[$this->pq[$j]]){
+        if ($this->keys[$this->pq[$i]] < $this->keys[$this->pq[$j]]) {
             return true;
-        }
-        else {
+        } else {
             return false;
         }
     }
 
 
-    private function exch( $i, $j)
+    private function exch($i, $j)
     {
         $swap = $this->pq[$i];
         $this->pq[$i] = $this->pq[$j];

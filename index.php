@@ -4,7 +4,7 @@
  * Quick menu to flip between the algorithms
  */
 ?>
-<a href="binarySearch.php">binary search</a> <br/>
+<a href="sandbox/binarySearch.php">binary search</a> <br/>
 
 <a href="sort/QuickSort.php">Quick Sort</a> <br/>
 
@@ -14,8 +14,8 @@
 
 <h2></h2>
 
-<a href="priority_queues/MaxPriorityQueueBinaryHeap.php">Max Priority Queue Binary Heap</a> <br/>
-<a href="priority_queues/MinPriorityQueueBinaryHeap.php">Min Priority Queue Binary Heap</a> <br/>
+<a href="collections/priority_queues/MaxPriorityQueueBinaryHeap.php">Max Priority Queue Binary Heap</a> <br/>
+<a href="collections/priority_queues/MinPriorityQueueBinaryHeap.php">Min Priority Queue Binary Heap</a> <br/>
 
 
 

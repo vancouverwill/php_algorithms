@@ -88,10 +88,10 @@ class MinPriorityQueueBinaryHeap {
         assert($this->isMinHeap());
     }
 
-    public function insert_array($array)
+    public function insertArray($array)
     {
         if (is_array($array)) {
-            foreach($array AS $value) {
+            foreach ($array as $value) {
                 $this->insert($value);
             }
         }
@@ -103,7 +103,9 @@ class MinPriorityQueueBinaryHeap {
      */
     public function delMin()
     {
-        if ($this->isEmpty()) { throw new Exception("Priority queue underflow"); }
+        if ($this->isEmpty()) {
+            throw new Exception("Priority queue underflow");
+        }
         $min = $this->pq[1];
         $this->exch(1, $this->N--);
         $this->sink(1);
@@ -119,7 +121,8 @@ class MinPriorityQueueBinaryHeap {
      * Helper functions to restore the heap invariant.
      **********************************************************************/
 
-    private function swim($k) {
+    private function swim($k)
+    {
         while ($k > 1 && $this->less($k, floor($k/2))) {
             $this->exch($k, floor($k/2));
             $k = floor($k/2);
@@ -127,11 +130,16 @@ class MinPriorityQueueBinaryHeap {
     }
 
 
-    private function sink($k) {
-        while(2 * $k <= $this->N) {
+    private function sink($k)
+    {
+        while (2 * $k <= $this->N) {
             $j = 2 * $k;
-            if ($j < $this->N && $this->less($j + 1, $j)) $j++;
-            if (!$this->less($j, $k)) { break; }
+            if ($j < $this->N && $this->less($j + 1, $j)) {
+                $j++;
+            }
+            if (!$this->less($j, $k)) {
+                break;
+            }
             $this->exch($k, $j);
             $k = $j;
         }
@@ -143,12 +151,11 @@ class MinPriorityQueueBinaryHeap {
      * @param int $j exhange number 2
      * @return boolean
      */
-    private function less( $i, $j)
+    private function less($i, $j)
     {
-        if ($this->pq[$i] < $this->pq[$j]){
+        if ($this->pq[$i] < $this->pq[$j]) {
             return true;
-        }
-        else {
+        } else {
             return false;
         }
     }
