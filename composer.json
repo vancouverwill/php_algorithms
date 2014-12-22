@@ -1,8 +1,9 @@
 {
     "require-dev": {
-        "squizlabs/php_codesniffer": "x"
+        "squizlabs/php_codesniffer": "x",
+        "phpunit/phpunit": "x"
     },
     "autoload": {
-        "classmap" : [ ""]
+        "classmap" : [ "collections","divideAndConquer","graphs","hashTables","sandbox","sort"]
     }
 }
