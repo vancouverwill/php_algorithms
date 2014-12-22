@@ -11,10 +11,12 @@
  * Date: 2014-05-26
  * Time: 9:59 PM
  */
+namespace PHP_Algorithms\graphs;
 
 require_once('../WeightedQuickUnionUF.php');
 
-class ContractionAlgorithmSimplified {
+class ContractionAlgorithmSimplified
+{
     private $vertices; /** @var WeightedQuickUnionUF  */
     private $edges; /** @var array */
     private $n; /** @var int */
@@ -49,8 +51,7 @@ class ContractionAlgorithmSimplified {
 
     public function addEdge(Edge $edge)
     {
-        if (!in_array($edge, $this->edges))
-        {
+        if (!in_array($edge, $this->edges)) {
             $this->edges[] = $edge;
             return true;
         }
@@ -92,13 +93,11 @@ class ContractionAlgorithmSimplified {
         $remaingPoints = $this->n;
 
         while ($remaingPoints > 2) {
-
 //           pick a remaining edge (u,v) uniformly at random
             $key = array_rand($this->edges);
 //            if (($key) == null) break;
 
-            if ($this->vertices->connected($this->edges[$key]->lo, $this->edges[$key]->hi) == true)
-            {
+            if ($this->vertices->connected($this->edges[$key]->lo, $this->edges[$key]->hi) == true) {
                 continue;
             }
 
@@ -109,11 +108,10 @@ class ContractionAlgorithmSimplified {
         }
 
         $count = 0;
-        foreach ($this->edges AS $edge) {
+        foreach ($this->edges as $edge) {
             if ($this->vertices->connected($edge->lo, $edge->hi) == true) {
                 continue;
-            }
-            else {
+            } else {
                 $count++;
             }
         }
@@ -123,7 +121,8 @@ class ContractionAlgorithmSimplified {
 }
 
 
-class Edge {
+class Edge
+{
     public $lo;
     public $hi;
 
@@ -132,8 +131,7 @@ class Edge {
         if ($start < $end) {
             $this->lo = $start;
             $this->hi = $end;
-        }
-        else {
+        } else {
             $this->hi = $start;
             $this->lo = $end;
         }
@@ -146,8 +144,7 @@ class Edge {
             if ($this->lo == $start && $this->hi == $end) {
                 return true;
             }
-        }
-        else {
+        } else {
             if ($this->hi == $start && $this->lo == $end) {
                 return true;
             }
@@ -185,7 +182,7 @@ if ($handle) {
 
         $a = (int)$pieces[0];
         if ($a == 0) {
-           exit("we shouldn't ever have 0");
+            exit("we shouldn't ever have 0");
         }
 
         if (!in_array($a, $uniqueNumbers)) {
@@ -193,7 +190,7 @@ if ($handle) {
         }
 
         if (count($pieces) > 1) {
-            for ($i = 1; $i < count($pieces); $i++ ) {
+            for ($i = 1; $i < count($pieces); $i++) {
                 $b = (int)$pieces[$i];
                 $ContractionAlgorithm->addTwoVertices($a, $b);
                 if (!in_array((int)$pieces[$i], $uniqueNumbers)) {
@@ -215,7 +212,6 @@ $smallestAmountConnections = INF;
 
 
 for ($i = 0; $i < ($n * $n * floor(log($n, 2))); $i++) {
-
     $algorithmCopy = clone $ContractionAlgorithm;
     $algorithmCopy->randomContractionAlogrithm();
 

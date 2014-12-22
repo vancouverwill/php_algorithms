@@ -1,16 +1,13 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: will_melbourne
- * Date: 2014-05-17
- * Time: 2:28 PM
- */
 
-class QuickSortFirstElementPartition {
-    private     $array;
-    private     $noComparisons;
+namespace PHP_Algorithms\sort;
 
-   public function __construct($array)
+class QuickSortFirstElementPartition
+{
+    private $array;
+    private $noComparisons;
+
+    public function __construct($array)
     {
         $this->array = $array;
     }
@@ -25,7 +22,9 @@ class QuickSortFirstElementPartition {
 
     private function recursiveSort($lo, $hi)
     {
-        if ($hi <= $lo) return FALSE;
+        if ($hi <= $lo) {
+            return false;
+        }
 
         $arraySize = $hi - $lo + 1;
         $this->noComparisons += ($arraySize - 1);
@@ -44,7 +43,7 @@ class QuickSortFirstElementPartition {
 
         while ($j <= $hi) {
             if ($this->array[$j] < $p) {
-                $this->exch( $i, $j);
+                $this->exch($i, $j);
                 $i++;
             }
 
@@ -67,8 +66,7 @@ class QuickSortFirstElementPartition {
     public function displayArray()
     {
         echo '<br/>';
-        for ($i = 0; $i < count($this->array); $i++)
-        {
+        for ($i = 0; $i < count($this->array); $i++) {
             echo $this->array[$i] . ', ';
         }
     }
@@ -99,4 +97,3 @@ function test()
 
     echo $quickSort->getNoComparisons();
 }
-

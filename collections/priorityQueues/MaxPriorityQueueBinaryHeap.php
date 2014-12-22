@@ -6,13 +6,16 @@
  *
  **/
 
-class MaxPriorityQueueBinaryHeap {
+namespace PHP_Algorithms\collections\priorityQueues;
+
+class MaxPriorityQueueBinaryHeap
+{
     private $pq;
     private $N; //size
 
     public function __construct($capacity)
     {
-        $this->pq = new SplFixedArray($capacity + 1);
+        $this->pq = new \SplFixedArray($capacity + 1);
 
         $this->N = 0;
     }
@@ -28,22 +31,23 @@ class MaxPriorityQueueBinaryHeap {
     {
         if ($this->N == 0) {
             return true;
-        }
-        else {
+        } else {
             return false;
         }
     }
     
     
     /**
-     * 
+     *
      * Return the largest key on the priority queue.
-     * @return type
-     * @throws Exception
+     * @return mixed
+     * @throws \Exception
      */
     public function max()
     {
-        if ($this->isEmpty()) throw new Exception ("Priority queue underflow");
+        if ($this->isEmpty()) {
+            throw new \Exception("Priority queue underflow");
+        }
         return $this->pq[1];
     }
     
@@ -55,7 +59,7 @@ class MaxPriorityQueueBinaryHeap {
     private function resize($capacity)
     {
         assert($capacity > 0);
-        $temp = new SplFixedArray($capacity);
+        $temp = new \SplFixedArray($capacity);
         for ($i = 1; $i <= $this->N; $i++) {
             $temp[$i] = $this->pq[$i];
         }
@@ -83,10 +87,11 @@ class MaxPriorityQueueBinaryHeap {
         $this->isMaxHeap();
     }
 
-    public function insert_array($array)
+
+    public function insertArray($array)
     {
         if (is_array($array)) {
-            foreach($array AS $value) {
+            foreach ($array as $value) {
                 $this->insert($value);
             }
         }
@@ -94,11 +99,13 @@ class MaxPriorityQueueBinaryHeap {
     
     /**
      * Delete and return the largest key on the priority queue.
-     * @throws Exception if priority queue is empty.
+     * @throws \Exception if priority queue is empty.
      */
     public function delMax()
     {
-        if ($this->isEmpty()) { throw new Exception("Priority queue underflow"); }
+        if ($this->isEmpty()) {
+            throw new \Exception("Priority queue underflow");
+        }
         $max = $this->pq[1];
         $this->exch(1, $this->N--);
         $this->sink(1);
@@ -110,11 +117,12 @@ class MaxPriorityQueueBinaryHeap {
         return $max;
     }
     
-     /***********************************************************************
+    /***********************************************************************
     * Helper functions to restore the heap invariant.
     **********************************************************************/
     
-    private function swim($k) {
+    private function swim($k)
+    {
         while ($k > 1 && $this->less(floor($k/2), $k)) {
             $this->exch($k, floor($k/2));
             $k = floor($k/2);
@@ -122,79 +130,87 @@ class MaxPriorityQueueBinaryHeap {
     }
     
     
-    private function sink($k) {
-        while(2 * $k <= $this->N) {
+    private function sink($k)
+    {
+        while (2 * $k <= $this->N) {
             $j = 2 * $k;
-            if ($j < $this->N && $this->less($j, $j + 1)) $j++;
-            if (!$this->less($k, $j)) { break; }
+            if ($j < $this->N && $this->less($j, $j + 1)) {
+                $j++;
+            }
+            if (!$this->less($k, $j)) {
+                break;
+            }
             $this->exch($k, $j);
             $k = $j;
         }
     }
     
-        /**
-     * 
-     * @param int $i exchange number 1
-     * @param int $j exhange number 2
-     * @return boolean
-     */
-     private function less( $i, $j)
+    /**
+    *
+    * @param int $i exchange number 1
+    * @param int $j exhange number 2
+    * @return boolean
+    */
+    private function less($i, $j)
     {
-        if ($this->pq[$i] < $this->pq[$j]){
+        if ($this->pq[$i] < $this->pq[$j]) {
             return true;
-        }
-        else {
+        } else {
             return false;
         }
     }
     
     
-     private function exch( $i, $j)
+    private function exch($i, $j)
     {
         $swap = $this->pq[$i];
         $this->pq[$i] = $this->pq[$j];
         $this->pq[$j] = $swap;
-     }
+    }
      
-     /**
-      * 
-      *   is subtree of pq[1..N] rooted at k a max heap?
-      * 
-      * 
-      */
-     public function isMaxHeap($k = 1)
-     {
-         if($k > $this->N) {return true;}
-         $left = 2 * $k;
-         $right = 2 * $k + 1;
-         if ($left <= $this->N && $this->less($k, $left)) return FALSE;
-         if ($right <= $this->N && $this->less($k, $right)) return FALSE;
-         return $this->isMaxHeap($left) && $this->isMaxHeap($right);
-     }
-             
+    /**
+    *
+    *   is subtree of pq[1..N] rooted at k a max heap?
+    *
+    *
+    */
+    public function isMaxHeap($k = 1)
+    {
+        if ($k > $this->N) {
+            return true;
+        }
+        $left = 2 * $k;
+        $right = 2 * $k + 1;
+        if ($left <= $this->N && $this->less($k, $left)) {
+            return false;
+        }
+        if ($right <= $this->N && $this->less($k, $right)) {
+            return false;
+        }
+        return $this->isMaxHeap($left) && $this->isMaxHeap($right);
+    }
 }
 
 function sampleUsageMaxPriorityQueue()
 {
-$pq = new MaxPriorityQueueBinaryHeap(10);
-$pq->insert(15);
-$pq->insert(175);
-$pq->insert(125);
-$pq->insert(25);
-$pq->insert(5);
+    $pq = new MaxPriorityQueueBinaryHeap(10);
+    $pq->insert(15);
+    $pq->insert(175);
+    $pq->insert(125);
+    $pq->insert(25);
+    $pq->insert(5);
 
-echo "size:" . $pq->size() . "<br/>";
-echo "isMaxHeap:" . $pq->isMaxHeap() . "<br/>";
+    echo "size:" . $pq->size() . "<br/>";
+    echo "isMaxHeap:" . $pq->isMaxHeap() . "<br/>";
 
-echo $pq->max() . "<br/>";
-$pq->delMax();
-echo $pq->max() . "<br/>";
-$pq->delMax();
-echo $pq->max() . "<br/>";
-$pq->delMax();
-echo $pq->max() . "<br/>";
-$pq->delMax();
-echo $pq->max() . "<br/>";
-$pq->delMax();
+    echo $pq->max() . "<br/>";
+    $pq->delMax();
+    echo $pq->max() . "<br/>";
+    $pq->delMax();
+    echo $pq->max() . "<br/>";
+    $pq->delMax();
+    echo $pq->max() . "<br/>";
+    $pq->delMax();
+    echo $pq->max() . "<br/>";
+    $pq->delMax();
 }
-

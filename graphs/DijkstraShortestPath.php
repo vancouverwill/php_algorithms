@@ -2,46 +2,52 @@
 
 /**
  *
+ * used to calculate shortest path in graphs with weighted edges
+ *
+ * we can not just convert each weight edge into set of edges of size weight as it blows up graph too much
+ *
  * p652 in Robert Sedgewick - algorithms fourth edition
  *
  *
  **/
 
-// todo finish Dijksta notes
+namespace PHP_Algorithms\graphs;
 
-require_once('./DirectedEdge.php');
-require_once('./../priority_queues/IndexedMinPriorityQueueBinaryHeap.php');
-require_once('./EdgeWeightedDiGraph.php');
+require_once('../vendor/autoload.php');
 
+use PHP_Algorithms\collections\priorityQueues;
+use PHP_Algorithms\graphs;
 
-class DijkstraShortestPath {
+class DijkstraShortestPath
+{
 
     private $distTo;    /** @var  SplFixedArray int  distance  of shortest s->v path */
     private $edgeTo; /** @var  SplFixedArray DirectedEdge last edge on shortest s->v path */
-    private $pq;            /** @var IndexedMinPriorityQueueBinaryHeap  priority queue of vertices */
+    private $pq;            /** @var IndexedMinPriorityQueueBinaryHeap
+ * priority queue of vertices */
 
 
-    public function  DijkstraShortestPath(EdgeWeightedDiGraph $G, $s)
+    public function __construct(EdgeWeightedDiGraph $G, $s)
     {
-        foreach ($G->edges() AS $edge) {
+        foreach ($G->edges() as $edge) {
             if ($edge->getWeight() < 0) {
-                throw new InvalidArgumentException("edge " + e + " has negative weight");
+                throw new \InvalidArgumentException("edge " + e + " has negative weight");
             }
         }
 
-        $this->distTo = new SplFixedArray($G->getV());
-        $this->edgeTo = new SplFixedArray($G->getV());
+        $this->distTo = new \SplFixedArray($G->getV());
+        $this->edgeTo = new \SplFixedArray($G->getV());
 
         for ($v = 0; $v < $G->getV(); $v++) {
             $this->distTo[$v] = INF;
         }
         $this->distTo[$s] = 0;
 
-        $this->pq = new IndexedMinPriorityQueueBinaryHeap($G->getV());
+        $this->pq = new \PHP_Algorithms\collections\priorityQueues\IndexedMinPriorityQueueBinaryHeap($G->getV());
         $this->pq->insert($s, $this->distTo[$s]);
 
 
-        while(!$this->pq->isEmpty()) {
+        while (!$this->pq->isEmpty()) {
             $v = $this->pq->delMin();
             $G->adj($v)->rewind();
 
@@ -64,22 +70,32 @@ class DijkstraShortestPath {
             $this->distTo[$w] = $this->distTo[$v] + $e->getWeight();
             $this->edgeTo[$w] = $e;
 
-            if ($this->pq->contains($w)) $this->pq->decreaseKey($w,$this->distTo[$w]);
-            else $this->pq->insert($w, $this->distTo[$w]);
+            if ($this->pq->contains($w)) {
+                $this->pq->decreaseKey($w, $this->distTo[$w]);
+            } else {
+                $this->pq->insert($w, $this->distTo[$w]);
+            }
         }
     }
 
 
     // length of shortest path from s to v
-    public function distTo($v) {
+    public function distTo($v)
+    {
+        if (!isset($this->distTo[$v])) {
+            throw new \InvalidArgumentException("this point is not on the graph, you sure this is the correct data?");
+        }
         return $this->distTo[$v];
     }
 
     // is there a path from s to v?
-    public function hasPathTo($v) {
+    public function hasPathTo($v)
+    {
+        if (!isset($this->distTo[$v])) {
+            throw new \InvalidArgumentException("this point is not on the graph, you sure this is the correct data?");
+        }
         return $this->distTo[$v] < INF;
     }
-
 }
 
 
@@ -94,14 +110,12 @@ $pathVariables = explode("/", $REQUEST_URI);
 
 $lastElementInArray = $pathVariables[count($pathVariables) - 1];
 
-if (strpos($lastElementInArray, "?") != FALSE) {
+if (strpos($lastElementInArray, "?") != false) {
     $lastElementInArrayWithoutGetVariables = explode("?", $lastElementInArray)[0];
-}
-else {
+} else {
     exit;
 }
 
-var_dump($lastElementInArrayWithoutGetVariables);
 
 
 $handle = fopen($lastElementInArrayWithoutGetVariables, "r");
@@ -110,10 +124,16 @@ $uniqueNumbers = array();
 
 if ($handle) {
     while (($line = fgets($handle)) !== false) {
+        if (substr($line, 0, 5) == "<?php") {
+            throw new \Exception("invalid data type, please use the last parameter in the url as the data string i.e. url/graphs/EdgeWeightedDiGraph.php/dijskstrasDataSmall.txt");
+        }
 
-        $nodes = explode($spaceSymbol, $line);
+        $line = str_replace("\n", "", $line);
+        $nodes = preg_split('/\s+/', $line);
 
-        foreach ($nodes AS $node) {
+//        exit;
+
+        foreach ($nodes as $node) {
             $nodeInfo = explode(",", $node);
 
             $nodeIndex = $nodeInfo[0];
@@ -129,15 +149,16 @@ if ($handle) {
 fclose($handle);
 
 
-$graph = new EdgeWeightedDiGraph(max($uniqueNumbers) + 1);
+$graph = new \PHP_Algorithms\graphs\EdgeWeightedDiGraph(max($uniqueNumbers) + 1);
 $handle = fopen($lastElementInArrayWithoutGetVariables, "r");
 
 if ($handle) {
     while (($line = fgets($handle)) !== false) {
         // process the line read.
+        $line = str_replace("\n", "", $line);
         $integerArray[] = (int)$line;
 
-        $nodes = explode($spaceSymbol, $line);
+        $nodes = preg_split('/\s+/', $line);
 
         $fromIndex = $nodes[0];
 
@@ -160,25 +181,36 @@ if ($handle) {
 }
 fclose($handle);
 
+
 $dijkstras = new DijkstraShortestPath($graph, 1);
 
 
-echo $dijkstras->distTo(7);
+echo $dijkstras->distTo(1);
 echo ",";
-echo $dijkstras->distTo(37);
+echo $dijkstras->distTo(2);
 echo ",";
-echo $dijkstras->distTo(59);
+echo $dijkstras->distTo(3);
 echo ",";
-echo $dijkstras->distTo(82);
+echo $dijkstras->distTo(4);
 echo ",";
-echo $dijkstras->distTo(99);
-echo ",";
-echo $dijkstras->distTo(115);
-echo ",";
-echo $dijkstras->distTo(133);
-echo ",";
-echo $dijkstras->distTo(165);
-echo ",";
-echo $dijkstras->distTo(188);
-echo ",";
-echo $dijkstras->distTo(197);
+
+
+//echo $dijkstras->distTo(7);
+//echo ",";
+//echo $dijkstras->distTo(37);
+//echo ",";
+//echo $dijkstras->distTo(59);
+//echo ",";
+//echo $dijkstras->distTo(82);
+//echo ",";
+//echo $dijkstras->distTo(99);
+//echo ",";
+//echo $dijkstras->distTo(115);
+//echo ",";
+//echo $dijkstras->distTo(133);
+//echo ",";
+//echo $dijkstras->distTo(165);
+//echo ",";
+//echo $dijkstras->distTo(188);
+//echo ",";
+//echo $dijkstras->distTo(197);

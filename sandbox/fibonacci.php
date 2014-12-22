@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: will_melbourne
- * Date: 2014-04-15
- * Time: 8:08 AM
- */
 
 function fibonacci_setup()
 {
@@ -24,7 +18,9 @@ function fibonacci_recursive($n_2, $n_1, $count, $goal)
 
 //    if ($n > 1000) exit;
 
-    if ($count >= $goal) return $n;
+    if ($count >= $goal) {
+        return $n;
+    }
     return fibonacci_recursive($n_1, $n, $count, $goal);
 }
 

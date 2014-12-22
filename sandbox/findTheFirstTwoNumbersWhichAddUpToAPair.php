@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: will_melbourne
- * Date: 2014-04-16
- * Time: 8:37 AM
- */
 
 $sortedArray = array(0, 4, 6, 9, 13, 17, 24, 32);
 
@@ -21,11 +15,9 @@ function findPair($sortedArray, $desiredNumber)
     for ($lo < (count($sortedArray) - 1); $hi >= 0;) {
         if ($sortedArray[$lo] + $sortedArray[$hi] > $desiredNumber) {
             $hi--;
-        }
-        elseif ($sortedArray[$lo] + $sortedArray[$hi] < $desiredNumber) {
+        } elseif ($sortedArray[$lo] + $sortedArray[$hi] < $desiredNumber) {
             $lo++;
-        }
-        else {
+        } else {
             break;
         }
     }

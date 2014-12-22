@@ -2,7 +2,9 @@
 /*
  * an indexed min priority queue
  *
- * as well as the normal functions from a min priority queue we now get delete at index and change key at index functionality
+ * as well as the normal functions from a min priority queue we now get
+ * delete at index &
+ * change key at index functionality
  *
  * gives us delMin and insert in logarithmic time and min, size, is empty in constant time
  *
@@ -11,7 +13,11 @@
  *
  *
  */
-class IndexedMinPriorityQueueBinaryHeap {
+
+namespace PHP_Algorithms\collections\priorityQueues;
+
+class IndexedMinPriorityQueueBinaryHeap
+{
     private $pq;  /** @var  SplFixedArray int - binary heap using 1-based indexing */
     private $qp;  /** @var  SplFixedArray int - inverse of pq - qp[pq[i]] = pq[qp[i]] = i */
     private $keys;  /** @var  SplFixedArray object - keys[i] = priority of i */
@@ -22,9 +28,9 @@ class IndexedMinPriorityQueueBinaryHeap {
     public function __construct($capacity)
     {
         $this->NMAX = $capacity;
-        $this->pq = new SplFixedArray($capacity + 1);
-        $this->qp = new SplFixedArray($capacity + 1);
-        $this->keys = new SplFixedArray($capacity + 1);
+        $this->pq = new \SplFixedArray($capacity + 1);
+        $this->qp = new \SplFixedArray($capacity + 1);
+        $this->keys = new \SplFixedArray($capacity + 1);
         $this->N = 0;
 
         for ($i = 0; $i <= $this->NMAX; $i++) {
@@ -208,11 +214,17 @@ class IndexedMinPriorityQueueBinaryHeap {
      */
     public function isMinHeap($k = 1)
     {
-        if($k > $this->N) {return true;}
+        if ($k > $this->N) {
+            return true;
+        }
         $left = 2 * $k;
         $right = 2 * $k + 1;
-        if ($left <= $this->N && $this->less($left, $k)) return FALSE;
-        if ($right <= $this->N && $this->less($right, $k)) return FALSE;
+        if ($left <= $this->N && $this->less($left, $k)) {
+            return false;
+        }
+        if ($right <= $this->N && $this->less($right, $k)) {
+            return false;
+        }
         return $this->isMinHeap($left) && $this->isMinHeap($right);
     }
 
@@ -241,17 +253,17 @@ class IndexedMinPriorityQueueBinaryHeap {
         $this->keys[$i] = $key;
         $this->sink($this->qp[$i]);
     }
-
 }
 
 
-function showSampleUsage() {
+function showSampleUsage()
+{
     $pq = new IndexedMinPriorityQueueBinaryHeap(5);
     $pq->insert(1, 15);
     $pq->insert(2, 175);
     $pq->insert(3, 125);
     $pq->insert(4, 25);
-    $pq->insert(5 , 5);
+    $pq->insert(5, 5);
 
     echo "size:" . $pq->size() . "<br/>";
     echo "isMinHeap:" . $pq->isMinHeap() . "<br/>";
@@ -276,7 +288,3 @@ function showSampleUsage() {
     echo "key" . $pq->minKey() . "<br/>";
     $pq->delMin();
 }
-
-
-
-

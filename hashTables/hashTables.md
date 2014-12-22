@@ -1,7 +1,7 @@
 
 
 # Purpose:
-Maintain a possibly evolving set of stuff.
+Maintain a possibly evolving SET of stuff.
 
 ## Most important functions
 - insert

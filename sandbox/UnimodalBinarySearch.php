@@ -1,12 +1,7 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: will_melbourne
- * Date: 2014-05-04
- * Time: 8:13 PM
  *
- *
- * Binary Search Psuedo code
+ * Binary Search Pseudo code
  *
  * n = desired number
  * a = sorted array
@@ -28,7 +23,7 @@
  * else { break; }
  * }
  *
- * problem : You are a given a unimodal array of n distinct elements, meaning that its
+ * problem : You are a given a UNIMODAL array of n distinct elements, meaning that its
  * entries are in increasing order up until its maximum element, after which its elements
  * are in decreasing order. Give an algorithm to compute the maximum element that runs in O(log n) time.
  *
@@ -42,7 +37,7 @@
  *
  *
  * while() {
- * topCheck = (hi - mid) /2 + mid
+ * topCheck = (hi - mid) / 2 + mid
  * botCheck = (mid - lo) / 2
  * if mid == n break
  *  topComparison = a[topCheck] - num;
@@ -52,13 +47,16 @@
  *  lo = mid
  * mid = topCheck
  * }
- *
- *
- *
+ * else {
+ * lo = botCheck
+ * mid = mid
  * }
  *
  */
 
-class UnimodalBinarySearch {
+namespace PHP_Algorithms\sandbox;
 
-} 
+class UnimodalBinarySearch
+{
+
+}

@@ -1,17 +1,14 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: will_melbourne
- * Date: 2014-06-07
- * Time: 12:02 PM
- */
+namespace PHP_Algorithms\graphs;
 
-class WeightedQuickUnionUF {
+class WeightedQuickUnionUF
+{
     private $id; // @array of integers parent of i
     private $sz; // @array number of objects in subtree rooted at i
     private $count; // int number of components
 
-    public function createFixedSize($N) {
+    public function createFixedSize($N)
+    {
         $this->count = $N;
         $this->id = array();
         $this->sz = array();
@@ -37,7 +34,9 @@ class WeightedQuickUnionUF {
 
     public function addNewVertice($i)
     {
-        if ($this->find($i)) return FALSE;
+        if ($this->find($i)) {
+            return false;
+        }
         $this->count++;
         $this->id[$i] = $i;
         $this->sz[$i] = 1;
@@ -61,9 +60,11 @@ class WeightedQuickUnionUF {
      */
     public function find($p)
     {
-        if (!isset($this->id[$p])) return FALSE;
+        if (!isset($this->id[$p])) {
+            return false;
+        }
 
-        while($p != $this->id[$p]) {
+        while ($p != $this->id[$p]) {
             $p = $this->id[$p];
         }
         return $p;
@@ -78,11 +79,18 @@ class WeightedQuickUnionUF {
     {
         $rootP = $this->find($p);
         $rootQ = $this->find($q);
-        if ($rootP == $rootQ) return;
+        if ($rootP == $rootQ) {
+            return;
+        }
 
         // make smaller root point to larger one
-        if   ($this->sz[$rootP] < $this->sz[$rootQ]) { $this->id[$rootP] = $rootQ; $this->sz[$rootQ] += $this->sz[$rootP]; }
-        else                         { $this->id[$rootQ] = $rootP; $this->sz[$rootP] += $this->sz[$rootQ]; }
+        if ($this->sz[$rootP] < $this->sz[$rootQ]) {
+            $this->id[$rootP] = $rootQ;
+            $this->sz[$rootQ] += $this->sz[$rootP];
+        } else {
+            $this->id[$rootQ] = $rootP;
+            $this->sz[$rootP] += $this->sz[$rootQ];
+        }
         $this->count--;
     }
-} 
+}

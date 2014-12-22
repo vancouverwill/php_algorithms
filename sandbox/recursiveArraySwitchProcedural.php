@@ -1,13 +1,5 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: will_melbourne
- * Date: 2014-04-11
- * Time: 10:50 PM
- */
-
-
-/**
  *
  * recursively switch the order of an array
  * @param $array
@@ -19,16 +11,19 @@
 //recursive swap first and last
 //when 1 or 0 left in between then finished
 
+namespace PHP_Algorithms\sandbox;
 
 function recursiveSwitch($array, $lowerPointer, $higherPointer)
 {
-    if ($lowerPointer >= $higherPointer) return FALSE;
+    if ($lowerPointer >= $higherPointer) {
+        return false;
+    }
     $last_element = $array[$higherPointer];
     $array[$higherPointer] = $array[$lowerPointer];
     $array[$lowerPointer] = $last_element;
     $results =  recursiveSwitch($array, $lowerPointer + 1, $higherPointer - 1);
 
-    if ($results != FALSE) {
+    if ($results != false) {
         $array = $results;
     }
     return $array;

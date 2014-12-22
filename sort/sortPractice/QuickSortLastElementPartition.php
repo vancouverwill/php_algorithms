@@ -1,15 +1,11 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: will_melbourne
- * Date: 2014-05-21
- * Time: 10:15 PM
- */
+namespace PHP_Algorithms\sort;
 
-class QuickSortLastElementPartition {
+class QuickSortLastElementPartition
+{
 
     private $array;
-    private     $noComparisons;
+    private $noComparisons;
 
 
     public function __construct($array)
@@ -26,7 +22,9 @@ class QuickSortLastElementPartition {
 
     private function recursiveSort($lo, $hi)
     {
-        if ($hi <= $lo) return FALSE;
+        if ($hi <= $lo) {
+            return false;
+        }
 
         $arraySize = $hi - $lo + 1;
         $this->noComparisons += ($arraySize - 1);
@@ -77,17 +75,18 @@ class QuickSortLastElementPartition {
     }
 }
 
-function lastTest() {
+function lastTest()
+{
 //$array = array(20, 15, 1, 4, 6, 2);
-$array= array(10,20,4,3,5,19,11,12,1,7,8,2);
+    $array= array(10,20,4,3,5,19,11,12,1,7,8,2);
 
-$sort = new QuickSortLastElementPartition($array);
+    $sort = new QuickSortLastElementPartition($array);
 
-$sort->displayArray();
-echo '<br/>';
-$sort->startSort();
+    $sort->displayArray();
+    echo '<br/>';
+    $sort->startSort();
 
-echo '<br/>';
+    echo '<br/>';
 
-$sort->displayArray();
+    $sort->displayArray();
 }

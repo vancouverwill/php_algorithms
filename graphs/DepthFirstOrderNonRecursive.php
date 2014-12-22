@@ -1,16 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: will
- * Date: 2014-11-12
- * Time: 9:47 PM
- */
+
+namespace PHP_Algorithms\graphs;
 
 require_once("./DiGraph.php");
 
 class DepthFirstOrderNonRecursive
 {
-    private $debug = FALSE;
+    private $debug = false;
 
     private $marked;    /** @var SplFixedArray boolean  */
 
@@ -28,16 +24,16 @@ class DepthFirstOrderNonRecursive
     private $dfsStack;
 
 
-    public function DepthFirstOrderNonRecursive(DiGraph $G)
+    public function __construct(DiGraph $G)
     {
-        $this->pre = new SplFixedArray($G->getV());
-        $this->post = new SplFixedArray($G->getV());
-        $this->preOrder = new SplQueue();
-        $this->postOrder = new SplQueue();
-        $this->reversePost = new SplStack();
-        $this->marked = new SplFixedArray($G->getV());
+        $this->pre = new \SplFixedArray($G->getV());
+        $this->post = new \SplFixedArray($G->getV());
+        $this->preOrder = new \SplQueue();
+        $this->postOrder = new \SplQueue();
+        $this->reversePost = new \SplStack();
+        $this->marked = new \SplFixedArray($G->getV());
 
-        $this->dfsStack = new SplStack();
+        $this->dfsStack = new \SplStack();
 
         for ($v = 0; $v < $G->getV(); $v++) {
 //        for ($v = $G->getV() - 1; $v >= 0; $v--) {
@@ -50,7 +46,8 @@ class DepthFirstOrderNonRecursive
     }
 
 
-    public function dfs($G, $v) {
+    public function dfs($G, $v)
+    {
 
 
         $this->dfsStack->push($v);
@@ -60,7 +57,6 @@ class DepthFirstOrderNonRecursive
         $this->marked[$v] = true;
 
         while ($this->dfsStack->valid() && !$this->dfsStack->isEmpty()) {
-
             $this->dumpStack();
             $w = $this->dfsStack->top();
 
@@ -74,7 +70,7 @@ class DepthFirstOrderNonRecursive
 
             $count = 0;
 
-            foreach($G->reverseAdj($w) as $index => $x) {
+            foreach ($G->reverseAdj($w) as $index => $x) {
                 if (!$this->marked[$x]) {
 //                    $this->marked[$x] = true;
                     $this->dfsStack->push($x);
@@ -93,9 +89,11 @@ class DepthFirstOrderNonRecursive
 
     public function dumpStack()
     {
-        if ($this->debug == FALSE) return;
+        if ($this->debug == false) {
+            return;
+        }
 
-        foreach ($this->dfsStack AS $stack) {
+        foreach ($this->dfsStack as $stack) {
             echo $stack . ", ";
         }
         echo "<br/>";
@@ -118,7 +116,7 @@ class DepthFirstOrderNonRecursive
      */
     public function reversePostOrder()
     {
-        $reverse = new SplStack();
+        $reverse = new \SplStack();
 
         $this->postOrder->rewind();
         while ($this->postOrder->valid()) {
@@ -129,7 +127,6 @@ class DepthFirstOrderNonRecursive
 
         return $reverse;
     }
-
 }
 
 
@@ -144,9 +141,9 @@ function exampleDepthFirstOrderNonRecursive()
     $uniqueNumbers = array();
     if ($handle) {
         while (($line = fgets($handle)) !== false) {
-
-            $vertices = explode(" ", $line);
-            foreach($vertices AS $vertice) {
+            $line = str_replace("\n", "", $line);
+            $vertices = preg_split('/\s+/', $line);
+            foreach ($vertices as $vertice) {
                 $uniqueNumbers[(int)$vertice] = true;
             }
         }
@@ -162,8 +159,8 @@ function exampleDepthFirstOrderNonRecursive()
 
     if ($handle) {
         while (($line = fgets($handle)) !== false) {
-
-            $vertices = explode(" ", $line);
+            $line = str_replace("\n", "", $line);
+            $vertices = preg_split('/\s+/', $line);
             $digraph->addEdge((int)$vertices[0] - 1, (int)$vertices[1] - 1);
         }
     } else {
@@ -175,14 +172,14 @@ function exampleDepthFirstOrderNonRecursive()
     $example = new DepthFirstOrderNonRecursive($digraph);
 
 
-    foreach ($example->preOrder() AS $item) {
+    foreach ($example->preOrder() as $item) {
         echo $item . " ";
     }
 
     echo "<br/>";
     echo "<br/>";
 
-    foreach ($example->postOrder() AS $item) {
+    foreach ($example->postOrder() as $item) {
         echo $item . " ";
     }
 }

@@ -12,20 +12,21 @@ $final_array = array();
 
 
 
-$i = 0; $j = 0;
+$i = 0;
+$j = 0;
 
 show($final_array);
 
-for ($k = 0; $k < count($arrayI) + count($arrayJ); $k++)
-{
-    if ($i >= count($arrayI)) 
+for ($k = 0; $k < count($arrayI) + count($arrayJ); $k++) {
+    if ($i >= count($arrayI)) {
         $final_array[$k] = $arrayJ[$j++];
-    elseif ($j >= count($arrayJ)) 
+    } elseif ($j >= count($arrayJ))
         $final_array[$k] = $arrayI[$i++];
-    else if ($arrayI[$i] < $arrayJ[$j]) 
+    elseif ($arrayI[$i] < $arrayJ[$j]) {
         $final_array[$k] = $arrayI[$i++];
-    else                                
+    } else {
         $final_array[$k] = $arrayJ[$j++];
+    }
 }
 echo 'finished' . PHP_EOL;
 

@@ -17,11 +17,12 @@
  * Date: 2014-11-29
  * Time: 1:29 PM
  */
+namespace PHP_Algorithms\collections\priorityQueues;
 
-require_once("MinPriorityQueueBinaryHeap.php");
-require_once("MaxPriorityQueueBinaryHeap.php");
+require_once(__DIR__ . "/../../vendor/autoload.php");
 
-class MedianMaintenance  {
+class MedianMaintenance
+{
 
 
     private $HeapLow; /** @var MaxPriorityQueueBinaryHeap  */
@@ -29,11 +30,11 @@ class MedianMaintenance  {
     private $sumMedians;
 
 
-    function __construct($filename)
+    public function __construct($filename)
     {
-        $fileNumnberOfIntegers = count(file($filename));
-        $this->HeapLow = new MaxPriorityQueueBinaryHeap($fileNumnberOfIntegers/2);
-        $this->HeapHigh = new MinPriorityQueueBinaryHeap($fileNumnberOfIntegers/2);
+        $fileNumberOfIntegers = count(file($filename));
+        $this->HeapLow = new MaxPriorityQueueBinaryHeap($fileNumberOfIntegers/2);
+        $this->HeapHigh = new MinPriorityQueueBinaryHeap($fileNumberOfIntegers/2);
 
 
         $handle = fopen($filename, "r");
@@ -42,14 +43,11 @@ class MedianMaintenance  {
 
         if ($handle) {
             while (($line = fgets($handle)) !== false) {
-
                 if (!$this->HeapLow->isEmpty() && (int)$line < $this->HeapLow->max()) {
                     $this->HeapLow->insert((int)$line);
-                }
-                elseif (!$this->HeapHigh->isEmpty() && (int)$line > $this->HeapHigh->min()) {
+                } elseif (!$this->HeapHigh->isEmpty() && (int)$line > $this->HeapHigh->min()) {
                     $this->HeapHigh->insert((int)$line);
-                }
-                else {
+                } else {
                     $this->HeapLow->insert((int)$line);
                 }
 
@@ -72,7 +70,7 @@ class MedianMaintenance  {
             }
         } else {
             // error opening the file.
-            "no file exists";
+            echo "no file exists";
         }
         fclose($handle);
 
@@ -102,16 +100,12 @@ class MedianMaintenance  {
         if ($this->HeapLow->size() - 1 > $this->HeapHigh->size()) {
             $temp = $this->HeapLow->delMax();
             $this->HeapHigh->insert($temp);
-        }
-        elseif ($this->HeapHigh->size() > $this->HeapLow->size()) {
+        } elseif ($this->HeapHigh->size() > $this->HeapLow->size()) {
             $temp = $this->HeapHigh->delMin();
             $this->HeapLow->insert($temp);
         }
     }
 }
 
-$medianMaintenace = new MedianMaintenance("Median.txt");  // 1213
-//$medianMaintenace = new MedianMaintenance("MedianTestSet1.txt");
-
- 
-  
+//new MedianMaintenance("Median.txt");  // 1213
+new MedianMaintenance("MedianTestSet1.txt");

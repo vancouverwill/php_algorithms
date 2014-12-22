@@ -1,10 +1,5 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: will_melbourne
- * Date: 2014-06-08
- * Time: 10:03 PM
- */
+namespace PHP_Algorithms\graphs;
 
 class DepthFirstSearch
 {
@@ -19,9 +14,9 @@ class DepthFirstSearch
      * @param $G MyGraph
      * @param $s SplInt
      */
-    public function __construct( $G, $s)
+    public function __construct($G, $s)
     {
-        $this->marked = new SplFixedArray($G.V());
+        $this->marked = new \SplFixedArray($G.V());
         $this->dfs($G, $s);
     }
 
@@ -38,7 +33,7 @@ class DepthFirstSearch
         $adjacentArray = $G->adj($v);
 
 
-        foreach ($adjacentArray AS $w) {
+        foreach ($adjacentArray as $w) {
             if (!$this->marked[$w]) {
                 $this->dfs($G, $w);
             }
@@ -61,5 +56,4 @@ class DepthFirstSearch
     {
         return $this->marked;
     }
-
 }

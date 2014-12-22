@@ -1,16 +1,13 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: will_melbourne
- * Date: 2014-04-14
- * Time: 9:50 PM
- */
 
-class queue {
+namespace PHP_Algorithms\sandbox;
+
+class Queue
+{
     private $first;
     private $size;
 
-    function pop()
+    public function pop()
     {
         $oldFirst = $this->first;
         $this->first = $oldFirst->next;
@@ -18,14 +15,13 @@ class queue {
         return $oldFirst;
     }
 
-    function push($value)
+    public function push($value)
     {
         if ($this->first == null) {
             $this->first = new Node($value, null);
             $this->size++;
             return;
-        }
-        else {
+        } else {
             $node = $this->first;
 
             while ($node->next != null) {
@@ -38,28 +34,28 @@ class queue {
     }
 
 
-    function size()
+    public function size()
     {
         return $this->size;
     }
 
-    function isEmpty()
+    public function isEmpty()
     {
         if ($this->size > 0) {
             return false;
-        }
-        else {
+        } else {
             return true;
         }
     }
 }
 
 
-class Node {
+class Node
+{
     public $value;
     public $next;
 
-    function   __construct($value, $next)
+    public function __construct($value, $next)
     {
         $this->value = $value;
         $this->next = $next;
@@ -77,6 +73,6 @@ echo $queue->size() . '<br/>';
 echo $queue->isEmpty() . '<br/>';
 
 
-while(!$queue->isEmpty()) {
+while (!$queue->isEmpty()) {
     echo '' . $queue->pop()->value . '<br/>';
 }

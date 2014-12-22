@@ -1,25 +1,21 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Will Melbourne
- * Date: 2014-11-12
- * Time: 9:55 PM
- */
+namespace PHP_Algorithms\graphs;
 
 class DiGraph
 {
     private $v; /** @var  int */
     private $e; /** @var  int */
-    private $adj; /** @var SplFixedArray fixed array of Stacks each stack storing all the vertices connected to that vertices */
+    private $adj; /** @var SplFixedArray fixed array of Stacks each stack
+ * storing all the vertices connected to that vertices */
 
 
-    public function DiGraph($v)
+    public function __construct($v)
     {
         $this->v = $v;
         $this->e = 0;
-        $this->adj = new SplFixedArray($v);
-        for($i = 0; $i < $this->v; $i++) {
-            $this->adj[$i] = new SplStack();
+        $this->adj = new \SplFixedArray($v);
+        for ($i = 0; $i < $this->v; $i++) {
+            $this->adj[$i] = new \SplStack();
         }
     }
 
@@ -47,16 +43,18 @@ class DiGraph
 
     public function adj($v)
     {
-        if ($v < 0 || $v >= $this->v) throw new InvalidArgumentException();
+        if ($v < 0 || $v >= $this->v) {
+            throw new InvalidArgumentException();
+        }
         return $this->adj[$v];
     }
 
 
     public function reverseAdj($v)
     {
-        $reverseAdj = new SplStack();
+        $reverseAdj = new \SplStack();
 
-        foreach ($this->adj($v) AS $w) {
+        foreach ($this->adj($v) as $w) {
             $reverseAdj->push($w);
         }
 

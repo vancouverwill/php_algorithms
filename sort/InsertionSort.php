@@ -1,13 +1,17 @@
 <?php
 
 /**
- * Find the smallest element using a linear scan and move it to the front 
- * Then, find the second smallest and move it, again doing a linear scan 
+ * Find the smallest element using a linear scan and move it to the front
+ * Then, find the second smallest and move it, again doing a linear scan
  * Continue doing this until all the elements are in place O(n^2)
- * 
+ *
  * @author Will Melbourne <willmelbourne@gmail.com>
  */
-class InsertionSort {
+
+namespace PHP_Algorithms\sort;
+
+class InsertionSort
+{
     
     private $array;
     private $size;
@@ -17,7 +21,7 @@ class InsertionSort {
      *  setup the class
      * @param type $input_array
      */
-    public function intialize( $input_array)
+    public function intialize($input_array)
     {
         $this->array = $input_array;
         $this->size = count($input_array);
@@ -25,7 +29,7 @@ class InsertionSort {
 
     /**
      * the insertion sort algorithm
-     * 
+     *
      * @param int[] $input_array input_array
      */
     public function insertion_sort()
@@ -42,48 +46,51 @@ class InsertionSort {
     }
    
     /**
-     * 
+     *
      * @param int $i exchange number 1
      * @param int $j exhange number 2
      * @return boolean
      */
-     private function less( $i, $j)
-    {
-        if ($i < $j){
+     private function less($i, $j)
+     {
+        if ($i < $j) {
             return true;
-        }
-        else {
+        } else {
             return false;
         }
-    }
+        }
     
     
-     private function exch( $i, $j)
-    {
-        $swap = $this->array[$i];
-        $this->array[$i] = $this->array[$j];
-        $this->array[$j] = $swap;
-     }
+        private function exch($i, $j)
+        {
+            $swap = $this->array[$i];
+            $this->array[$i] = $this->array[$j];
+            $this->array[$j] = $swap;
+        }
     
      
-    public function isSorted( $lo = 0, $hi = null)
-    {
-        if ($hi === null)  $hi = $this->size - 1; 
-        for ( $i = $lo; $i < $hi; $i++) {
-            if ($this->less($this->array[$i + 1], $this->array[$i])) return false;
+        public function isSorted($lo = 0, $hi = null)
+        {
+            if ($hi === null) {
+                $hi = $this->size - 1;
+            }
+            for ($i = $lo; $i < $hi; $i++) {
+                if ($this->less($this->array[$i + 1], $this->array[$i])) {
+                    return false;
+                }
+            }
+            return true;
         }
-        return true;
-    }
     
     
-     public function show() 
-    {
-        $string = "";
-        foreach ($this->array as $key => $value) {
-            $string .= $value . "-";
+        public function show()
+        {
+            $string = "";
+            foreach ($this->array as $key => $value) {
+                $string .= $value . "-";
+            }
+            echo $string . '<br/>';
         }
-        echo $string . '<br/>';
-    }
 }
 
 $obj = new InsertionSort();
@@ -94,10 +101,6 @@ $obj->show();
 
 if ($obj->isSorted()) {
     echo 'SUCCESS: sorted <br/>';
-}
-else {
+} else {
     echo 'FAIL: unsorted <br/>';
 }
-
-
-

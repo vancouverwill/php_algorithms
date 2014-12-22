@@ -1,12 +1,8 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: will
- * Date: 2014-11-12
- * Time: 9:47 PM
- */
 
-require_once("./DiGraph.php");
+namespace PHP_Algorithms\graphs;
+
+require_once("../vendor/autoload.php");
 
 class DepthFirstOrder
 {
@@ -25,14 +21,14 @@ class DepthFirstOrder
     private $reversePost;    /** @var SplStack int vertices in reverse postorder  */
 
 
-    public function DepthFirstOrder(DiGraph $G)
+    public function __construct(DiGraph $G)
     {
-            $this->pre = new SplFixedArray($G->getV());
-        $this->post = new SplFixedArray($G->getV());
-        $this->preOrder = new SplQueue();
-        $this->postOrder = new SplQueue();
-        $this->reversePost = new SplStack();
-        $this->marked = new SplFixedArray($G->getV());
+            $this->pre = new \SplFixedArray($G->getV());
+        $this->post = new \SplFixedArray($G->getV());
+        $this->preOrder = new \SplQueue();
+        $this->postOrder = new \SplQueue();
+        $this->reversePost = new \SplStack();
+        $this->marked = new \SplFixedArray($G->getV());
 
         for ($v = 0; $v < $G->getV(); $v++) {
             if (!$this->marked[$v]) {
@@ -51,7 +47,7 @@ class DepthFirstOrder
         $stack = $G->adj($v);
 
 
-        foreach($G->adj($v) as $index => $w) {
+        foreach ($G->adj($v) as $index => $w) {
             if (!$this->marked[$w]) {
                 $this->dfs($G, $w);
             }
@@ -77,7 +73,7 @@ class DepthFirstOrder
      */
     public function reversePostOrder()
     {
-        $reverse = new SplStack();
+        $reverse = new \SplStack();
 
         $this->postOrder->rewind();
         while ($this->postOrder->valid()) {
@@ -88,7 +84,6 @@ class DepthFirstOrder
 
         return $reverse;
     }
-
 }
 
 
@@ -103,9 +98,9 @@ function exampleDepthFirstOrder()
     $uniqueNumbers = array();
     if ($handle) {
         while (($line = fgets($handle)) !== false) {
-
-            $vertices = explode(" ", $line);
-            foreach($vertices AS $vertice) {
+            $line = str_replace("\n", "", $line);
+            $vertices = preg_split('/\s+/', $line);
+            foreach ($vertices as $vertice) {
                 $uniqueNumbers[(int)$vertice] = true;
             }
         }
@@ -121,8 +116,8 @@ function exampleDepthFirstOrder()
 
     if ($handle) {
         while (($line = fgets($handle)) !== false) {
-
-            $vertices = explode(" ", $line);
+            $line = str_replace("\n", "", $line);
+            $vertices = preg_split('/\s+/', $line);
             $digraph->addEdge((int)$vertices[0] - 1, (int)$vertices[1] - 1);
         }
     } else {
@@ -133,14 +128,14 @@ function exampleDepthFirstOrder()
 
     $example = new DepthFirstOrder(($digraph));
 
-    foreach ($example->preOrder() AS $item) {
+    foreach ($example->preOrder() as $item) {
         echo $item . " ";
     }
 
     echo "<br/>";
     echo "<br/>";
 
-    foreach ($example->postOrder() AS $item) {
+    foreach ($example->postOrder() as $item) {
         echo $item . " ";
     }
 }

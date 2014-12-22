@@ -1,6 +1,7 @@
 <?php
 /**
- * A binary tree has smaller values to the left and larger values to the right. With this simple logic it keeps and maintains the order between nodes.
+ * A binary tree has smaller values to the left and larger values to the right.
+ * With this simple logic it keeps and maintains the order between nodes.
  *
  * Here I have implemented the Node with public fields so don't have to use getters or setters.
  *
@@ -11,16 +12,17 @@
  * explanation : http://algs4.cs.princeton.edu/32bst/
  *
  **/
+namespace PHP_Algorithms\collections\symbolTables;
 
-class BinarySearchTreeSymbolTable {
-    private $root; // Node
+class BinarySearchTreeSymbolTable
+{
+    private $root; /** @var BinarySearchTreeNode */
     
     public function isEmpty()
     {
-        if ($this->size_all() == 0) {
+        if ($this->sizeAll() == 0) {
             return true;
-        }
-        else {
+        } else {
             return false;
         }
     }
@@ -31,7 +33,7 @@ class BinarySearchTreeSymbolTable {
      * @return mixed
      */
     //
-    public function size_all()
+    public function sizeAll()
     {
             $size = $this->size($this->root);
         return $size;
@@ -47,8 +49,7 @@ class BinarySearchTreeSymbolTable {
     {
         if ($nodeX == null) {
             return 0;
-        }
-        else {
+        } else {
             return $nodeX->getNum();
         }
     }
@@ -62,8 +63,7 @@ class BinarySearchTreeSymbolTable {
     {
         if ($this->get($key) != null) {
             return true;
-        }
-        else {
+        } else {
             return false;
         }
     }
@@ -80,11 +80,18 @@ class BinarySearchTreeSymbolTable {
 
     private function getRecursive($nodeX, $key)
     {
-        if ($nodeX == null) { return null; }
+        if ($nodeX == null) {
+            return null;
+        }
         $cmp = $this->compareTo($key, $nodeX->getKey());
-        if ($cmp < 0) return $this->getRecursive($nodeX->left, $key);
-        if ($cmp > 0) return $this->getRecursive($nodeX->right, $key);
-        else return $nodeX->val;
+        if ($cmp < 0) {
+            return $this->getRecursive($nodeX->left, $key);
+        }
+        if ($cmp > 0) {
+            return $this->getRecursive($nodeX->right, $key);
+        } else {
+            return $nodeX->val;
+        }
     }
 
 
@@ -92,7 +99,8 @@ class BinarySearchTreeSymbolTable {
      *  Insert key-value pair into BST
      *  If key already exists, update with new value
      ***********************************************************************/
-    public function put($key, $val) {
+    public function put($key, $val)
+    {
         if ($val == null) {
             $this->delete($key);
             return;
@@ -104,11 +112,16 @@ class BinarySearchTreeSymbolTable {
 
     private function putRecursive($nodeX, $key, $val)
     {
-        if ($nodeX == null) { return new Node($key, $val, 1); }
+        if ($nodeX == null) {
+            return new BinarySearchTreeNode($key, $val, 1);
+        }
         $cmp = $this->compareTo($key, $nodeX->getKey());
-        if ($cmp < 0) $nodeX->left = $this->putRecursive($nodeX->left, $key, $val);
-        elseif ($cmp > 0) $nodeX->right = $this->putRecursive($nodeX->right, $key, $val);
-        else $nodeX->val = $val;
+        if ($cmp < 0) {
+            $nodeX->left = $this->putRecursive($nodeX->left, $key, $val);
+        } elseif ($cmp > 0) $nodeX->right = $this->putRecursive($nodeX->right, $key, $val);
+        else {
+            $nodeX->val = $val;
+        }
 
         $nodeX->N = 1 + $this->size($nodeX->left) + $this->size($nodeX->right);
 
@@ -123,12 +136,15 @@ class BinarySearchTreeSymbolTable {
 
     /**
      * If the left link of the root is null, the smallest key in a BST is the key at the root;
-     * if the left link is not null, the smallest key in the BST is the smallest key in the subtree rooted at the node referenced by the left link.
+     * if the left link is not null, the smallest key in the BST is the smallest key in
+     * the subtree rooted at the node referenced by the left link.
      * @throws NoSuchElementException
      */
     public function deleteMin()
     {
-        if ($this->isEmpty()) throw new NoSuchElementException("Symbol table underflow");
+        if ($this->isEmpty()) {
+            throw new NoSuchElementException("Symbol table underflow");
+        }
         $this->root = $this->deleteMinRecursive($this->root);
         assert($this->check());
     }
@@ -136,7 +152,9 @@ class BinarySearchTreeSymbolTable {
 
     private function deleteMinRecursive($nodeX)
     {
-        if ($nodeX->left == null) return $nodeX->right;
+        if ($nodeX->left == null) {
+            return $nodeX->right;
+        }
         $nodeX->left = $this->deleteMinRecursive($nodeX->left);
         $nodeX->N = $this->size($nodeX->left) + $this->size($nodeX->right) + 1;
         return $nodeX;
@@ -149,9 +167,11 @@ class BinarySearchTreeSymbolTable {
      ***********************************************************************/
 
 
-    public  function min()
+    public function min()
     {
-        if ($this->isEmpty()) return null;
+        if ($this->isEmpty()) {
+            return null;
+        }
         $minNode = $this->minRecursive($this->root);
         return $minNode->key;
     }
@@ -160,8 +180,7 @@ class BinarySearchTreeSymbolTable {
     {
         if ($nodeX->left == null) {
             return $nodeX;
-        }
-        else {
+        } else {
             return $this->minRecursive($nodeX->left);
         }
     }
@@ -169,7 +188,9 @@ class BinarySearchTreeSymbolTable {
 
     public function max()
     {
-        if ($this->isEmpty()) return null;
+        if ($this->isEmpty()) {
+            return null;
+        }
         $maxNode = $this->maxRecursive($this->root);
         return $maxNode->key;
     }
@@ -178,8 +199,7 @@ class BinarySearchTreeSymbolTable {
     {
         if ($nodeX->right == null) {
             return $nodeX;
-        }
-        else {
+        } else {
             return $this->maxRecursive($nodeX->right);
         }
     }
@@ -192,39 +212,61 @@ class BinarySearchTreeSymbolTable {
     public function floor($key)
     {
         $nodeX = $this->floorRecursive($this->root, $key);
-        if ($nodeX == null) return null;
-        else return $nodeX->key;
+        if ($nodeX == null) {
+            return null;
+        } else {
+            return $nodeX->key;
+        }
     }
 
     private function floorRecursive($nodeX, $key)
     {
-        if ($nodeX == null) return null;
+        if ($nodeX == null) {
+            return null;
+        }
         $cmp = $this->compareTo($key, $nodeX->key);
-        if ($cmp == 0) return $nodeX;
-        if ($cmp < 0) return $this->floorRecursive($nodeX->left, $key);
+        if ($cmp == 0) {
+            return $nodeX;
+        }
+        if ($cmp < 0) {
+            return $this->floorRecursive($nodeX->left, $key);
+        }
         $t = $this->floorRecursive($nodeX->right, $key);
-        if ($t != null) return $t;
-        else return $nodeX;
+        if ($t != null) {
+            return $t;
+        } else {
+            return $nodeX;
+        }
     }
 
 
     public function ceiling($key)
     {
         $nodeX = $this->ceilingRecursive($this->root, $key);
-        if ($nodeX == null) return null;
-        else return $nodeX->key;
+        if ($nodeX == null) {
+            return null;
+        } else {
+            return $nodeX->key;
+        }
     }
 
 
     private function ceilingRecursive($nodeX, $key)
     {
-        if ($nodeX == null) return null;
+        if ($nodeX == null) {
+            return null;
+        }
         $cmp = $this->compareTo($key, $nodeX->key);
-        if ($cmp == 0) return $nodeX;
+        if ($cmp == 0) {
+            return $nodeX;
+        }
         if ($cmp < 0) {
             $t = $this->ceilingRecursive($nodeX->left, $key);
-            if ($t != null) return $t;
-            else return $nodeX;
+            if ($t != null) {
+                return $t;
+            } else {
+                return $nodeX;
+            }
         }
         return $this->ceilingRecursive($nodeX->right, $key);
     }
@@ -241,18 +283,25 @@ class BinarySearchTreeSymbolTable {
      */
     public function select($k)
     {
-        if ($k < 0 ||$k >= $this->size_all()) return null;
+        if ($k < 0 ||$k >= $this->sizeAll()) {
+            return null;
+        }
         $x = $this->selectRecursive($this->root, $k);
         return $x->key;
     }
 
     private function selectRecursive($nodeX, $k)
     {
-        if ($nodeX == null) return null;
+        if ($nodeX == null) {
+            return null;
+        }
         $t = $this->size($nodeX->left);
-        if ($t > $k) return $this->selectRecursive($nodeX->left, $k);
-        elseif ($t < $k) return $this->selectRecursive($nodeX->right, $k - $t - 1);
-        else    return $nodeX;
+        if ($t > $k) {
+            return $this->selectRecursive($nodeX->left, $k);
+        } elseif ($t < $k) return $this->selectRecursive($nodeX->right, $k - $t - 1);
+        else {
+            return $nodeX;
+        }
     }
 
 
@@ -263,15 +312,15 @@ class BinarySearchTreeSymbolTable {
 
     private function rankRecursive($key, $nodeX)
     {
-        if ($nodeX == null) return 0;
+        if ($nodeX == null) {
+            return 0;
+        }
         $cmp = $this->compareTo($key, $nodeX->key);
         if ($cmp < 0) {
             return $this->rankRecursive($key, $nodeX->left);
-        }
-        elseif ($cmp > 0 ) {
+        } elseif ($cmp > 0) {
             return 1 + $this->size($nodeX->left) + $this->rankRecursive($key, $nodeX->right);
-        }
-        else {
+        } else {
             return $this->size($nodeX->left);
         }
     }
@@ -283,7 +332,7 @@ class BinarySearchTreeSymbolTable {
 
     public function keys()
     {
-        $queue = new SplQueue();
+        $queue = new \SplQueue();
         $this->keysRecursive($this->root, $queue, $this->min(), $this->max());
         return $queue;
     }
@@ -291,12 +340,20 @@ class BinarySearchTreeSymbolTable {
 
     private function keysRecursive($nodeX, $queue, $lo, $hi)
     {
-        if ($nodeX == null) return;
+        if ($nodeX == null) {
+            return;
+        }
         $cmplo = $this->compareTo($lo, $nodeX->key);
         $cmphi = $this->compareTo($hi, $nodeX->key);
-        if ($cmplo < 0) $this->keysRecursive($nodeX->left, $queue, $lo, $hi);
-        if ($cmplo <= 0 && $cmphi >= 0) $queue->push($nodeX->key);
-        if ($cmphi > 0) $this->keysRecursive($nodeX->right, $queue, $lo, $hi);
+        if ($cmplo < 0) {
+            $this->keysRecursive($nodeX->left, $queue, $lo, $hi);
+        }
+        if ($cmplo <= 0 && $cmphi >= 0) {
+            $queue->push($nodeX->key);
+        }
+        if ($cmphi > 0) {
+            $this->keysRecursive($nodeX->right, $queue, $lo, $hi);
+        }
     }
 
 
@@ -318,13 +375,7 @@ class BinarySearchTreeSymbolTable {
             return false;
         }
 
-
-
-        // isSizeConsistent
-//        isRankConsistent
-
-        return $this->isBinarySearchTreeSymbolTableRecursive($this->root, null, null) && $this->isSizeConsistent($this->root) && $this->isRankConsistent();
-//        return $this->isBinarySearchTreeSymbolTableRecursive($this->root, null, null) && $this->isSizeConsistent($this->root);
+        return true;
     }
 
     // does this binary tree satisfy symmetric order?
@@ -334,18 +385,29 @@ class BinarySearchTreeSymbolTable {
     // Credit: Bob Dondero's elegant solution
     private function isBinarySearchTreeSymbolTableRecursive($nodeX, $minKey, $maxKey)
     {
-        if ($nodeX == null) return true;
-        if ($minKey != null && $nodeX->getKey() <= $minKey) return false;
-        if ($maxKey != null && $nodeX->getKey() >= $maxKey) return false;
-        return $this->isBinarySearchTreeSymbolTableRecursive($nodeX->getLeft(), $minKey, $nodeX->getKey()) && $this->isBinarySearchTreeSymbolTableRecursive($nodeX->getRight(), $nodeX->getKey(), $maxKey);
+        if ($nodeX == null) {
+            return true;
+        }
+        if ($minKey != null && $nodeX->getKey() <= $minKey) {
+            return false;
+        }
+        if ($maxKey != null && $nodeX->getKey() >= $maxKey) {
+            return false;
+        }
+        return $this->isBinarySearchTreeSymbolTableRecursive($nodeX->getLeft(), $minKey, $nodeX->getKey())
+        && $this->isBinarySearchTreeSymbolTableRecursive($nodeX->getRight(), $nodeX->getKey(), $maxKey);
     }
 
 
     // are the size fields correct?
     private function isSizeConsistent($nodeX)
     {
-        if ($nodeX == null) return true;
-        if ($nodeX->N  != $this->size($nodeX->left) + 1 + $this->size($nodeX->right)) { return false; }
+        if ($nodeX == null) {
+            return true;
+        }
+        if ($nodeX->N  != $this->size($nodeX->left) + 1 + $this->size($nodeX->right)) {
+            return false;
+        }
         return $this->isSizeConsistent($nodeX->left) && $this->isSizeConsistent($nodeX->right);
     }
 
@@ -368,13 +430,18 @@ class BinarySearchTreeSymbolTable {
      *
      * check that ranks are consistent
      */
-    private function isRankConsistent() {
-        for ($i = 0; $i < $this->size_all(); $i++) {
-            if ($i != $this->rank($this->select($i))) return false;
+    private function isRankConsistent()
+    {
+        for ($i = 0; $i < $this->sizeAll(); $i++) {
+            if ($i != $this->rank($this->select($i))) {
+                return false;
+            }
         }
 
-        foreach ($this->keys() AS $key) {
-            if ($this->compareTo($key, $this->select($this->rank($key))) != 0) return false;
+        foreach ($this->keys() as $key) {
+            if ($this->compareTo($key, $this->select($this->rank($key))) != 0) {
+                return false;
+            }
         }
         return true;
     }
@@ -389,48 +456,56 @@ class BinarySearchTreeSymbolTable {
      */
     private function compareTo($thisKey, $thatKey)
     {
-        if ($thisKey < $thatKey) return -1;
-        elseif ($thisKey > $thatKey) return +1;
-        else return 0;
+        if ($thisKey < $thatKey) {
+            return -1;
+        } elseif ($thisKey > $thatKey) return +1;
+        else {
+            return 0;
+        }
     }
 }
 
 
-class Node {
-    public $key;       //assorted by key
-    public $val;     //associated data
-    public $left;      //left subtree
-    public $right;     //right subtree
-    public $N;         //number of nodes in subtree
+class BinarySearchTreeNode
+{
+    public $key;        //assorted by key
+    public $val;        //associated data
+    public $left;       //left subtree
+    public $right;      //right subtree
+    public $N;          //number of nodes in subtree
     
-    public function __construct($key, $val, $N) {
+    public function __construct($key, $val, $N)
+    {
         $this->key = $key;
         $this->val = $val;
         $this->N = $N;
     }
 
-    public function getNum(){
+    public function getNum()
+    {
         return $this->N;
     }
 
-    public function getKey(){
+    public function getKey()
+    {
         return $this->key;
     }
 
-    public function getLeft(){
+    public function getLeft()
+    {
         return $this->left;
     }
 
 
-    public function getRight(){
+    public function getRight()
+    {
         return $this->right;
     }
 
-    public function getValue(){
+    public function getValue()
+    {
         return $this->value;
     }
-
-
 }
 
 //Example Usage
@@ -447,7 +522,7 @@ $symbolTable->put("cloud", 5);
 $symbolTable->put("cloud", 7);
 //$symbolTable->put("cloud", 9);
 
-echo "<h2>Size:" . $symbolTable->size_all() . "</h2>";
+echo "<h2>Size:" . $symbolTable->sizeAll() . "</h2>";
 //
 echo "<h2>get sun:" . $symbolTable->get("sun") . "</h2>";
 echo "<h2>get rain:" . $symbolTable->get("rain") . "</h2>";

@@ -11,9 +11,11 @@
  * Date: 2014-11-27
  * Time: 11:23 PM
  */
- 
+namespace PHP_Algorithms\hashTables;
+
 require_once("../sort/QuickSort.php");
 require_once("../binarySearch.php");
+
 
 
 class TwoSumProblem
@@ -21,7 +23,7 @@ class TwoSumProblem
     private $array;
     private $pairCount;
 
-   public function __construct()
+    public function __construct()
     {
 
     }
@@ -41,7 +43,6 @@ class TwoSumProblem
 
         if ($handle) {
             while (($line = fgets($handle)) !== false) {
-
                 $this->array[(int)$line] = (int)$line;
                 $count++;
             }
@@ -64,12 +65,12 @@ class TwoSumProblem
 
         $index = 0;
         $sortedIndexedArray = array();
-        foreach ($sortedArray AS $value) {
+        foreach ($sortedArray as $value) {
             $sortedIndexedArray[$index] = $value;
             $index++;
         }
 
-        foreach ($sortedIndexedArray AS $index => $xValue) {
+        foreach ($sortedIndexedArray as $index => $xValue) {
             //  given $xValue + $lowerY = $lowerRangeLimit
             $lowerY = $lowerRangeLimit - $xValue;
 
@@ -81,14 +82,22 @@ class TwoSumProblem
             // look all  Y where      $lowerY <= $this->array[Y] <= $upperY;
             // what is lowerYIndex where is smallest $lowerYIndex such that $this->array[$lowerYIndex] >= $lowerY
             $lowerYIndex = binarySearchGreaterThanOrEqual($lowerY, $sortedIndexedArray);
-            if ($lowerYIndex == -1) continue;
+            if ($lowerYIndex == -1) {
+                continue;
+            }
 
             $upperYIndex = binarySearchLesserThanOrEqual($upperY, $sortedIndexedArray);
-            if ($upperYIndex == -1) continue;
+            if ($upperYIndex == -1) {
+                continue;
+            }
 
-            if ($index >= $lowerYIndex) ($lowerYIndex = $index + 1);
+            if ($index >= $lowerYIndex) {
+                ($lowerYIndex = $index + 1);
+            }
 
-            if ($lowerYIndex > $upperYIndex) continue;
+            if ($lowerYIndex > $upperYIndex) {
+                continue;
+            }
             $this->pairCount += $upperYIndex - $lowerYIndex + 1;
 
             for ($i = $lowerYIndex; $i <= $upperYIndex; $i++) {
@@ -115,13 +124,11 @@ class TwoSumProblem
         echo PHP_EOL . PHP_EOL . "Start Time " . $startTime;
         echo PHP_EOL . PHP_EOL . "End Time " . $endTime . PHP_EOL . PHP_EOL;
     }
-
-
 }
 
 $TwoSumProblem = new TwoSumProblem();
 
-$TwoSumProblem->run("algoProgramming_prob2sum.txt", -10000, 10000);   // rows 999752 pairs 50195
-//$TwoSumProblem->run("2sumDataTestSet1.txt", -10000, 10000);
+//$TwoSumProblem->run("algoProgramming_prob2sum.txt", -10000, 10000);   // rows 999752 pairs 50195
+$TwoSumProblem->run("2sumDataTestSet1.txt", -10000, 10000);
 //$TwoSumProblem->run("2sumDataTestSet2.txt", -10000, 10000);
 //$TwoSumProblem->run("2sumDataTestSet3.txt", -10000, 10000);

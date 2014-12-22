@@ -1,24 +1,24 @@
 <?php
 
 /**
- * Pick a random element and partition the array, such that all numbers that are less than 
- * it come before all elements that are greater than it Then do that for each half, then each 
+ * Pick a random element and partition the array, such that all numbers that are less than
+ * it come before all elements that are greater than it Then do that for each half, then each
  * quar- ter, etc O(n log n) expected, O(n^2) worst case
  */
-error_reporting(E_ALL);
+namespace PHP_Algorithms\sort;
 
-class  QuickSort 
+class QuickSort
 {
     private $array;
     private $size;
     
-    private $debug = FALSE;
+    private $debug = false;
     
     /**
      *  setup the class
      * @param type $input_array
      */
-    public function intialize( $input_array)
+    public function intialize($input_array)
     {
         $this->array = $input_array;
         $this->size = count($input_array);
@@ -31,25 +31,28 @@ class  QuickSort
     public function quick_sort()
     {
  
-        if ($this->debug == FALSE) {
+        if ($this->debug == false) {
             shuffle($this->array);
-        }        
-        $this->sort( 0, count($this->array) -1);
+        }
+        $this->sort(0, count($this->array) -1);
      
     }
     
     
-    private function sort( $lo, $hi){
-        if ($hi <= $lo) return;
-        $j = $this->partition( $lo, $hi); 
-        $this->sort( $lo, $j - 1);
-        $this->sort( $j + 1, $hi);
+    private function sort($lo, $hi)
+    {
+        if ($hi <= $lo) {
+            return;
+        }
+        $j = $this->partition($lo, $hi);
+        $this->sort($lo, $j - 1);
+        $this->sort($j + 1, $hi);
 
-        assert($this->is_sorted( $lo, $hi));
+        assert($this->is_sorted($lo, $hi));
     }
 
     /**
-     * 
+     *
      * @param type $array
      * @param type $lo - low pointer
      * @param type $hi - high pointer
@@ -62,51 +65,56 @@ class  QuickSort
 
         while (true) {
             // find item on lo to swap
-            while($this->less($this->array[$i], $comparator)) {
-                if ($i == $hi) break;
+            while ($this->less($this->array[$i], $comparator)) {
+                if ($i == $hi) {
+                    break;
+                }
                 $i++;
             }
 
             // find item on hi to swap
-            while($this->less($comparator, $this->array[$j])) {
-                if ($j == $lo) break;
+            while ($this->less($comparator, $this->array[$j])) {
+                if ($j == $lo) {
+                    break;
+                }
                 $j--;
             }
 
             // check if pointers cross
-            if (($i) >= ($j)) break;
+            if (($i) >= ($j)) {
+                break;
+            }
             
              $this->exch($i, $j);
         }
         
         // put v = a[j] into position
-        $this->exch( $lo, $j);
+        $this->exch($lo, $j);
         
         // with a[lo .. j-1] <= a[j] <= a[j+1 .. hi]
         return $j;
     }
 
 
-    private function less( $i, $j)
+    private function less($i, $j)
     {
-        if ($i < $j){
+        if ($i < $j) {
             return true;
-        }
-        else {
+        } else {
             return false;
         }
     }
 
     
-    private function exch( $i, $j)
+    private function exch($i, $j)
     {
         $swap = $this->array[$i];
         $this->array[$i] = $this->array[$j];
-        $this->array[$j] = $swap;        
+        $this->array[$j] = $swap;
     }
     
     
-    public function show() 
+    public function show()
     {
         $string = "";
         foreach ($this->array as $key => $value) {
@@ -116,60 +124,65 @@ class  QuickSort
     }
     
     
-    private function show_between( $lo, $hi) 
+    private function show_between($lo, $hi)
     {
         $string = "";
-        for ( $i = $lo; $i <= $hi; $i++) {
+        for ($i = $lo; $i <= $hi; $i++) {
             $string .= $this->array[$i] . " ";
         }
         echo $string . '<br/>';
     }
     
     
-    private function is_sorted( $lo, $hi)
+    private function is_sorted($lo, $hi)
     {
-        if ($hi === null)  $hi = $this->size - 1; 
-        for ( $i = $lo; $i < $hi; $i++) {
-            if ($this->less($this->array[$i + 1], $this->array[$i])) return false;
+        if ($hi === null) {
+            $hi = $this->size - 1;
+        }
+        for ($i = $lo; $i < $hi; $i++) {
+            if ($this->less($this->array[$i + 1], $this->array[$i])) {
+                return false;
+            }
         }
         return true;
     }
     
     /**
-     * 
+     *
      * simple test to verify is_sorted() is working
-     * 
+     *
      */
-    public function test_is_sorted() {
+    public function test_is_sorted()
+    {
         $this->array = array(1, 2, 3, 4, 5);
         
-        $lo = 0; $hi = 3;
-        if (!$this->is_sorted( $lo, $hi)) {
+        $lo = 0;
+        $hi = 3;
+        if (!$this->is_sorted($lo, $hi)) {
             echo 'lo-' . $lo . ' hi:' . $hi . '<br/>';
-            $this->show_between( $lo, $hi);
+            $this->show_between($lo, $hi);
             exit;
-        }
-        else {
+        } else {
             echo 'SUCCESS';
         }
         
-        $lo = 3; $hi = 5;
-        if (!$this->is_sorted( $lo, $hi)) {
+        $lo = 3;
+        $hi = 5;
+        if (!$this->is_sorted($lo, $hi)) {
             echo 'lo-' . $lo . ' hi:' . $hi . '<br/>';
-            $this->show_between( $lo, $hi);
+            $this->show_between($lo, $hi);
             exit;
-        }
-        else {
+        } else {
             echo 'SUCCESS';
         }
         
-        $lo = 0; $hi = 5;
-        if (!$this->is_sorted( $lo, $hi)) {
+        $lo = 0;
+        $hi = 5;
+        if (!$this->is_sorted($lo, $hi)) {
             echo 'lo-' . $lo . ' hi:' . $hi . '<br/>';
-            $this->show_between( $lo, $hi);
+            $this->show_between($lo, $hi);
             exit;
-        }
-        else {
+        } else {
             echo 'SUCCESS';
         }
     }
@@ -183,7 +196,7 @@ class  QuickSort
 function test()
 {
 
-$obj = new QuickSort();
+    $obj = new QuickSort();
 
     $sample_array = array(5, 3, 5, 1, 4, 6 ,9, 7, 5);
     $array_full = array( 25, 37, 45, 84, 74, 16, 99, 64, 15, 14, 26, 43);

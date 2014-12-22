@@ -1,17 +1,10 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: will_melbourne
- * Date: 2014-04-13
- * Time: 2:50 PM
- */
 
 
 function multiplicationWithOutOperator($productA, $productB)
 {
     $results = 0;
-    for($i = 0; $i < $productB; $i++)
-    {
+    for ($i = 0; $i < $productB; $i++) {
         $results += $productA;
     }
 
@@ -20,7 +13,9 @@ function multiplicationWithOutOperator($productA, $productB)
 
 function recursiveMultiplicationWithOutOperator($productA, $productB)
 {
-    if ($productB <= 0) return 0;
+    if ($productB <= 0) {
+        return 0;
+    }
     $results = recursiveMultiplicationWithOutOperator($productA, $productB - 1);
     $results += $productA;
 
@@ -32,7 +27,9 @@ function recursiveDivisionWithOutOperator($numerator, $denominator)
     //keep subtracting from $denominator until lower than $denominator
     //pass a counter which is returned as
 
-    if ($numerator < $denominator) return 0;
+    if ($numerator < $denominator) {
+        return 0;
+    }
 
     $count = recursiveDivisionWithOutOperator($numerator - $denominator, $denominator);
     $count++;
@@ -45,7 +42,8 @@ function recursiveDivisionWithOutOperator($numerator, $denominator)
 
 //echo recursiveDivisionWithOutOperator(29, 5, 0);
 
-function  isPalindrome( $a) {
+function isPalindrome($a)
+{
     $aWithOutSpaces = str_replace(" ", "", $a);
     $aWithOutPeriods = str_replace(".", "", $aWithOutSpaces);
     $aLowerCase = strtolower($aWithOutPeriods);
@@ -56,8 +54,7 @@ function  isPalindrome( $a) {
 
     if (strrev($aLowerCase) == $aLowerCase) {
         return 1;
-    }
-    else {
+    } else {
         return 0;
     }
 }

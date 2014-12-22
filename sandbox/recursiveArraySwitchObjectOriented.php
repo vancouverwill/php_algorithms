@@ -1,13 +1,7 @@
 <?php
+namespace PHP_Algorithms\sandbox;
 
-/**
- * Created by PhpStorm.
- * User: will_melbourne
- * Date: 2014-04-11
- * Time: 10:50 PM
- */
-
-class recursiveArraySwitchObjectOriented
+class RecursiveArraySwitchObjectOriented
 {
     private $array;
 
@@ -23,7 +17,9 @@ class recursiveArraySwitchObjectOriented
 
     private function recursivelyReverse($lowerPointer, $higherPointer)
     {
-        if ($lowerPointer >= $higherPointer) return;
+        if ($lowerPointer >= $higherPointer) {
+            return;
+        }
         $lastElement = $this->array[$higherPointer];
         $this->array[$higherPointer] = $this->array[$lowerPointer];
         $this->array[$lowerPointer] = $lastElement;

@@ -1,29 +1,29 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: will_melbourne
- * Date: 2014-02-02
- * Time: 6:29 PM
- */
-/**
  * Class Stack
  *
  * todo create iterator
  */
 
-class Stack {
+namespace PHP_Algorithms\collections\symbolTables;
+
+require_once(__DIR__ . "/../vendor/autoload.php");
+
+class Stack
+{
 
     private $N; //int
-    private $first; //Node
+    private $first; //StackNode
 
-public function isEmpty() {
-    return $this->first == null;
-}
+    public function isEmpty()
+    {
+        return $this->first == null;
+    }
 
-public function size()
-{
-    return $this->N;
-}
+    public function size()
+    {
+        return $this->N;
+    }
 
 
     /**
@@ -34,7 +34,7 @@ public function size()
     public function push($item)
     {
         $oldfirst = $this->first;
-        $this->first = new Node();
+        $this->first = new StackNode();
         $this->first->item = $item;
         $this->first->next = $oldfirst;
         $this->N++;
@@ -49,14 +49,10 @@ public function size()
         $this->N--;
         return $item;
     }
-
 }
 
 
-class Node {
-    public $item;
-    public $next;
-}
+
 
 ?>
 
@@ -93,7 +89,7 @@ class Node {
     echo $stack->isEmpty() . '<br/>';
 
 
-    while(!$stack->isEmpty()) {
+    while (!$stack->isEmpty()) {
         echo '' . $stack->pop() . '<br/>';
     }
 

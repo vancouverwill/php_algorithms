@@ -1,10 +1,5 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Will Melbourne
- * Date: 2014-11-23
- * Time: 2:19 PM
- */
+namespace PHP_Algorithms\graphs;
 
 class DirectedEdge
 {
@@ -12,7 +7,7 @@ class DirectedEdge
     private $from;
     private $weight;
 
-    public function directedEdge($from, $to, $weight = 1)
+    public function __construct($from, $to, $weight = 1)
     {
         $this->from = $from;
         $this->to = $to;
@@ -42,6 +37,4 @@ class DirectedEdge
     {
         return $this->weight;
     }
-
-
 }

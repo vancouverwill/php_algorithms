@@ -1,12 +1,8 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: will_melbourne
- * Date: 2014-04-15
- * Time: 10:26 PM
- */
+namespace PHP_Algorithms\graphs;
 
-class MyGraph {
+class MyGraph
+{
     /** @var  int */
     private $V;     // number of vertices
     /** @var  int */

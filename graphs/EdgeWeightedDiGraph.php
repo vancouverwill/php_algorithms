@@ -1,12 +1,9 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Will Melbourne
- * Date: 2014-11-12
- * Time: 9:55 PM
- */
+namespace PHP_Algorithms\graphs;
 
-require_once("./DirectedEdge.php");
+require_once(__DIR__ . "/../vendor/autoload.php");
+
+use PHP_Algorithms\graphs;
 
 class EdgeWeightedDiGraph
 {
@@ -15,13 +12,13 @@ class EdgeWeightedDiGraph
     private $adj; /** @var SplFixedArray fixed array of ??? */
 
 
-    public function EdgeWeightedDiGraph($v)
+    public function __construct($v)
     {
         $this->v = $v;
         $this->e = 0;
-        $this->adj = new SplFixedArray($v);
-        for($i = 0; $i < $this->v; $i++) {
-            $this->adj[$i] = new SplStack();
+        $this->adj = new \SplFixedArray($v);
+        for ($i = 0; $i < $this->v; $i++) {
+            $this->adj[$i] = new \SplStack();
         }
     }
 
@@ -51,21 +48,23 @@ class EdgeWeightedDiGraph
     /**
      * Return the edges incident from vertex v as an Iterable.
      * @param $v
-     * @return mixed
+     * @return SplStack
      * @throws InvalidArgumentException
      */
     public function adj($v)
     {
-        if ($v < 0 || $v >= $this->v) throw new InvalidArgumentException();
+        if ($v < 0 || $v >= $this->v) {
+            throw new InvalidArgumentException();
+        }
         return $this->adj[$v];
     }
 
     public function edges()
     {
-        $edges = new SplStack();
+        $edges = new \SplStack();
 
         for ($v = 0; $v < $this->v; $v++) {
-            foreach($this->adj($v) as $key => $edge) {
+            foreach ($this->adj($v) as $key => $edge) {
                 $edges->push($edge);
             }
         }
@@ -73,80 +72,3 @@ class EdgeWeightedDiGraph
         return $edges;
     }
 }
-
-
-function test() {
-
-    $REQUEST_URI = $_SERVER['REQUEST_URI'];
-
-    $pathVariables = explode("/", $REQUEST_URI);
-
-    $lastElementInArray = $pathVariables[count($pathVariables) - 1];
-
-    if (strpos($lastElementInArray, "?") != FALSE) {
-        $lastElementInArrayWithoutGetVariables = explode("?", $lastElementInArray)[0];
-    }
-    else {
-        exit;
-    }
-
-    var_dump($lastElementInArrayWithoutGetVariables);
-
-
-    $handle = fopen($lastElementInArrayWithoutGetVariables, "r");
-
-    $uniqueNumbers = array();
-
-    if ($handle) {
-        while (($line = fgets($handle)) !== false) {
-
-            $nodes = explode(" ", $line);
-
-            foreach ($nodes AS $node) {
-                $nodeInfo = explode(",", $node);
-
-                $nodeIndex = $nodeInfo[0];
-                if (!in_array($nodeIndex, $uniqueNumbers)) {
-                    $uniqueNumbers[] = $nodeIndex;
-                }
-            }
-        }
-    } else {
-        // error opening the file.
-    }
-    fclose($handle);
-
-
-    $graph = new EdgeWeightedDiGraph(max($uniqueNumbers) + 1);
-    $handle = fopen($lastElementInArrayWithoutGetVariables, "r");
-
-    if ($handle) {
-        while (($line = fgets($handle)) !== false) {
-            // process the line read.
-            $integerArray[] = (int)$line;
-
-            $nodes = explode(" ", $line);
-
-            $fromIndex = $nodes[0];
-
-            for ($i = 1; $i < count($nodes); $i++) {
-                $nodeInfo = explode(",", $nodes[$i]);
-
-                $nodeIndex = $nodeInfo[0];
-                $nodeWeight = (int)$nodeInfo[1];
-
-                $edge = new DirectedEdge($fromIndex, $nodeIndex, $nodeWeight);
-
-                $graph->addEdge($edge);
-            }
-        }
-    } else {
-        // error opening the file.
-    }
-    fclose($handle);
-
-}
-
-//test();
-
-

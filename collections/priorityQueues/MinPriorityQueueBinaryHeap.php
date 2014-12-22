@@ -1,8 +1,5 @@
 <?php
-
-
-
-/*
+/**
  * a min priority queue
  *
  * gives us delMin and insert in logarthimic time
@@ -14,13 +11,17 @@
  *
  *
  */
-class MinPriorityQueueBinaryHeap {
+
+namespace PHP_Algorithms\collections\priorityQueues;
+
+class MinPriorityQueueBinaryHeap
+{
     private $pq;
     private $N; //number of items on priority queue so far
 
     public function __construct($capacity)
     {
-            $this->pq = new SplFixedArray($capacity + 1);
+            $this->pq = new \SplFixedArray($capacity + 1);
 
         $this->N = 0;
     }
@@ -36,8 +37,7 @@ class MinPriorityQueueBinaryHeap {
     {
         if ($this->N == 0) {
             return true;
-        }
-        else {
+        } else {
             return false;
         }
     }
@@ -51,7 +51,9 @@ class MinPriorityQueueBinaryHeap {
      */
     public function min()
     {
-        if ($this->isEmpty()) throw new Exception ("Priority queue underflow");
+        if ($this->isEmpty()) {
+            throw new Exception("Priority queue underflow");
+        }
         return $this->pq[1];
     }
 
@@ -63,10 +65,10 @@ class MinPriorityQueueBinaryHeap {
     private function resize($capacity)
     {
         assert($capacity > 0);
-            $temp = new SplFixedArray($capacity);
-            for ($i = 1; $i <= $this->N; $i++) {
-                $temp[$i] = $this->pq[$i];
-            }
+            $temp = new \SplFixedArray($capacity);
+        for ($i = 1; $i <= $this->N; $i++) {
+            $temp[$i] = $this->pq[$i];
+        }
             $this->pq = $temp;
     }
 
@@ -161,7 +163,7 @@ class MinPriorityQueueBinaryHeap {
     }
 
 
-    private function exch( $i, $j)
+    private function exch($i, $j)
     {
         $swap = $this->pq[$i];
         $this->pq[$i] = $this->pq[$j];
@@ -176,14 +178,19 @@ class MinPriorityQueueBinaryHeap {
      */
     public function isMinHeap($k = 1)
     {
-        if($k > $this->N) {return true;}
+        if ($k > $this->N) {
+            return true;
+        }
         $left = 2 * $k;
         $right = 2 * $k + 1;
-        if ($left <= $this->N && $this->less($left, $k)) return FALSE;
-        if ($right <= $this->N && $this->less($right, $k)) return FALSE;
+        if ($left <= $this->N && $this->less($left, $k)) {
+            return false;
+        }
+        if ($right <= $this->N && $this->less($right, $k)) {
+            return false;
+        }
         return $this->isMinHeap($left) && $this->isMinHeap($right);
     }
-
 }
 
 function sampleUsageMinPriorityQueue()
@@ -209,4 +216,3 @@ function sampleUsageMinPriorityQueue()
     echo $pq->min() . "<br/>";
     $pq->delMin();
 }
-

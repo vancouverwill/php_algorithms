@@ -1,15 +1,11 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: will_melbourne
- * Date: 2014-05-21
- * Time: 10:15 PM
- */
+namespace PHP_Algorithms\sort;
 
-class QuickSortMedianElementPartition {
+class QuickSortMedianElementPartition
+{
 
     private $array;
-    private     $noComparisons;
+    private $noComparisons;
 
 
     public function __construct($array)
@@ -28,7 +24,9 @@ class QuickSortMedianElementPartition {
 
     private function recursiveSort($lo, $hi)
     {
-        if ($hi <= $lo) return FALSE;
+        if ($hi <= $lo) {
+            return false;
+        }
 
         $arraySize = $hi - $lo + 1;
         $this->noComparisons += ($arraySize - 1);
@@ -66,62 +64,56 @@ class QuickSortMedianElementPartition {
     {
         $this->array = array(4,5,6,7);
 
-        $value = $this->getMedianParitionIndex(0,2);
+        $value = $this->getMedianParitionIndex(0, 2);
 
         if ($value == 1) {
             echo "OKAY" . "<br/>";
-        }
-        else {
+        } else {
             echo "FAILED" . "<br/>";
         }
 
-        $value = $this->getMedianParitionIndex(0,1);
+        $value = $this->getMedianParitionIndex(0, 1);
 
         if ($value == 0) {
             echo "OKAY" . "<br/>";
-        }
-        else {
+        } else {
             echo "FAILED" . "<br/>";
         }
 
 
-        $value = $this->getMedianParitionIndex(1,2);
+        $value = $this->getMedianParitionIndex(1, 2);
 
         if ($value == 1) {
             echo "OKAY" . "<br/>";
-        }
-        else {
+        } else {
             echo "FAILED" . "<br/>";
         }
 
 
-        $value = $this->getMedianParitionIndex(0,3);
+        $value = $this->getMedianParitionIndex(0, 3);
 
         if ($value == 1) {
             echo "OKAY" . "<br/>";
-        }
-        else {
+        } else {
             echo "FAILED" . "<br/>";
         }
 
 
         $this->array = array(8,1,6,7,);
 
-        $value = $this->getMedianParitionIndex(0,3);
+        $value = $this->getMedianParitionIndex(0, 3);
 
         if ($value == 3) {
             echo "OKAY" . "<br/>";
-        }
-        else {
+        } else {
             echo "FAILED" . "<br/>";
         }
 
-        $value = $this->getMedianParitionIndex(0,1);
+        $value = $this->getMedianParitionIndex(0, 1);
 
         if ($value == 1) {
             echo "OKAY" . "<br/>";
-        }
-        else {
+        } else {
             echo "FAILED" . "<br/>";
         }
     }
@@ -139,9 +131,10 @@ class QuickSortMedianElementPartition {
 
         // find lowest
         $min = 0;
-        for ($j = 0 + 1; $j <= 2; $j++)
-        {
-            if ($array[$j] < $array[$min]) $min = $j;
+        for ($j = 0 + 1; $j <= 2; $j++) {
+            if ($array[$j] < $array[$min]) {
+                $min = $j;
+            }
         }
 
         $temp = $array[$min];
@@ -152,8 +145,7 @@ class QuickSortMedianElementPartition {
 
         if ($array[1] < $array[2]) {
             $medianValue = $array[1];
-        }
-        else {
+        } else {
             $medianValue = $array[2];
         }
 
@@ -176,7 +168,9 @@ class QuickSortMedianElementPartition {
     {
         $median = floor(($hi - $lo)/2) + $lo;
 
-        if ($median == $lo) return $lo;
+        if ($median == $lo) {
+            return $lo;
+        }
 
         $array = array();
 
@@ -186,9 +180,10 @@ class QuickSortMedianElementPartition {
 
         // find lowest
         $minIndex = 0;
-        for ($j = 0 + 1; $j <= 2; $j++)
-        {
-            if ($this->array[$array[$j]] < $this->array[$array[$minIndex]]) $minIndex = $j;
+        for ($j = 0 + 1; $j <= 2; $j++) {
+            if ($this->array[$array[$j]] < $this->array[$array[$minIndex]]) {
+                $minIndex = $j;
+            }
         }
 
         $temp = $array[$minIndex];
@@ -199,8 +194,7 @@ class QuickSortMedianElementPartition {
 
         if ($this->array[$array[1]] < $this->array[$array[2]]) {
             $medianIndex = $array[1];
-        }
-        else {
+        } else {
             $medianIndex = $array[2];
         }
 
@@ -232,19 +226,20 @@ class QuickSortMedianElementPartition {
     }
 }
 
-function medianTest() {
+function medianTest()
+{
 //$array = array(20, 15, 1, 4, 6, 2);
-$array= array(10,20,4,3,5,19,11,12,1,7,8,2);
+    $array= array(10,20,4,3,5,19,11,12,1,7,8,2);
 
-$sort = new QuickSortMedianElementPartition($array);
+    $sort = new QuickSortMedianElementPartition($array);
 
-$sort->displayArray();
-echo '<br/>';
-$sort->startSort();
+    $sort->displayArray();
+    echo '<br/>';
+    $sort->startSort();
 
-echo '<br/>';
+    echo '<br/>';
 
-$sort->displayArray();
+    $sort->displayArray();
 
     echo '<br/>';
 

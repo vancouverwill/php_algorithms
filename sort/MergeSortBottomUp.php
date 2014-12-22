@@ -1,132 +1,139 @@
 <?php
 /**
- * Sort each pair of elements Then, sort every four elements by merging every two pairs 
+ * Experiment try running mergesort from the other direction, instead of recursively halving the array,
+ * try starting from the bottom, take single elements and join with the neighbouring element, repeat this process up
+ *
+ *
+ * Sort each pair of elements Then, sort every four elements by merging every two pairs
  * Then, sort every 8 elements, etc O(n log n) expected and worst case
  */
 
-class MergeSort {
+namespace PHP_Algorithms\sort;
+
+class MergeSortBottomUp
+{
     
     private $array;
     private $aux_array;
     private $size;
     
-    private $debug = TRUE;
-    private $merge_count;
+    private $mergeCount;
     
     /**
      *  setup the class
-     * @param type $input_array
+     * @param array $input_array
      */
-    public function intialize( $input_array)
+    public function intialize($inputArray)
     {
-        $this->array = $input_array;
-        $this->size = count($input_array);
-        $this->merge_count = 0;
+        $this->array = $inputArray;
+        $this->size = count($inputArray);
+        $this->mergeCount = 0;
     }
     
     /**
      * run the quick sort
      */
-    public function merge_sort()
+    public function mergeSortBottomUp()
     {
-        $this->aux_array = new SplFixedArray($this->size);
+        $this->aux_array = new \SplFixedArray($this->size);
         $this->sort(0, $this->size - 1);
         
-        assert($this->is_sorted());
+        assert($this->isSorted());
     }
-    
-    private function sort_old($lo, $hi)
+
+
+    /**
+     * instead of recursively breaking up the array smaller,
+     * we start at the smallest merge which is merging single items into pairs,
+     * then merge the pairs in to four sets and so on until we can't doube anymore
+     *
+     */
+    private function sort()
     {
-        if ($hi <= $lo) return;
-        $mid = $lo + floor(($hi - $lo) / 2);
-//        $this->sort($lo, $mid);
-//        $this->sort($mid + 1, $hi);
-        $this->merge($lo, $mid, $hi);
-    }
-    
-    
-     private function sort() {
-    	
-//    	compareCount = 0;
-//    	exchCount = 0;
-//    	mergeCount = 0;
-    	
-    	
-//        int N = a.length;
-//        Comparable[] aux = new Comparable[N];
         for ($n = 1; $n < $this->size; $n = $n + $n) {
             for ($i = 0; $i < $this->size - $n; $i += $n + $n) {
                 $lo = $i;
                 $m  = $i + $n - 1;
                 $hi = min($i + $n + $n - 1, $this->size - 1);
                 $this->merge($lo, $m, $hi);
-                
+
             }
         }
     }
-    
-    
-    private function merge( $lo, $mid, $hi)
+
+
+    /**
+     * identical merge function from MergeSort
+     * @param $lo
+     * @param $mid
+     * @param $hi
+     */
+    private function merge($lo, $mid, $hi)
     {
-        $this->merge_count++;
+        $this->mergeCount++;
         // precondition: $this->array[lo .. mid] and $this->array[mid+1 .. hi] are sorted subarrays
-        assert($this->is_sorted( $lo, $mid));
-        assert($this->is_sorted( $mid + 1, $hi));
-        
+        assert($this->isSorted($lo, $mid));
+        assert($this->isSorted($mid + 1, $hi));
+
 
         // copy to $this->aux_array[]
-        for ( $k = $lo; $k <= $hi; $k++) {
-            $this->aux_array[$k] = $this->array[$k]; 
+        for ($k = $lo; $k <= $hi; $k++) {
+            $this->aux_array[$k] = $this->array[$k];
         }
-        
+
          // merge back to $this->array[]
-        $i = $lo; 
+        $i = $lo;
         $j = $mid + 1;
         for ($k = $lo; $k <= $hi; $k++) {
-            if      ($i > $mid)              $this->array[$k] = $this->aux_array[$j++];
-            else if ($j > $hi)               $this->array[$k] = $this->aux_array[$i++];
-            else if ($this->less($this->aux_array[$j], $this->aux_array[$i])) {
+            if ($i > $mid) {
                 $this->array[$k] = $this->aux_array[$j++];
-            }
-            else {
+            } elseif ($j > $hi) {
+                $this->array[$k] = $this->aux_array[$i++];
+            } elseif ($this->less($this->aux_array[$j], $this->aux_array[$i])) {
+                $this->array[$k] = $this->aux_array[$j++];
+            } else {
                 $this->array[$k] = $this->aux_array[$i++];
             }
         }
-        
+
         // postcondition: $this->array[lo .. hi] is sorted
-        assert($this->is_sorted( $lo, $hi));
+        assert($this->isSorted($lo, $hi));
     }
     
     
-    private function less( $i, $j)
+    private function less($i, $j)
     {
-        if ($i < $j){
+        if ($i < $j) {
             return true;
-        }
-        else {
+        } else {
             return false;
         }
     }
 
     
-    private function exch( $i, $j)
+    private function exch($i, $j)
     {
         $swap = $this->array[$i];
         $this->array[$i] = $this->array[$j];
-        $this->array[$j] = $swap;        
+        $this->array[$j] = $swap;
     }
-    
-    public function is_sorted( $lo = 0, $hi = null)
+
+
+    public function isSorted($lo = 0, $hi = null)
     {
-        if ($hi === null)  $hi = $this->size - 1; 
-        for ( $i = $lo; $i < $hi; $i++) {
-            if ($this->less($this->array[$i + 1], $this->array[$i])) return false;
+        if ($hi === null) {
+            $hi = $this->size - 1;
+        }
+        for ($i = $lo; $i < $hi; $i++) {
+            if ($this->less($this->array[$i + 1], $this->array[$i])) {
+                return false;
+            }
         }
         return true;
     }
    
     
-    public function show() 
+    public function show()
     {
         $string = "";
         foreach ($this->array as $key => $value) {
@@ -134,22 +141,24 @@ class MergeSort {
         }
         echo $string . '<br/>';
     }
-    
-    public function getSize(){
+
+
+    public function getSize()
+    {
         return $this->size;
     }
 }
 
-$array_short2 = array( 2378, 50000, 4323, 16, 99, 64, 15, 14, 300, 43000);
-$exercise_array = array(55, 48, 44, 42, 24, 67, 41, 29, 99, 98, 84, 52 );
+//$array_short2 = array( 2378, 50000, 4323, 16, 99, 64, 15, 14, 300, 43000);
+//$exercise_array = array(55, 48, 44, 42, 24, 67, 41, 29, 99, 98, 84, 52 );
 
-$ex_array = array(77, 74, 27, 82, 87, 99, 20, 34, 13, 81);
+$ex_array = array(77, 74, 27, 82, 99, 87, 20, 34, 13, 81);
 
-$obj = new MergeSort();
+$obj = new MergeSortBottomUp();
 
 $obj->intialize($ex_array);
 echo 'Initial Array : ';
 $obj->show();
-$obj->merge_sort();
+$obj->mergeSortBottomUp();
 echo 'Final Array : ';
-$obj->show(); 
+$obj->show();

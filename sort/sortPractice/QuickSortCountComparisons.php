@@ -1,11 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Will Melbourne
- * Date: 2014-11-26
- * Time: 9:47 PM
- */
-
 require_once("./QuickSortFirstElementPartition.php");
 require_once("./QuickSortLastElementPartition.php");
 require_once("./QuickSortMedianElementPartition.php");
@@ -17,10 +10,9 @@ $pathVariables = explode("/", $REQUEST_URI);
 
 $lastElementInArray = $pathVariables[count($pathVariables) - 1];
 
-if (strpos($lastElementInArray, "?") != FALSE) {
+if (strpos($lastElementInArray, "?") != false) {
     $lastElementInArrayWithoutGetVariables = explode("?", $lastElementInArray)[0];
-}
-else {
+} else {
     $lastElementInArrayWithoutGetVariables = $lastElementInArray;
 }
 
@@ -34,7 +26,6 @@ $unsortedArray = array();
 
 if ($handle) {
     while (($line = fgets($handle)) !== false) {
-
         $unsortedArray[] = (int)$line;
 
     }

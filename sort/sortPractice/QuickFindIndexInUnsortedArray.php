@@ -11,6 +11,9 @@
  * Time: 3:31 PM
  */
 
-class QuickFindIndexInUnsortedArray {
+namespace PHP_Algorithms\sort;
 
-} 
+class QuickFindIndexInUnsortedArray
+{
+
+}
