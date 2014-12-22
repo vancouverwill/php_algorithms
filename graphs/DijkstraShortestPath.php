@@ -2,7 +2,7 @@
 
 /**
  *
- * used to calculate shortest path in graphs with weighted edges
+ * used to calculate shortest path in graphs with weighted edges (non negative)
  *
  * we can not just convert each weight edge into set of edges of size weight as it blows up graph too much
  *

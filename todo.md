@@ -2,7 +2,6 @@ TO DO & IDEAS
 ============
 
 * expand notes
-* UnimodalBinarySearch
 * switch all PHP arrays out to more precise and less memory extensive SPL data structure such as splarray, splqueue etc
 * boggle game using recursive approach and non recursive approach (http://www.cs.rit.edu/~ib/Classes/CS242_Winter09-10/Week2/Week2.pdf)
 * Randomized Selection - https://www.youtube.com/watch?v=kg3XKGFObI4 in QuickFindIndexInUnsortedArray
