@@ -28,7 +28,7 @@ class CountInversions
     }
 
 
-    public function countSort($lo, $hi)
+    private function countSort($lo, $hi)
     {
         if ($hi <= $lo) {
             return 0;
@@ -41,7 +41,7 @@ class CountInversions
     }
 
 
-    public function countSplitInvMerge($lo, $hi)
+    private function countSplitInvMerge($lo, $hi)
     {
         $mid  = $lo + floor(($hi - $lo) / 2);
 
@@ -84,32 +84,3 @@ class CountInversions
         return $this->total;
     }
 }
-
-$array= array(6,3,5,2,4,1);
-
-$CountInversions = new CountInversions();
-$CountInversions->countSortInit($array);
-
-var_dump($CountInversions->getTotal());
-
-
-@set_time_limit(60*60*24);
-
-$integerArray = array();
-$handle = fopen("IntegerArray.txt", "r");
-//$handle = fopen("IntegerArrayVerySmall.txt", "r");
-if ($handle) {
-    while (($line = fgets($handle)) !== false) {
-        // process the line read.
-        $integerArray[] = (int)$line;
-    }
-} else {
-    // error opening the file.
-}
-fclose($handle);
-
-
-$CountInversions = new CountInversions();
-$CountInversions->countSortInit($integerArray);
-
-var_dump($CountInversions->getTotal());
