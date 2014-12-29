@@ -1,7 +1,7 @@
 <?php
 namespace PHP_Algorithms\graphs;
 
-class MyGraph
+class Graph
 {
     /** @var  int */
     private $V;     // number of vertices
@@ -12,20 +12,39 @@ class MyGraph
 
 
     /**
-     * @param $v SplInt
+     * @param $v int
      */
     public function __construct($v)
     {
         $this->V = $v;
         $this->E = 0;
-        $this->adj = array(array());
+//        $this->adj = array(array());
+
+        $this->adj = new \SplFixedArray($v);
+        for ($i = 0; $i < $this->getV(); $i++) {
+            $this->adj[$i] = new \SplStack();
+        }
     }
 
 
     public function addEdge($v, $w)
     {
-        $this->adj[$v] []= $w;
-        $this->adj[$w] []= $v;
+//        $this->adj[$v] []= $w;
+//        $this->adj[$w] []= $v;
+//        $this->E++;
+
+        if (!isset($this->adj[$v])) {
+            exit("v is " . $v);
+        }
+        if ($v < 0 || $v > $this->V) {
+            throw new \InvalidArgumentException("v is out of bounds");
+        }
+        if ($w < 0 || $w > $this->V) {
+            throw new \InvalidArgumentException("w is out of bounds");
+        }
+
+        $this->adj[$v]->push($w);
+        $this->adj[$w]->push($v);
         $this->E++;
     }
 
@@ -49,6 +68,9 @@ class MyGraph
 
     public function adj($v)
     {
+        if ($v < 0 || $v >= $this->V) {
+            throw new \InvalidArgumentException();
+        }
         return $this->adj[$v];
     }
 }
@@ -57,19 +79,3 @@ class MyGraph
 
 
 
-$graph = new MyGraph(6);
-
-$graph->addEdge(0, 1);
-$graph->addEdge(0, 2);
-$graph->addEdge(0, 5);
-$graph->addEdge(2, 1);
-$graph->addEdge(2, 3);
-$graph->addEdge(2, 4);
-$graph->addEdge(3, 5);
-
-echo $graph->getE();
-echo '<br/>';
-echo $graph->getV();
-
-require_once("./DepthFirstSearch.php");
-new DepthFirstSearch($graph, $graph->getV());

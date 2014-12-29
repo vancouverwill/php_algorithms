@@ -47,7 +47,7 @@ class DepthFirstOrder
         $stack = $G->adj($v);
 
 
-        foreach ($G->adj($v) as $index => $w) {
+        foreach ($G->adj($v) as $w) {
             if (!$this->marked[$w]) {
                 $this->dfs($G, $w);
             }

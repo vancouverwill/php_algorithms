@@ -9,7 +9,7 @@ class BreathFirstSearch
     private $s;             // source
 
 
-    public function breathFirstPaths(MyGraph $graph, $s)
+    public function breathFirstPaths(Graph $graph, $s)
     {
         for ($i = 0; $i < $graph->getV(); $i++) {
             $this->marked = false;
@@ -19,7 +19,7 @@ class BreathFirstSearch
     }
 
 
-    private function bfs(MyGraph $graph, $s)
+    private function bfs(Graph $graph, $s)
     {
         $queue = new \SplQueue();
         $this->marked[$s] = true;

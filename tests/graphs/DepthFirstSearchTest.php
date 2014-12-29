@@ -30,5 +30,3 @@ class DepthFirstSearchTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($dfs->getCount(), 5);
     }
 }
-
-

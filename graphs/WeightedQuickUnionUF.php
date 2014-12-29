@@ -10,8 +10,8 @@ class WeightedQuickUnionUF
     public function createFixedSize($N)
     {
         $this->count = $N;
-        $this->id = array();
-        $this->sz = array();
+        $this->id = new \SplFixedArray($N);
+        $this->sz = new \SplFixedArray($N);
         for ($i = 0; $i < $N; $i++) {
             $this->id[$i] = $i;
             $this->sz[$i] = 1;
@@ -25,12 +25,6 @@ class WeightedQuickUnionUF
         $this->sz = null;
     }
 
-    public function intializeWithVariableSize()
-    {
-        $this->count = 0;
-        $this->id = array();
-        $this->sz = array();
-    }
 
     public function addNewVertice($i)
     {

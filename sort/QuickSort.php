@@ -16,19 +16,19 @@ class QuickSort
     
     /**
      *  setup the class
-     * @param type $input_array
+     * @param type $inputArray
      */
-    public function intialize($input_array)
+    public function intialize($inputArray)
     {
-        $this->array = $input_array;
-        $this->size = count($input_array);
+        $this->array = $inputArray;
+        $this->size = count($inputArray);
     }
     
     
     /**
      * run the quick sort
      */
-    public function quick_sort()
+    public function quickSort()
     {
  
         if ($this->debug == false) {
@@ -48,7 +48,7 @@ class QuickSort
         $this->sort($lo, $j - 1);
         $this->sort($j + 1, $hi);
 
-        assert($this->is_sorted($lo, $hi));
+        assert($this->isSorted($lo, $hi));
     }
 
     /**
@@ -65,6 +65,7 @@ class QuickSort
 
         while (true) {
             // find item on lo to swap
+            // look for item higher than comparator coming from the left
             while ($this->less($this->array[$i], $comparator)) {
                 if ($i == $hi) {
                     break;
@@ -73,6 +74,7 @@ class QuickSort
             }
 
             // find item on hi to swap
+            // look for item lower than comparator coming from the right
             while ($this->less($comparator, $this->array[$j])) {
                 if ($j == $lo) {
                     break;
@@ -84,7 +86,13 @@ class QuickSort
             if (($i) >= ($j)) {
                 break;
             }
-            
+
+            //check if there have been no inversions found if so break
+            if ($i == $lo + 1 && $j == $hi) {
+                break;
+            }
+
+            // we have a inversion where the item at $i is higher than the comparator and $j is lower than the comparator
              $this->exch($i, $j);
         }
         
@@ -134,8 +142,11 @@ class QuickSort
     }
     
     
-    private function is_sorted($lo, $hi)
+    public function isSorted($lo = null, $hi = null)
     {
+        if ($lo === null) {
+            $lo = 0;
+        }
         if ($hi === null) {
             $hi = $this->size - 1;
         }
@@ -149,16 +160,16 @@ class QuickSort
     
     /**
      *
-     * simple test to verify is_sorted() is working
+     * simple test to verify isSorted() is working
      *
      */
-    public function test_is_sorted()
+    public function testIsSorted()
     {
         $this->array = array(1, 2, 3, 4, 5);
         
         $lo = 0;
         $hi = 3;
-        if (!$this->is_sorted($lo, $hi)) {
+        if (!$this->isSorted($lo, $hi)) {
             echo 'lo-' . $lo . ' hi:' . $hi . '<br/>';
             $this->show_between($lo, $hi);
             exit;
@@ -168,7 +179,7 @@ class QuickSort
         
         $lo = 3;
         $hi = 5;
-        if (!$this->is_sorted($lo, $hi)) {
+        if (!$this->isSorted($lo, $hi)) {
             echo 'lo-' . $lo . ' hi:' . $hi . '<br/>';
             $this->show_between($lo, $hi);
             exit;
@@ -178,7 +189,7 @@ class QuickSort
         
         $lo = 0;
         $hi = 5;
-        if (!$this->is_sorted($lo, $hi)) {
+        if (!$this->isSorted($lo, $hi)) {
             echo 'lo-' . $lo . ' hi:' . $hi . '<br/>';
             $this->show_between($lo, $hi);
             exit;
@@ -187,28 +198,8 @@ class QuickSort
         }
     }
 
-    public function getSortedArray()
+    public function getArray()
     {
         return $this->array;
     }
-}
-
-function test()
-{
-
-    $obj = new QuickSort();
-
-    $sample_array = array(5, 3, 5, 1, 4, 6 ,9, 7, 5);
-    $array_full = array( 25, 37, 45, 84, 74, 16, 99, 64, 15, 14, 26, 43);
-    $array_full2 = array (25, 37, 45, 84, 74, 16, 99, 64, 15, 14, 26, 43);
-    $array_short = array( 25, 37, 45, 84, 74);
-    $array_short2 = array( 16, 99, 64, 15, 14);
-
-
-    $obj->intialize($array_full2);
-    echo 'Initial Array : ';
-    $obj->show();
-    $obj->quick_sort();
-    echo 'Final Array : ';
-    $obj->show();
 }

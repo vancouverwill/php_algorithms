@@ -11,17 +11,17 @@ class DepthFirstSearch
 
 
     /**
-     * @param $G MyGraph
-     * @param $s SplInt
+     * @param Graph $G Graph
+     * @param int $s SplInt
      */
-    public function __construct($G, $s)
+    public function __construct(Graph $G, $s)
     {
-        $this->marked = new \SplFixedArray($G.V());
+        $this->marked = new \SplFixedArray($G->getV());
         $this->dfs($G, $s);
     }
 
     /**
-     * @param $G MyGraph
+     * @param $G Graph
      * @param $v SplInt
      */
     private function dfs($G, $v)
@@ -42,6 +42,7 @@ class DepthFirstSearch
 
 
     /**
+     * number of vertices connected to source
      * @return \SplInt
      */
     public function getCount()
@@ -50,7 +51,7 @@ class DepthFirstSearch
     }
 
     /**
-     * @return \booean[]
+     * @return \boolean[]
      */
     public function getMarked()
     {

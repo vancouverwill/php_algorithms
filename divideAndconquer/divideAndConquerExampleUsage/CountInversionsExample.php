@@ -32,7 +32,11 @@ $CountInversions->countSortInit($integerArray);
 var_dump($CountInversions->getTotal());
 
 $CountInversions = new PHP_Algorithms\divideAndConquer\CountInversions();
-$CountInversions->countSortInit(array(1, 0, 0, 0, 0));
+$CountInversions->countSortInit(array(1, 0, 0, 0, 0, 0));
+var_dump($CountInversions->getTotal());
+
+$CountInversions = new PHP_Algorithms\divideAndConquer\CountInversions();
+$CountInversions->countSortInit(array(0, 0, 0, 0, 0,));
 var_dump($CountInversions->getTotal());
 
 

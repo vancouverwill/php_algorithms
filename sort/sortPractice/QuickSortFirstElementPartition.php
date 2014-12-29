@@ -76,6 +76,33 @@ class QuickSortFirstElementPartition
     {
         return $this->noComparisons;
     }
+
+
+    private function less($i, $j)
+    {
+        if ($i < $j) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+
+    public function isSorted($lo = null, $hi = null)
+    {
+        if ($lo === null) {
+            $lo = 0;
+        }
+        if ($hi === null) {
+            $hi = $this->size - 1;
+        }
+        for ($i = $lo; $i < $hi; $i++) {
+            if ($this->less($this->array[$i + 1], $this->array[$i])) {
+                return false;
+            }
+        }
+        return true;
+    }
 }
 
 

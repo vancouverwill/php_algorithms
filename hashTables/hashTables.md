@@ -69,3 +69,15 @@ Amazing:
 - hash function now specifies probe sequence h1(x), h2(x)...
 -
 
+
+
+# Bloom Filters / Hash Sets
+
+-Fast insert and lookups
+pros:
+more space efficient
+
+cons:
+1. Can't store an associate object
+2. no deletions
+3. small false positive probability
