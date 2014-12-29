@@ -1,0 +1,35 @@
+<?php
+
+
+namespace PHP_Algorithms\tests\graphs;
+
+use PHP_Algorithms\graphs\BoggleGame;
+
+class BoggleGameTest extends \PHPUnit_Framework_TestCase
+{
+
+    /**
+     * @expectedException InvalidArgumentException
+     */
+    public function testGetReachableDiceAsIterator()
+    {
+        $a = new BoggleGame(4, 4);
+        $a->getReachableDiceAsIterator(5, 3);
+    }
+
+    /**
+     * @expectedException InvalidArgumentException
+     */
+    public function testGetReachableDiceAsIteratorNegativeX()
+    {
+        $a = new BoggleGame(4, 4);
+        $a->getReachableDiceAsIterator(-1, 3);
+
+    }
+
+
+}
+
+
+
+

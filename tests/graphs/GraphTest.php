@@ -3,7 +3,6 @@
 
 namespace PHP_Algorithms\tests\graphs;
 
-use PHP_Algorithms\graphs\DepthFirstSearch;
 use PHP_Algorithms\graphs\Graph;
 
 class GraphTest extends \PHPUnit_Framework_TestCase
