@@ -1,5 +1,10 @@
 <?php
-
+/**
+ * the most efficient way to push or pull a node is swapping the start. The alternative is to add on to the end of list.
+ * This seems simpler logically but requires the user to loop through all the nodes from the start to the end.
+ * Once we have the end we can either add onto the end or remove the last node on the path.
+ * Comparing these is a case of 1 transaction to access the start or the size of the linked list N transactions to find the end.
+ */
 namespace PHP_Algorithms\sandbox;
 
 class Queue
@@ -7,15 +12,15 @@ class Queue
     private $first;
     private $size;
 
-    public function pop()
+    public function dequeue()
     {
         $oldFirst = $this->first;
         $this->first = $oldFirst->next;
         $this->size--;
-        return $oldFirst;
+        return $oldFirst->value;
     }
 
-    public function push($value)
+    public function enqueue($value)
     {
         if ($this->first == null) {
             $this->first = new Node($value, null);
@@ -62,17 +67,17 @@ class Node
     }
 }
 
-$queue = new Queue();
-
-$queue->push("red");
-$queue->push("orange");
-$queue->push("yellow");
-$queue->push("blue");
-
-echo $queue->size() . '<br/>';
-echo $queue->isEmpty() . '<br/>';
-
-
-while (!$queue->isEmpty()) {
-    echo '' . $queue->pop()->value . '<br/>';
-}
+//$queue = new Queue();
+//
+//$queue->enqueue("red");
+//$queue->enqueue("orange");
+//$queue->enqueue("yellow");
+//$queue->enqueue("blue");
+//
+//echo $queue->size() . '<br/>';
+//echo $queue->isEmpty() . '<br/>';
+//
+//
+//while (!$queue->isEmpty()) {
+//    echo '' . $queue->dequeue() . '<br/>';
+//}

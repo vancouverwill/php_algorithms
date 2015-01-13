@@ -60,6 +60,8 @@ Each vertex points to edges incident to it.
 # Depth First Search DFS
 - explores aggressively like a maze, only backtracks when necessary
 - compute topological ordering of a directed acyclic graph //todo explain topological
+A topological or topsort or topologoical ordering of a directed graph is a linear ordering of its vertices such that for every directed edge uv from vertex u to vertex v, u becomes before v in the ordering.
+An example is the vertices of the graph represent the order tasks must be done, and each edge represents one task that must be done before another. In this case the topological ordering is the valid sequence of tasks.
 - compute connected components in directed graphs
 - works with a stack data structure LIFO
 

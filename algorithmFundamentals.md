@@ -9,6 +9,8 @@ them I have implemented and tested them in PHP.
 
 ## Big-Oh Notation
 
+Big Oh notiation is used for showing quickly what the asymptotic running time is in best case, worst case and if it is bounded both above and below by the asymptotic running time.
+
 Upper Bounds
 
 T(n) = o(f(n)) if and only if there exists constants c, n0 > 0 such that
@@ -48,3 +50,5 @@ and there exists constants c1, c2 n0 > 0 such that
 -Organize data so that it can be accessed quickly
 - Different data structures support different sets of operations => suitable for different types of tasks
 - Rule of thumb - choose the "minimal" data structure that supports all the operations that you need.
+
+
