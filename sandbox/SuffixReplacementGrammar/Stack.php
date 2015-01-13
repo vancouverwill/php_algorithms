@@ -10,9 +10,6 @@
  * todo create iterator
  */
 
-namespace PHP_Algorithms\collections;
-
-require_once(__DIR__ . "/../vendor/autoload.php");
 
 class Stack
 {

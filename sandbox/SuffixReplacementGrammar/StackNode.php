@@ -1,6 +1,5 @@
 <?php
 
-namespace PHP_Algorithms\collections;
 
 class StackNode
 {
