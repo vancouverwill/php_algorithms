@@ -38,7 +38,7 @@ class QuickSortTest extends \PHPUnit_Framework_TestCase
         $a = new QuickSort();
         $a->intialize($array);
         $a->quickSort();
-        $this->assertEquals(true, $a->isSorted(0, count($array) - 1));
+        $this->assertEquals(true, $a->isSorted());
     }
 
     public function partitionProvider()

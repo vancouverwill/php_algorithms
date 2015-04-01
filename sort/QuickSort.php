@@ -71,7 +71,7 @@ class QuickSort
             // look for item higher than comparator coming from the left, if find item higher then stop this while loop
             while ($this->less($i, $comparator)) {
                 $i++;
-                if ($i == $hi) {
+                if ($i >= $hi) {
                     break;
                 }
 
@@ -81,19 +81,19 @@ class QuickSort
             // look for item lower than comparator coming from the right
             while ($this->less($comparator, $j)) {
                 $j--;
-                if ($j == $lo) {
+                if ($j <= $lo) {
                     break;
                 }
 
             }
 
             // check if pointers cross
-            if (($i) >= ($j)) {
+            if ($i >= $j) {
                 break;
             }
 
             //check if there have been no inversions found if so break
-//            if ($i == $lo + 1 && $j == $hi) {
+//            if (($i == $lo + 1) && $j == $hi) {
 //                break;
 //            }
 
@@ -111,6 +111,12 @@ class QuickSort
 
     protected function less($i, $j)
     {
+        if ($i >=  $this->size || $j >=  $this->size) {
+            $temp = "huh";
+            $temp ++;
+        }
+        $temp = "great";
+
         if ($this->array[$i] < $this->array[$j]) {
             return true;
         } else {
