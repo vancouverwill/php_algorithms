@@ -32,7 +32,7 @@ class QuickSort
     {
  
         if ($this->debug == false) {
-            shuffle($this->array);
+//            shuffle($this->array);
         }
         $this->sort(0, count($this->array) -1);
      
@@ -43,6 +43,9 @@ class QuickSort
     {
         if ($hi <= $lo) {
             return;
+        }
+        if ($lo == 5 && $hi == 9) {
+            $temp = 2;
         }
         $j = $this->partition($lo, $hi);
         $this->sort($lo, $j - 1);
@@ -57,29 +60,31 @@ class QuickSort
      * @param type $lo - low pointer
      * @param type $hi - high pointer
      */
-    private function partition($lo, $hi)
+    public function partition($lo, $hi)
     {
         $i = $lo + 1;
         $j = $hi;
-        $comparator = $this->array[$lo];
+        $comparator = $lo;
 
         while (true) {
             // find item on lo to swap
-            // look for item higher than comparator coming from the left
-            while ($this->less($this->array[$i], $comparator)) {
+            // look for item higher than comparator coming from the left, if find item higher then stop this while loop
+            while ($this->less($i, $comparator)) {
+                $i++;
                 if ($i == $hi) {
                     break;
                 }
-                $i++;
+
             }
 
             // find item on hi to swap
             // look for item lower than comparator coming from the right
-            while ($this->less($comparator, $this->array[$j])) {
+            while ($this->less($comparator, $j)) {
+                $j--;
                 if ($j == $lo) {
                     break;
                 }
-                $j--;
+
             }
 
             // check if pointers cross
@@ -88,9 +93,9 @@ class QuickSort
             }
 
             //check if there have been no inversions found if so break
-            if ($i == $lo + 1 && $j == $hi) {
-                break;
-            }
+//            if ($i == $lo + 1 && $j == $hi) {
+//                break;
+//            }
 
             // we have a inversion where the item at $i is higher than the comparator and $j is lower than the comparator
              $this->exch($i, $j);
@@ -106,7 +111,7 @@ class QuickSort
 
     protected function less($i, $j)
     {
-        if ($i < $j) {
+        if ($this->array[$i] < $this->array[$j]) {
             return true;
         } else {
             return false;
@@ -151,7 +156,7 @@ class QuickSort
             $hi = $this->size - 1;
         }
         for ($i = $lo; $i < $hi; $i++) {
-            if ($this->less($this->array[$i + 1], $this->array[$i])) {
+            if ($this->less($i + 1, $i)) {
                 return false;
             }
         }
