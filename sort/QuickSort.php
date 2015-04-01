@@ -9,10 +9,10 @@ namespace PHP_Algorithms\sort;
 
 class QuickSort
 {
-    private $array;
-    private $size;
-    
-    private $debug = false;
+    protected $array;
+    protected $size;
+
+    protected $debug = false;
     
     /**
      *  setup the class

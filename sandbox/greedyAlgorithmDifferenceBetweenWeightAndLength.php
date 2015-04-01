@@ -30,7 +30,8 @@ if ($handle) {
         $jobs[] = array("weight" => $weight,
                         "length" => $length,
                         "priorityByDifference" => $weight - $length,
-                        "priorityByRatio" => $weight / $length);
+                        "priorityByRatio" => $weight / $length,
+                        "weightedCompletionTime" => $weight * $length);
 
 
 
