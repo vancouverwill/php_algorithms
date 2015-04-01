@@ -2,6 +2,10 @@
 
 /**
  *
+ * run
+ *
+ * php DijkstraShortestPath.php
+ *
  * used to calculate shortest path in graphs with weighted edges (non negative)
  *
  * we can not just convert each weight edge into set of edges of size weight as it blows up graph too much
@@ -103,19 +107,21 @@ class DijkstraShortestPath
 $spaceSymbol = "\t";
 
 
-$REQUEST_URI = $_SERVER['REQUEST_URI'];
+//$REQUEST_URI = $_SERVER['REQUEST_URI'];
+//
+//$pathVariables = explode("/", $REQUEST_URI);
+//
+//
+//$lastElementInArray = $pathVariables[count($pathVariables) - 1];
+//
+//if (strpos($lastElementInArray, "?") != false) {
+//    $lastElementInArrayWithoutGetVariables = explode("?", $lastElementInArray)[0];
+//} else {
+//    exit("there is no sign " . $lastElementInArray);
+//}
 
-$pathVariables = explode("/", $REQUEST_URI);
 
-
-$lastElementInArray = $pathVariables[count($pathVariables) - 1];
-
-if (strpos($lastElementInArray, "?") != false) {
-    $lastElementInArrayWithoutGetVariables = explode("?", $lastElementInArray)[0];
-} else {
-    exit;
-}
-
+$lastElementInArrayWithoutGetVariables = "dijkstraData.txt";
 
 
 $handle = fopen($lastElementInArrayWithoutGetVariables, "r");
@@ -185,32 +191,32 @@ fclose($handle);
 $dijkstras = new DijkstraShortestPath($graph, 1);
 
 
-echo $dijkstras->distTo(1);
-echo ",";
-echo $dijkstras->distTo(2);
-echo ",";
-echo $dijkstras->distTo(3);
-echo ",";
-echo $dijkstras->distTo(4);
-echo ",";
+//echo $dijkstras->distTo(1);
+//echo ",";
+//echo $dijkstras->distTo(2);
+//echo ",";
+//echo $dijkstras->distTo(3);
+//echo ",";
+//echo $dijkstras->distTo(4);
+//echo ",";
 
 
-//echo $dijkstras->distTo(7);
-//echo ",";
-//echo $dijkstras->distTo(37);
-//echo ",";
-//echo $dijkstras->distTo(59);
-//echo ",";
-//echo $dijkstras->distTo(82);
-//echo ",";
-//echo $dijkstras->distTo(99);
-//echo ",";
-//echo $dijkstras->distTo(115);
-//echo ",";
-//echo $dijkstras->distTo(133);
-//echo ",";
-//echo $dijkstras->distTo(165);
-//echo ",";
-//echo $dijkstras->distTo(188);
-//echo ",";
-//echo $dijkstras->distTo(197);
+echo $dijkstras->distTo(7);
+echo ",";
+echo $dijkstras->distTo(37);
+echo ",";
+echo $dijkstras->distTo(59);
+echo ",";
+echo $dijkstras->distTo(82);
+echo ",";
+echo $dijkstras->distTo(99);
+echo ",";
+echo $dijkstras->distTo(115);
+echo ",";
+echo $dijkstras->distTo(133);
+echo ",";
+echo $dijkstras->distTo(165);
+echo ",";
+echo $dijkstras->distTo(188);
+echo ",";
+echo $dijkstras->distTo(197);

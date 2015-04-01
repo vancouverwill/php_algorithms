@@ -104,7 +104,7 @@ class QuickSort
     }
 
 
-    private function less($i, $j)
+    protected function less($i, $j)
     {
         if ($i < $j) {
             return true;

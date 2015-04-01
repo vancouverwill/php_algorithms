@@ -1,12 +1,18 @@
 <?php
 /**
- * Here we will Kosaraju’s Two-­‐Pass Algorith
- * to calculate strongly connected componenets
+ *
+ * Run :
+ *
+ * php KosarajuSCCnonRecursive.php
+ *
+ *
+ * Here we will Kosaraju’s Two-­‐Pass Algoritmh
+ * to calculate strongly connected components
  * Strongly connected components in a directed graph are directed cycles within the graph
  *
- * let grev = G with all arcs reversed
+ * let gRev = G with all arcs reversed
  *
- * run dfs loop on Grev
+ * run dfs loop on gRev
  * starting with highest number node and working down
  * goal : compute "magical ordering" of nodes
  * let f(V) = "finishing time" of each v in V
@@ -27,9 +33,9 @@
  */
 namespace PHP_Algorithms\graphs;
 
-require_once("./DiGraph.php");
+require_once(__DIR__ . "/./DiGraph.php");
 //require_once("./DepthFirstOrder.php");
-require_once("./DepthFirstOrderNonRecursive.php");
+require_once(__DIR__ . "/./DepthFirstOrderNonRecursive.php");
 
 
 class KosarajuSCCnonRecursive
@@ -141,6 +147,8 @@ class KosarajuSCCnonRecursive
 $filename = "DiGraphTestData1.txt";
 //$filename = "KosarajuSCCLargeDataSet.txt";
 
+//echo "start";
+
 
 
 $handle = fopen($filename, "r");
@@ -159,7 +167,12 @@ if ($handle) {
 }
 fclose($handle);
 
+echo 'we have ' . count($uniqueNumbers) . ' unique numbers' . PHP_EOL;
+//exit;
+
 $digraph = new DiGraph(count($uniqueNumbers));
+
+
 
 $handle = fopen($filename, "r");
 

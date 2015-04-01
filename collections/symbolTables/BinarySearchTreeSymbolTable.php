@@ -16,7 +16,7 @@ namespace PHP_Algorithms\collections\symbolTables;
 
 class BinarySearchTreeSymbolTable
 {
-    private $root; /** @var BinarySearchTreeNode */
+    private $root; /** @field BinarySearchTreeNode **/
     
     public function isEmpty()
     {
@@ -52,6 +52,12 @@ class BinarySearchTreeSymbolTable
         } else {
             return $nodeX->getNum();
         }
+    }
+
+
+    public function getRoot()
+    {
+        return $this->root;
     }
 
 
@@ -522,8 +528,8 @@ $symbolTable->put("cloud", 5);
 $symbolTable->put("cloud", 7);
 //$symbolTable->put("cloud", 9);
 
-echo "<h2>Size:" . $symbolTable->sizeAll() . "</h2>";
-//
-echo "<h2>get sun:" . $symbolTable->get("sun") . "</h2>";
-echo "<h2>get rain:" . $symbolTable->get("rain") . "</h2>";
-echo "<h2>get cloud:" . $symbolTable->get("cloud") . "</h2>";
+//echo "<h2>Size:" . $symbolTable->sizeAll() . "</h2>";
+////
+//echo "<h2>get sun:" . $symbolTable->get("sun") . "</h2>";
+//echo "<h2>get rain:" . $symbolTable->get("rain") . "</h2>";
+//echo "<h2>get cloud:" . $symbolTable->get("cloud") . "</h2>";

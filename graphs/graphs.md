@@ -75,3 +75,9 @@ An example is the vertices of the graph represent the order tasks must be done, 
 
 # Radius
 
+
+# Travesal
+- inorder traversal x.left -> x -> x.right
+- preorder traversal x -> x.left -> x.right
+->postorder traversal x.left -> x.right -> x
+

@@ -13,8 +13,8 @@
  */
 namespace PHP_Algorithms\hashTables;
 
-require_once("../sort/QuickSort.php");
-require_once("../binarySearch.php");
+require_once(__DIR__ . "/../sort/QuickSort.php");
+require_once(__DIR__ . "/../sandbox/binarySearch.php");
 
 
 
@@ -128,7 +128,7 @@ class TwoSumProblem
 
 $TwoSumProblem = new TwoSumProblem();
 
-//$TwoSumProblem->run("algoProgramming_prob2sum.txt", -10000, 10000);   // rows 999752 pairs 50195
-$TwoSumProblem->run("2sumDataTestSet1.txt", -10000, 10000);
+$TwoSumProblem->run("algoProgramming_prob2sum.txt", -10000, 10000);   // rows 999752 pairs 50195
+//$TwoSumProblem->run("2sumDataTestSet1.txt", -10000, 10000);
 //$TwoSumProblem->run("2sumDataTestSet2.txt", -10000, 10000);
 //$TwoSumProblem->run("2sumDataTestSet3.txt", -10000, 10000);

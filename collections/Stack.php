@@ -2,6 +2,11 @@
 /**
  * Class Stack
  *
+ * the most efficient way to push or pull a node is swapping the start. The alternative is to add on to the end of list.
+ * This seems simpler logically but requires the user to loop through all the nodes from the start to the end.
+ * Once we have the end we can either add onto the end or remove the last node on the path.
+ * Comparing these is a case of 1 transaction to access the start or the size of the linked list N transactions to find the end.
+ *
  * todo create iterator
  */
 
@@ -53,6 +58,11 @@ class Stack
         $this->first = $this->first->next;
         $this->N--;
         return $item;
+    }
+
+    public function iterator()
+    {
+
     }
 }
 

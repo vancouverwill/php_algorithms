@@ -107,5 +107,5 @@ class MedianMaintenance
     }
 }
 
-//new MedianMaintenance("Median.txt");  // 1213
-new MedianMaintenance("MedianTestSet1.txt");
+new MedianMaintenance("Median.txt");  // 1213
+//new MedianMaintenance("MedianTestSet1.txt");

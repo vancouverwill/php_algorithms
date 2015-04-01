@@ -161,13 +161,13 @@ $ContractionAlgorithm = new ContractionAlgorithmSimplified();
 
 $startTime = microtime(true);
 
-//$handle = fopen("kargerMinCut.txt", "r");
+$handle = fopen("kargerMinCut.txt", "r");
 //$handle = fopen("./kargerMinCutPracticev1ans2.txt", "r");
 //$handle = fopen("./kargerMinCutPracticev2ans3.txt", "r");
 //$handle = fopen("./kargerMinCutPracticev3ans1.txt", "r");
 //$handle = fopen("./kargerMinCutPracticev4ans3.txt", "r");
 //$handle = fopen("./kargerMinCutPracticev5ans1.txt", "r");
-$handle = fopen("kargerMinCutPractice.txt", "r");
+//$handle = fopen("kargerMinCutPractice.txt", "r");
 
 $uniqueNumbers = array();
 if ($handle) {

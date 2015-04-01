@@ -6,6 +6,8 @@
  *
  * gives us min, size, is empty in constant time
  *
+ * not difference between delMin and show min. Only one has to change the actual heap
+ *
  * array representation
  *
  *

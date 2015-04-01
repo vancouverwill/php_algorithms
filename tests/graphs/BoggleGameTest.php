@@ -63,6 +63,46 @@ class BoggleGameTest extends \PHPUnit_Framework_TestCase
     }
 
 
+    public function diceNumberIntoXCoordinateProvider()
+    {
+        return array(
+            array(0, 0),
+            array(3, 3),
+            array(12, 0),
+            array(15, 3),
+        );
+    }
+
+    /**
+     * @dataProvider diceNumberIntoXCoordinateProvider
+     */
+    public function test_diceNumberIntoXCoordinate_returns_CorrectLowerBound($no, $xCordinate)
+    {
+        $a = new BoggleGame(4, 4);
+        $this->assertEquals($a->diceNumberIntoXCoordinate($no), $xCordinate);
+    }
+
+
+    public function diceNumberIntoYCoordinateProvider()
+    {
+        return array(
+            array(0, 0),
+            array(3, 0),
+            array(12, 3),
+            array(15, 3),
+        );
+    }
+
+
+    /**
+     * @dataProvider diceNumberIntoYCoordinateProvider
+     */
+    public function test_diceNumberIntoYCoordinate_returns_CorrectLowerBound($no, $yCordinate)
+    {
+        $a = new BoggleGame(4, 4);
+        $this->assertEquals($a->diceNumberIntoYCoordinate($no), $yCordinate);
+    }
+
 
 
 }

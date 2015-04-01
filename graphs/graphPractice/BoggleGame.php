@@ -20,7 +20,10 @@
  */
 namespace PHP_Algorithms\graphs;
 
-use Doctrine\Instantiator\Exception\InvalidArgumentException;
+require_once(__DIR__ . "/../../collections/Stack.php");
+require_once(__DIR__ . "/../../collections/StackNode.php");
+
+//use Doctrine\Instantiator\Exception\InvalidArgumentException;
 
 class BoggleGame
 {
@@ -44,8 +47,21 @@ class BoggleGame
         }
     }
 
+    public function addData($array)
+    {
+        $x = 0;
+        $y = 0;
+        foreach ($array AS $row) {
+            foreach ($row AS $dice) {
+                $this->letterGrid[$x][$y] = $dice;
+                $x++;
+            }
+            $y++;
+        }
+    }
 
-    public function addData($letters)
+
+    public function addDataIndexesSet($letters)
     {
         foreach ($letters as $x => $col) {
             foreach ($col as $y => $dice) {
@@ -100,6 +116,7 @@ class BoggleGame
          * 1. get current dice no
          * 2.
          */
+        $currentPath = new Stack();
     }
 
 
@@ -120,13 +137,13 @@ class BoggleGame
 
     public function diceNumberIntoXCoordinate($no)
     {
-
+        return $no % $this->width;
     }
 
 
     public function diceNumberIntoYCoordinate($no)
     {
-
+        return ($no - ($no % $this->width)) / $this->width;
     }
 
 
@@ -137,9 +154,8 @@ class BoggleGame
      */
     private function checkXY($x, $y)
     {
-        if ($x < 0 || $x >= $this->width || $y < 0 || $y >= $this->height) {
-            throw new \InvalidArgumentException("out of range for ({$x}, {$y})");
-        }
+        $this->checkX($x);
+        $this->checkY($y);
     }
 
 

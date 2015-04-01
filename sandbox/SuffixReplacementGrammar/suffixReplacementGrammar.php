@@ -1,15 +1,17 @@
 <?php
 
-require_once("./Stack.php");
-require_once("./StackNode.php");
-require_once("../queue.php");
+/**
+ * author : will Melbourne
+ * date : 13 January 2015
+ */
+
 
 class SuffixReplacementGrammarCaseTestCase
 {
     private $rules; /** @var array array of rules */
     private $N; /** @var int number of rules */
     private $start; /** @var string starting point string */
-    private $goal; /** @var string desired goal string */
+    private $goal; /** @var String desired goal string */
 
 
     public function __construct($numberOrRules, $start, $goal)
@@ -28,38 +30,66 @@ class SuffixReplacementGrammarCaseTestCase
 
     public function tryToReachGoal()
     {
-        $smallestDistance = INF;
-
-        $route = new \PHP_Algorithms\sandbox\Queue();
+        $q = new SplQueue();
         $marked = array();
+        $distance = array();
+        $distance[$this->start] = 0;
 
-//        $route->enqueue($this->start);
-        $route->enqueue(new CurrentStringState(null, null, $this->start));
+        $q->enqueue($this->start);
 
-        while (!$route->isEmpty()) {
-            $currentStringState = $route->dequeue();
+        while (!$q->isEmpty()) {
+            $currentString = $q->dequeue();
             foreach ($this->rules as $index => $rule) {
-                if ($currentStringState->canTransform($rule)) {
-//                    $newString = $rule->transform($currentStringState->getStringState());
-                    $newStringState = new CurrentStringState($currentStringState, $rule);
-//                    if (!isset($marked[$newString])) {
-                    if (!isset($marked[$newStringState->getStringState()])) {
-//                        if ($newString == $this->goal) {
-                        if ($newStringState->getStringState() == $this->goal) {
-                            $distance = $currentStringState->getDistance();
-                            if ($distance < $smallestDistance) {
-                                $smallestDistance = $distance;
-                            }
-                        } else {
-                            $route->enqueue($newStringState);
-                            $marked[$newStringState->getStringState()] = true;
-                        }
+                if ($rule->canTransform($currentString)) {
+                    $newString = $rule->transform($currentString);
+                    if (!isset($marked[$newString])) {
+                            $q->enqueue($newString);
+                            $marked[$newString] = true;
+                            $distance[$newString] = $distance[$currentString] + 1;
                     }
                 }
             }
         }
 
-        return $smallestDistance;
+        if (isset($distance[$this->goal])) {
+            return $distance[$this->goal];
+        } else {
+            return "No Solution";
+        }
+    }
+
+
+    public function tryToReachGoalWithCurrentStringState()
+    {
+        $smallestDistance = INF;
+
+        $q = new SplQueue();
+        $marked = array();
+
+        $q->enqueue(new CurrentStringState(null, null, $this->start));
+
+        while (!$q->isEmpty()) {
+            $currentStringState = $q->dequeue();
+            foreach ($this->rules as $index => $rule) {
+                if ($currentStringState->canTransform($rule)) {
+                    $newStringState = new CurrentStringState($currentStringState, $rule);
+                    if (!isset($marked[$newStringState->getStringState()])) {
+                        if ($newStringState->getStringState() == $this->goal) {
+                            $smallestDistance = $newStringState->getDistance();
+                        }
+
+                        $q->enqueue($newStringState);
+                        $marked[$newStringState->getStringState()] = true;
+                    }
+                }
+            }
+        }
+
+        if ($smallestDistance == INF) {
+            return "No Solution";
+        } else {
+            return $smallestDistance;
+        }
     }
 
 
@@ -91,21 +121,12 @@ class Rule
 
     public function canTransform($string)
     {
-        if (substr($string, -$this->length) == $this->suffix) {
-            return true;
-        } else {
-            return false;
-        }
-
+        return (substr($string, -$this->length) == $this->suffix);
     }
 
 
     public function transform($string)
     {
-        if (!$this->canTransform($string)) {
-            throw new \InvalidArgumentException("this string does not have a valid suffix to change");
-        }
-
         $result = substr_replace($string, $this->replacemnetSuffix, -$this->length);
         return $result;
     }
@@ -122,12 +143,11 @@ class CurrentStringState
     public function __construct($previousState = null, $rule = null, $stringState = null)
     {
         if ($previousState == null) {
-            $this->route = new \PHP_Algorithms\sandbox\Queue();
-//            $this->route->enqueue($rule);
+            $this->route = new SplQueue();
             $this->stringState = $stringState;
         } else {
-            $this->route = $previousState->getRoute();
-            $this->route = $this->route->enqueue($rule);
+            $this->route = clone $previousState->getRoute();
+            $this->route->enqueue($rule);
             $this->stringState = $rule->transform($previousState->getStringState());
         }
     }
@@ -151,7 +171,7 @@ class CurrentStringState
 
     public function getDistance()
     {
-        return $this->route->size();
+        return count($this->route);
     }
 }
 
@@ -188,34 +208,30 @@ function setupAndRun($filename)
                 $tempTestCase->addRule($rule);
                 $countRules++;
                 if ($countRules >= $tempTestCase->getN()) {
-                    $dist = $tempTestCase->tryToReachGoal();
+//                    $dist = $tempTestCase->tryToReachGoal();
+                    $dist = $tempTestCase->tryToReachGoalWithCurrentStringState();
 
-                    $distanceDisplay = ($dist != INF)? $dist + 1 : "No Solution";
-
-                    echo "Case " . $numberOfTestCases . ": " . $distanceDisplay . "<br/>";
+                    echo "Case " . $numberOfTestCases . ": " . $dist . PHP_EOL;
                     unset($tempTestCase);
                 }
             }
 
         }
+        fclose($handle);
     } else {
         // error opening the file.
-        "no file exists";
-    }
+        exit("no file exists");
 
-    $count = 1;
-//    foreach ($project as $testCase) {
-//        $dist = $testCase->tryToReachGoal();
-//
-//        // add in 1 to account for starting point
-//        $distanceDisplay = ($dist != INF)? $dist + 1 : "No Solution";
-//
-//
-//        echo "Case " . $count . ": " . $distanceDisplay . "<br/>";
-//        $count++;
-//    }
+    }
 
 }
 
 
-setupAndRun("suffixRules.txt");
+print "please enter the test data filename relative to this file to get started" . PHP_EOL;
+
+$fh = fopen('php://stdin','r') or die($php_errormsg);
+while($s = fgets($fh,1024)) {
+    print "You typed: $s";
+    setupAndRun(trim($s));
+    exit;
+}
