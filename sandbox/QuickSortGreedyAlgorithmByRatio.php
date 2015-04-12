@@ -23,13 +23,11 @@
 
 namespace PHP_Algorithms\sandbox;
 
-use \PHP_Algorithms\sort\QuickSort;
-
 require_once __DIR__ . '/../vendor/autoload.php';
 
 
 
-class QuickSortGreedyAlgorithmByDifference extends QuickSortGreedyAlgorithm
+class QuickSortGreedyAlgorithmByRatio extends QuickSortGreedyAlgorithm
 {
     protected function less($i, $j)
     {
@@ -39,9 +37,9 @@ class QuickSortGreedyAlgorithmByDifference extends QuickSortGreedyAlgorithm
         }
 
 
-        if ($this->array[$i]["priorityByDifference"] > $this->array[$j]["priorityByDifference"]) {
+        if ($this->array[$i]["priorityByRatio"] > $this->array[$j]["priorityByRatio"]) {
             return true;
-        } elseif ($this->array[$i]["priorityByDifference"] < $this->array[$j]["priorityByDifference"]) {
+        } elseif ($this->array[$i]["priorityByRatio"] < $this->array[$j]["priorityByRatio"]) {
             return false;
         } elseif ($this->array[$i]["weight"] > $this->array[$j]["weight"]) {
             return true;

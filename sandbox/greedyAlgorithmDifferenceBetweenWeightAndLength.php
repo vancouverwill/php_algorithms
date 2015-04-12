@@ -43,3 +43,16 @@ if ($handle) {
 fclose($handle);
 
 var_dump($jobs);
+
+function calculateTotalCompletionTime($array)
+{
+    $total = 0;
+    asset($this->isSorted());
+
+    foreach ($array as $value) {
+        $total += $value["weightedCompletionTime"];
+    }
+    return $total;
+}
+
+

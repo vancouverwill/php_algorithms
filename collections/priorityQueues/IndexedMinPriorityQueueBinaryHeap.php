@@ -97,13 +97,13 @@ class IndexedMinPriorityQueueBinaryHeap
     /**
      * Add a new $key with index $i to the priority queue.
      */
-    public function insert($i, $key)
+    public function insert($index, $key)
     {
         // add x, and percolate it up to maintain heap invariant
         $this->N++;
-        $this->qp[$i] = $this->N;
-        $this->pq[$this->N] = $i;
-        $this->keys[$i] = $key;
+        $this->qp[$index] = $this->N;
+        $this->pq[$this->N] = $index;
+        $this->keys[$index] = $key;
         $this->swim($this->N);
         assert($this->isMinHeap());
     }
@@ -256,35 +256,4 @@ class IndexedMinPriorityQueueBinaryHeap
 }
 
 
-function showSampleUsage()
-{
-    $pq = new IndexedMinPriorityQueueBinaryHeap(5);
-    $pq->insert(1, 15);
-    $pq->insert(2, 175);
-    $pq->insert(3, 125);
-    $pq->insert(4, 25);
-    $pq->insert(5, 5);
 
-    echo "size:" . $pq->size() . "<br/>";
-    echo "isMinHeap:" . $pq->isMinHeap() . "<br/>";
-
-    echo "index:" . $pq->minIndex() . "<br/>";
-    echo "key" . $pq->minKey() . "<br/>";
-    $pq->delMin();
-
-    echo "index:" . $pq->minIndex() . "<br/>";
-    echo "key" . $pq->minKey() . "<br/>";
-    $pq->delMin();
-
-    echo "index:" . $pq->minIndex() . "<br/>";
-    echo "key" . $pq->minKey() . "<br/>";
-    $pq->delMin();
-
-    echo "index:" . $pq->minIndex() . "<br/>";
-    echo "key" . $pq->minKey() . "<br/>";
-    $pq->delMin();
-
-    echo "index:" . $pq->minIndex() . "<br/>";
-    echo "key" . $pq->minKey() . "<br/>";
-    $pq->delMin();
-}
