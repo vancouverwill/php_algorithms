@@ -26,7 +26,11 @@
  *
  */
 
-use PHP_Algorithms\collections\priorityQueues\IndexedMinPriorityQueueBinaryHeap;
+require_once(__DIR__ . "/../../../vendor/autoload.php");
+
+//require_once("/vendor/autoload.php");
+
+//use PHP_Algorithms\collections\priorityQueues\IndexedMinPriorityQueueBinaryHeap;
 
 
 
@@ -68,11 +72,11 @@ if ($handle) {
 }
 fclose($handle);
 
+echo "finished";
+//$heap = new IndexedMinPriorityQueueBinaryHeap(count($edges));
 
-$heap = new IndexedMinPriorityQueueBinaryHeap(count($edges));
-
-foreach ($edges as $key => $edge) {
-    $heap->insert($key, $edge["weight"]);
-}
+//foreach ($edges as $key => $edge) {
+//    $heap->insert($key, $edge["weight"]);
+//}
 
 echo "finished";
