@@ -86,5 +86,7 @@ class WeightedQuickUnionUF
             $this->sz[$rootP] += $this->sz[$rootQ];
         }
         $this->count--;
+
+        return true;
     }
 }

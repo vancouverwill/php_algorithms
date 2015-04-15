@@ -81,14 +81,14 @@ class IndexedMinPriorityQueueBinaryHeap
 
     /**
      *
-     * Return the index associated with the smallest key on the priority queue.
+     * Return the key associated with the smallest key on the priority queue.
      * @return type
      * @throws Exception
      */
     public function minKey()
     {
         if ($this->isEmpty()) {
-            throw new Exception("Priority queue underflow");
+            throw new \Exception("Priority queue underflow");
         }
         return $this->keys[$this->pq[1]];
     }

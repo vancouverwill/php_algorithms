@@ -26,15 +26,16 @@
  *
  */
 
-require_once(__DIR__ . "/../../../vendor/autoload.php");
+var_dump(ini_get('display_errors'));
 
-//require_once("/vendor/autoload.php");
+require_once(__DIR__ . "/../../vendor/autoload.php");
 
-//use PHP_Algorithms\collections\priorityQueues\IndexedMinPriorityQueueBinaryHeap;
+use PHP_Algorithms\collections\priorityQueues\IndexedMinPriorityQueueBinaryHeap;
+use PHP_Algorithms\graphs\WeightedQuickUnionUF;
 
 
 
-$handle = fopen("./", "r");
+$handle = fopen("./ClusterAlgorithmData.txt", "r");
 
 $nodes = 0;
 $edges = array();
@@ -60,7 +61,6 @@ if ($handle) {
 
         $edges[] = array("start" => $edgeA,
             "end" => $edgeB,
-            "priorityByDifference" => $weight - $length,
             "weight" => $edgeWeight);
 
 
@@ -73,10 +73,25 @@ if ($handle) {
 fclose($handle);
 
 echo "finished";
-//$heap = new IndexedMinPriorityQueueBinaryHeap(count($edges));
+$heap = new IndexedMinPriorityQueueBinaryHeap(count($edges));
 
-//foreach ($edges as $key => $edge) {
-//    $heap->insert($key, $edge["weight"]);
-//}
+foreach ($edges as $key => $edge) {
+    $heap->insert($key, $edge["weight"]);
+}
 
-echo "finished";
+$unionFind = new WeightedQuickUnionUF();
+$unionFind->createFixedSize($nodes);
+
+while ($heap->size() > 0) {
+    $edgeKey = $heap->delMin();
+    if ($unionFind->union($edges[$edgeKey]["start"],  $edges[$edgeKey]["end"])) {
+        if ($unionFind->countComponents() <= 2) {
+            break;
+        }
+    }
+}
+
+echo "<br/>" . $heap->minKey();
+
+
+echo " finished";
