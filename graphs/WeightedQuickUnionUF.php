@@ -74,7 +74,7 @@ class WeightedQuickUnionUF
         $rootP = $this->find($p);
         $rootQ = $this->find($q);
         if ($rootP == $rootQ) {
-            return;
+            return false;
         }
 
         // make smaller root point to larger one

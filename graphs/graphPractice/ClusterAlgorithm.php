@@ -5,12 +5,17 @@
  * Date: 15-04-11
  * Time: 4:13 PM
  *
- * all n nodes are seperate, we could consider at this stage as n clusters each with a size of 1
+ * Glossary :
+ * Cluster a collection of nodes with one or more
+ *
+ * we have a graph where all n nodes are distinct, we could consider at this stage as n clusters each with a size of 1
  * to find the next cluster we look for the edge with smallest weight/length, we need to check these two points are not already joined and join these two nodes/clusters together
  * when two separate clusters are joined, number of clusters is reduced by 1
  *
  * this seems like a perfect example for union find
  *
+ *
+ * pseudocode ----
  *
  * add all edges to heap
  *
@@ -26,7 +31,6 @@
  *
  */
 
-var_dump(ini_get('display_errors'));
 
 require_once(__DIR__ . "/../../vendor/autoload.php");
 
@@ -35,7 +39,8 @@ use PHP_Algorithms\graphs\WeightedQuickUnionUF;
 
 
 
-$handle = fopen("./ClusterAlgorithmData.txt", "r");
+//$handle = fopen("./ClusterAlgorithmData.txt", "r");
+$handle = fopen("./ClusterAlgorithmData2.txt", "r");
 
 $nodes = 0;
 $edges = array();
@@ -44,9 +49,6 @@ $clusters = array();
 
 if ($handle) {
     while (($line = fgets($handle)) !== false) {
-//        if (substr($line, 0, 5) == "<?php") {
-//            throw new \Exception("invalid data type, please use the last parameter in the url as the data string i.e. url/graphs/EdgeWeightedDiGraph.php/dijskstrasDataSmall.txt");
-//        }
 
         $line = str_replace("\n", "", $line);
         $data = preg_split('/\s+/', $line);
@@ -72,7 +74,8 @@ if ($handle) {
 }
 fclose($handle);
 
-echo "finished";
+//var_dump($edges);
+
 $heap = new IndexedMinPriorityQueueBinaryHeap(count($edges));
 
 foreach ($edges as $key => $edge) {
@@ -82,16 +85,40 @@ foreach ($edges as $key => $edge) {
 $unionFind = new WeightedQuickUnionUF();
 $unionFind->createFixedSize($nodes);
 
+$clusterAmount = 3;
+$clusterArray = array(2,3,4);
+
 while ($heap->size() > 0) {
     $edgeKey = $heap->delMin();
     if ($unionFind->union($edges[$edgeKey]["start"],  $edges[$edgeKey]["end"])) {
-        if ($unionFind->countComponents() <= 2) {
-            break;
+//        if ($unionFind->countComponents() <= $clusterAmount) {
+        if ( in_array($unionFind->countComponents(), $clusterArray)) {
+            echo "<br/>number of clusters " . $unionFind->countComponents() . "   size of smallest distance left  " .  $heap->minKey();
+//            break;
         }
     }
 }
 
-echo "<br/>" . $heap->minKey();
 
 
-echo " finished";
+//echo "<br/>number of clusters " . $clusterAmount;
+//echo "<br/>" . $heap->minKey();
+//echo "<br/>" . $heap->minIndex();
+//
+//echo "<br/>" . $heap->size();
+//
+//$number = 0;
+//
+//while (true) {
+//    if ($heap->size() <= 1) {
+//        break;
+//    }
+//    $number = $heap->delMin();
+//
+//}
+//
+//
+//echo "<br/>" . $number;
+
+
+
