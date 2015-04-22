@@ -65,8 +65,6 @@ if ($handle) {
             "end" => $edgeB,
             "weight" => $edgeWeight);
 
-
-
     }
 } else {
     // error opening the file.
