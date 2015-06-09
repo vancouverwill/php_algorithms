@@ -24,7 +24,7 @@
  * this seems like a perfect example for union find
  *
  *
- * 
+ *
  * pseudocode ----
  *
  * add all edges to heap
@@ -49,8 +49,10 @@ use PHP_Algorithms\graphs\WeightedQuickUnionUF;
 
 
 
-$handle = fopen("./ClusterAlgorithmData.txt", "r");
-//$handle = fopen("./ClusterAlgorithmData2.txt", "r");
+$fileName = "./ClusterAlgorithmData.txt";
+//$fileName = "./ClusterAlgorithmData2.txt";
+
+$handle = fopen($fileName, "r");
 
 $nodes = 0;
 $edges = array();
@@ -71,14 +73,15 @@ if ($handle) {
         $edgeB = $data[1];
         $edgeWeight = $data[2];
 
-        $edges[] = array("start" => $edgeA,
-            "end" => $edgeB,
-            "weight" => $edgeWeight);
+        $edges[] = array(
+                        "start" => $edgeA,
+                        "end" => $edgeB,
+                        "weight" => $edgeWeight);
 
     }
 } else {
     // error opening the file.
-    exit("error opening the file.");
+    exit("error opening the file. " . $fileName);
 }
 fclose($handle);
 
@@ -93,7 +96,6 @@ foreach ($edges as $key => $edge) {
 $unionFind = new WeightedQuickUnionUF();
 $unionFind->createFixedSize($nodes);
 
-$clusterAmount = 3;
 $clusterArray = array(2,3,4);
 
 $nodesLeft = $nodes;
@@ -102,7 +104,6 @@ while ($heap->size() > 0) {
     $edgeKey = $heap->delMin();
     $temp = $edges[$edgeKey];
     if ($unionFind->union($edges[$edgeKey]["start"],  $edges[$edgeKey]["end"])) {
-//        if ($unionFind->countComponents() <= $clusterAmount) {
         $nodesLeft--;
 
         $countComponents = $unionFind->countComponents();
