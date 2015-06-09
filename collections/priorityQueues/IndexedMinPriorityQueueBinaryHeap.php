@@ -73,7 +73,7 @@ class IndexedMinPriorityQueueBinaryHeap
     public function minIndex()
     {
         if ($this->isEmpty()) {
-            throw new Exception("Priority queue underflow");
+            throw new \Exception("Priority queue underflow");
         }
         return $this->pq[1];
     }

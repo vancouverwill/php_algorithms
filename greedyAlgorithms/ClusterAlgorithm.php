@@ -6,15 +6,25 @@
  * Time: 4:13 PM
  *
  * Glossary :
- * Cluster a collection of nodes with one or more
+ * Cluster - a collection of nodes with one or more nodes in it, before the graph has been clusters you could say in a graph of N nodes, there are N clusters each with a size of 1
  *
+ * goal :
+ * Reduce the number of clusters to a predetermined amount X left. We want to find the X clusters with the maximum spacing between the clusters
+ *
+ * technique:
  * we have a graph where all n nodes are distinct, we could consider at this stage as n clusters each with a size of 1
- * to find the next cluster we look for the edge with smallest weight/length, we need to check these two points are not already joined and join these two nodes/clusters together
+ * to find the next cluster we look for the edge with smallest weight/length,
+ * we need to check these two points are not already joined and can then join these two nodes/clusters together
  * when two separate clusters are joined, number of clusters is reduced by 1
+ * when we reach our desired amount of clusters X we have completed
  *
+ *
+ * Analysis:
+ * We have lots of separate groups and we efficiently want to keep count of the number of different groups and update them easily,
  * this seems like a perfect example for union find
  *
  *
+ * 
  * pseudocode ----
  *
  * add all edges to heap
@@ -32,15 +42,15 @@
  */
 
 
-require_once(__DIR__ . "/../../vendor/autoload.php");
+require_once(__DIR__ . "/../vendor/autoload.php");
 
 use PHP_Algorithms\collections\priorityQueues\IndexedMinPriorityQueueBinaryHeap;
 use PHP_Algorithms\graphs\WeightedQuickUnionUF;
 
 
 
-//$handle = fopen("./ClusterAlgorithmData.txt", "r");
-$handle = fopen("./ClusterAlgorithmData2.txt", "r");
+$handle = fopen("./ClusterAlgorithmData.txt", "r");
+//$handle = fopen("./ClusterAlgorithmData2.txt", "r");
 
 $nodes = 0;
 $edges = array();
@@ -86,12 +96,26 @@ $unionFind->createFixedSize($nodes);
 $clusterAmount = 3;
 $clusterArray = array(2,3,4);
 
+$nodesLeft = $nodes;
+
 while ($heap->size() > 0) {
     $edgeKey = $heap->delMin();
+    $temp = $edges[$edgeKey];
     if ($unionFind->union($edges[$edgeKey]["start"],  $edges[$edgeKey]["end"])) {
 //        if ($unionFind->countComponents() <= $clusterAmount) {
+        $nodesLeft--;
+
+        $countComponents = $unionFind->countComponents();
+
+        $minIndex = $heap->minIndex();
+
+        $minKey = $heap->minKey();
+
+        $temp2 = $edges[$minIndex];
+
         if ( in_array($unionFind->countComponents(), $clusterArray)) {
             echo "<br/>number of clusters " . $unionFind->countComponents() . "   size of smallest distance left  " .  $heap->minKey();
+
 //            break;
         }
     }
