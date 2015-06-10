@@ -1,18 +1,26 @@
 <?php
 namespace PHP_Algorithms\graphs;
 
+use SebastianBergmann\Exporter\Exception;
+
 class WeightedQuickUnionUF
 {
     private $id; // @array of integers parent of i
     private $sz; // @array number of objects in subtree rooted at i
     private $count; // int number of components
 
-    public function createFixedSize($N)
+    private $allowedExpansion;
+
+    private $startingIndex;
+
+    public function createFixedSize($N, $startingIndex = 0, $allowedExpansion = false)
     {
+        $this->allowedExpansion = $allowedExpansion;
+        $this->startingIndex = $startingIndex;
         $this->count = $N;
-        $this->id = new \SplFixedArray($N);
-        $this->sz = new \SplFixedArray($N);
-        for ($i = 0; $i < $N; $i++) {
+        $this->id = new \SplFixedArray($N + $startingIndex);
+        $this->sz = new \SplFixedArray($N + $startingIndex);
+        for ($i = $this->startingIndex; $i < ($N + $this->startingIndex); $i++) {
             $this->id[$i] = $i;
             $this->sz[$i] = 1;
         }
@@ -55,6 +63,7 @@ class WeightedQuickUnionUF
     public function find($p)
     {
         if (!isset($this->id[$p])) {
+            if ($this->allowedExpansion == false) { throw new Exception("union find out of range"); }
             return false;
         }
 

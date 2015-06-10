@@ -49,8 +49,7 @@ use PHP_Algorithms\graphs\WeightedQuickUnionUF;
 
 
 
-$fileName = "./ClusterAlgorithmData.txt";
-//$fileName = "./ClusterAlgorithmData2.txt";
+$fileName = "./ClusterAlgorithmData6.txt";
 
 $handle = fopen($fileName, "r");
 
@@ -61,6 +60,8 @@ $clusters = array();
 
 if ($handle) {
     while (($line = fgets($handle)) !== false) {
+
+        if(substr($line,0,2) == '//') continue; // ignore commented lines
 
         $line = str_replace("\n", "", $line);
         $data = preg_split('/\s+/', $line);
@@ -85,8 +86,7 @@ if ($handle) {
 }
 fclose($handle);
 
-//var_dump($edges);
-
+// add all edges to minimum priority heap
 $heap = new IndexedMinPriorityQueueBinaryHeap(count($edges));
 
 foreach ($edges as $key => $edge) {
@@ -94,54 +94,23 @@ foreach ($edges as $key => $edge) {
 }
 
 $unionFind = new WeightedQuickUnionUF();
-$unionFind->createFixedSize($nodes);
+$unionFind->createFixedSize($nodes, 1);
 
-$clusterArray = array(2,3,4);
-
-$nodesLeft = $nodes;
+$clusterArray = array(3,4);
 
 while ($heap->size() > 0) {
     $edgeKey = $heap->delMin();
+
+    if ($heap->size() < 1) break;
     $temp = $edges[$edgeKey];
     if ($unionFind->union($edges[$edgeKey]["start"],  $edges[$edgeKey]["end"])) {
-        $nodesLeft--;
-
-        $countComponents = $unionFind->countComponents();
-
-        $minIndex = $heap->minIndex();
-
-        $minKey = $heap->minKey();
-
-        $temp2 = $edges[$minIndex];
 
         if ( in_array($unionFind->countComponents(), $clusterArray)) {
             echo "<br/>number of clusters " . $unionFind->countComponents() . "   size of smallest distance left  " .  $heap->minKey();
-
-//            break;
         }
     }
 }
 
-
-
-//echo "<br/>number of clusters " . $clusterAmount;
-//echo "<br/>" . $heap->minKey();
-//echo "<br/>" . $heap->minIndex();
-//
-//echo "<br/>" . $heap->size();
-//
-//$number = 0;
-//
-//while (true) {
-//    if ($heap->size() <= 1) {
-//        break;
-//    }
-//    $number = $heap->delMin();
-//
-//}
-//
-//
-//echo "<br/>" . $number;
 
 
 
