@@ -1,5 +1,8 @@
 <?php
 
+require_once __DIR__ . '/../vendor/autoload.php';
+
+require_once("./binarySearch.php");
 
 function exampleBinarySearchUse()
 {
@@ -7,10 +10,11 @@ function exampleBinarySearchUse()
 
     $result = binarySearch(34, $array);
 
-    echo $result;
+    echo "\n" . $result;
 
     $array = array( 0, 2, 4, 6, 8, 10);
 
+    echo "<br/>";
     echo binarySearchGreaterThanOrEqual(7, $array);
     echo "<br/>";
     echo binarySearchGreaterThanOrEqual(8, $array);

@@ -24,6 +24,14 @@ function binarySearch($key, $sortedArray)
 }
 
 
+/**
+ *
+ * find the first number greater than or equal to the need in the sortedArray
+ *
+ * @param $needle
+ * @param $sortedArray
+ * @return int
+ */
 function binarySearchGreaterThanOrEqual($needle, $sortedArray)
 {
     $array =  $sortedArray;

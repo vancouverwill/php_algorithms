@@ -6,6 +6,16 @@ A CUT of a graph splits the graph into two non empty sets A and B.
 
 A graph with n vertices has 2^n cuts
 
+*Cyclic Graphs* - Contain at least one graph cycle
+
+*Acyclic Graph* - Cannot get back to the start point once began 
+
+Every directed acylic grap has a *sink* vertex (at least one), 
+
+a *source* vertex is a vertex with indegree zero, while a *sink* vertex is a vertex with outdegree zero.
+
+Only directed acyclic graphs can be topologicaly sorted. A topological sort is?
+
 ## Min Cut - The cut with fewest number of crossing edges.
 
 The minimum number of edges a graph can have is (n-1)
