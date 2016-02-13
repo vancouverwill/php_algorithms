@@ -107,9 +107,9 @@ class MaxPriorityQueueBinaryHeap
             throw new \Exception("Priority queue underflow");
         }
         $max = $this->pq[1];
-        $this->exch(1, $this->N--);
+        $this->exch(1, $this->N--); // N-- because we want to decrease the value after exchange has run
         $this->sink(1);
-        $this->pq[$this->N + 1] = null; // to avoid loiterig and help with garbage collection
+        $this->pq[$this->N + 1] = null; // to avoid loiterig and help with garbage collection, note N+1 because the element being removed doesn't count to the total anymore
         if ($this->N > 0 && $this->N == ((count($this->pq) - 1) /4)) {
             $this->resize(count($this->pq) / 2);
         }

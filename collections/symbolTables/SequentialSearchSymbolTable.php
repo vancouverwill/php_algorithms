@@ -7,6 +7,8 @@
  *
  * based on the JAVA example http://algs4.cs.princeton.edu/34hash/SequentialSearchST.java.html
  *
+ * This is a very inefficient implementation and just shown as the simplest possible kind of symbol table
+ *
  * Created by PhpStorm.
  * User: will
  * Date: 2014-01-15

@@ -18,9 +18,9 @@ namespace PHP_Algorithms\collections\priorityQueues;
 
 class IndexedMinPriorityQueueBinaryHeap
 {
-    private $pq;  /** @var  SplFixedArray int - binary heap using 1-based indexing */
-    private $qp;  /** @var  SplFixedArray int - inverse of pq - qp[pq[i]] = pq[qp[i]] = i */
-    private $keys;  /** @var  SplFixedArray object - keys[i] = priority of i */
+    private $pq;  /** @var  \SplFixedArray int - binary heap using 1-based indexing */
+    private $qp;  /** @var  \SplFixedArray int - inverse of pq - qp[pq[i]] = pq[qp[i]] = i */
+    private $keys;  /** @var  \SplFixedArray object - keys[i] = priority of i */
     private $NMAX; // max number of elements on priority queue
     private $N; //number of items on priority queue so far
 
@@ -58,7 +58,7 @@ class IndexedMinPriorityQueueBinaryHeap
     public function contains($i)
     {
         if ($i < 0 || $i >= $this->NMAX) {
-            throw new InvalidArgumentException("Out of bounds");
+            throw new \InvalidArgumentException("Out of bounds");
         }
         return ($this->qp[$i] != -1);
     }
