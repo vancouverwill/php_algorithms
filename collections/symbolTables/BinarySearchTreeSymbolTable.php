@@ -7,6 +7,8 @@
  *
  * A symbol table implemented with a binary search tree.
  *
+ * Note it is NOT balanced like a Red Black Tree so potentially it could be not optimal depending which order the data is entered
+ *
  * example in JAVA : http://algs4.cs.princeton.edu/32bst/BST.java.html
  *
  * explanation : http://algs4.cs.princeton.edu/32bst/
@@ -35,7 +37,7 @@ class BinarySearchTreeSymbolTable
     //
     public function sizeAll()
     {
-            $size = $this->size($this->root);
+        $size = $this->size($this->root);
         return $size;
     }
 
@@ -144,12 +146,12 @@ class BinarySearchTreeSymbolTable
      * If the left link of the root is null, the smallest key in a BST is the key at the root;
      * if the left link is not null, the smallest key in the BST is the smallest key in
      * the subtree rooted at the node referenced by the left link.
-     * @throws NoSuchElementException
+     * @throws Exception
      */
     public function deleteMin()
     {
         if ($this->isEmpty()) {
-            throw new NoSuchElementException("Symbol table underflow");
+            throw new \Exception("Symbol table underflow");
         }
         $this->root = $this->deleteMinRecursive($this->root);
         assert($this->check());
@@ -167,7 +169,25 @@ class BinarySearchTreeSymbolTable
     }
 
 
-    //todo deleteMaxRecursive
+    public function deleteMax()
+    {
+        if ($this->isEmpty()) {
+            throw new \Exception("Symbol table underflow");
+        }
+        $this->root = $this->deleteMaxRecursive($this->root);
+        assert($this->check());
+    }
+
+
+    private function deleteMaxRecursive($nodeX)
+    {
+        if ($nodeX->right == null) {
+            return $nodeX->left;
+        }
+        $nodeX->right = $this->deleteMaxRecursive($nodeX->right);
+        $nodeX->N = $this->size($nodeX->left) + $this->size($nodeX->right) + 1;
+        return $nodeX;
+    }
     /***********************************************************************
      *  Min, max, floor, and ceiling
      ***********************************************************************/
@@ -418,19 +438,6 @@ class BinarySearchTreeSymbolTable
     }
 
 
-    // are the size fields correct?
-    /*
-     * @param Node $node
-     * @return recursive
-     */
-//    private function isSizeConsistent($node)
-//    {
-//        if ($node == null) return true;
-//        if ($node->getNum() != $this->size($node->getLeft()) + $this->size($node->getRight()) + 1) return false;
-//        return $this->isSizeConsistent($node->getLeft()) && $this->isSizeConsistent($node->getRight());
-//    }
-
-
 
     /**
      *
@@ -514,22 +521,28 @@ class BinarySearchTreeNode
     }
 }
 
-//Example Usage
+function exampleUsage() {
+    $symbolTable = new BinarySearchTreeSymbolTable();
 
-$symbolTable = new BinarySearchTreeSymbolTable();
+    echo $symbolTable->sizeAll() . "<br/>";
 
-$symbolTable->put("snow", 1);
-$symbolTable->put("sun", 2);
-$symbolTable->put("rain", 3);
-$symbolTable->put("rain", 4);
-$symbolTable->put("rain", 3);
-//$symbolTable->put("shine", 4);
-$symbolTable->put("cloud", 5);
-$symbolTable->put("cloud", 7);
-//$symbolTable->put("cloud", 9);
+    $symbolTable->put(1, "snow");
+    $symbolTable->put(2, "sun");
+    $symbolTable->put(3, "rain");
+    $symbolTable->put(4, "rain");
 
-//echo "<h2>Size:" . $symbolTable->sizeAll() . "</h2>";
-////
-//echo "<h2>get sun:" . $symbolTable->get("sun") . "</h2>";
-//echo "<h2>get rain:" . $symbolTable->get("rain") . "</h2>";
-//echo "<h2>get cloud:" . $symbolTable->get("cloud") . "</h2>";
+
+    $symbolTable->put(5, "cloud");
+
+    echo $symbolTable->sizeAll() . "<br/>";
+
+    $symbolTable->put(7, "cloud");
+
+    echo "<p>Size:" . $symbolTable->sizeAll() . "</p>";
+
+    echo "<p>get sun:" . $symbolTable->get(5) . "</p>";
+    echo "<p>get rain:" . $symbolTable->get(7) . "</p>";
+    echo "<p>get cloud:" . $symbolTable->get(4) . "</p>";
+}
+
+//exampleUsage();

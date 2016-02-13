@@ -15,7 +15,7 @@ Binary Search Trees enforce this order, binary trees don't necessarily enforce
 
 As keys are put on at different times there are many possible trees for a set of keys
 
-height could be anywhere from log(n) to n
+height could be anywhere from log(n) (best case) to n (worst case)
 
 # Functions
 
@@ -33,7 +33,7 @@ INSERT                      O(log(n)) - ?????? // todo finish insert
 DELETE                      O(log(n))
     Search for deleted key k
     1. If k has no children then just delete k's node from tree
-    2. If k has one child (unique child swaps with position previsouly held by k)
+    2. If k has one child (unique child swaps with position previously held by k)
     3. If k has 2 children +. Need to find k's predecessor l. get left child ptr, then right child ptr until no longer possible. swap k and l
 
 Examples
@@ -64,6 +64,15 @@ A balanced search tree spreads out nodes evenly so the bottom of the tree is clo
 3. No 2 reds in a row, therefore a red node must have two black children
 
 4. Every root-NULL path has same number of black nodes
+
+## Choosing a tree
+
+Balanced Binary Search Tree is good if you need rich set of functions such as insertion, deletion, min, max
+
+If you just need min OR max (but not both) then binary heap would be enough
+
+For fast lookups ( insertion, deletion) only then use a hash table
+
 
 
 
