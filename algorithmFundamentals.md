@@ -37,7 +37,7 @@ n >= n0
 
 ## Theta Notation
 
-T(n) = Θ(f(n)) If and only if T(n) = Ω(f(n)) and T(n) = o(f(n))
+T(n) = Θ(f(n)) If and only if T(n) = Ω(f(n)) AND T(n) = o(f(n))
 
 and there exists constants c1, c2 n0 > 0 such that
 
@@ -48,7 +48,7 @@ and there exists constants c1, c2 n0 > 0 such that
 # Data Structures
 
 -Organize data so that it can be accessed quickly
-- Different data structures support different sets of operations => suitable for different types of tasks
+- There are so many because different data structures support different sets of operations => suitable for different types of tasks
 - Rule of thumb - choose the "minimal" data structure that supports all the operations that you need.
 
 

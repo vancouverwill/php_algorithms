@@ -64,6 +64,7 @@ Amazing:
 ### Solution 1 (Separate) Chaining
 -keep linked list in each bucket
 - given a key/object x, perform insert/delete/lookup in the list A[h(x)]
+- uses a lot of space
 
 ### Solution 2 Open Addressing / Linear Probing
 - hash function now specifies probe sequence h1(x), h2(x)...

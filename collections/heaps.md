@@ -3,7 +3,7 @@
 - A container for objects that have keys
 
 - insert O(log(n)) - insert at end of last level then swim up until balanced
-- delete O(log(n)) -
+- delete O(log(n)) - only applies for indexed heap
 - extractMin O(log(n)) - delete root, set last leaf to be new root, sink root until balanced
 
 
