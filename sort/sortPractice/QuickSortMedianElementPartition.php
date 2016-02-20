@@ -246,18 +246,15 @@ function medianTest()
     echo $sort->getNoComparisons();
 }
 
-//$array= array(10,20,4,3,5,19,11,12,1,7,8,2);
-//
-//$sort = new QuickSortMedianElementPartition($array);
-//echo $sort->getMedianParitionIndex(0,11);
-//echo "<br/>";
-//echo $sort->getMedianParitionIndex(3,5);
-//
-//echo "<br/>";
-//echo $sort->getMedianParitionIndex(2,4);
+function test() {
+$array= array(10,20,4,3,5,19,11,12,1,7,8,2);
+
+$sort = new QuickSortMedianElementPartition($array);
+
+medianTest();
+
+$testSort = new QuickSortMedianElementPartition(null);
+$testSort->testPartition();
+}
 
 
-//medianTest();
-
-//$testSort = new QuickSortMedianElementPartition(null);
-//$testSort->testPartition();

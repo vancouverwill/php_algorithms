@@ -1,11 +1,5 @@
 <?php
 
-$sortedArray = array(0, 4, 6, 9, 13, 17, 24, 32);
-
-
-$desiredNumber = 30;
-
-
 function findPair($sortedArray, $desiredNumber)
 {
     $lo = 0;
@@ -25,6 +19,9 @@ function findPair($sortedArray, $desiredNumber)
     echo 'lo:' . $lo . ' .hi:' . $hi;
 }
 
+
+$sortedArray = array(0, 4, 6, 9, 13, 17, 24, 32);
+$desiredNumber = 30;
 echo findPair($sortedArray, $desiredNumber);
 
 

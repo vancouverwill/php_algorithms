@@ -67,80 +67,96 @@ for ($i = 0; $i < $bits; $i ++) {
     return $twoBitCombinations;
 }
 
-$bits = 4;
+function testGenerateBitCombinations() {
 
-$oneBitCombinations = generateOneBitCombinations($bits);
-$twoBitCombinations = generateTwoBitCombinations($bits);
-echo "oneBitCombinations";
-var_dump($oneBitCombinations);
-echo "twoBitCombinations";
-var_dump($twoBitCombinations);
-$oneBitCombinationsPlustwentyFourChooseTwo = array_merge($oneBitCombinations, $twoBitCombinations);
+    $bits = 4;
 
-echo "oneBitCombinationsPlustwentyFourChooseTwo";
-var_dump($oneBitCombinationsPlustwentyFourChooseTwo);
+    $oneBitCombinations = generateOneBitCombinations($bits);
+    $twoBitCombinations = generateTwoBitCombinations($bits);
+    echo "oneBitCombinations";
+    var_dump($oneBitCombinations);
+    echo "twoBitCombinations";
+    var_dump($twoBitCombinations);
+    $oneBitCombinationsPlustwentyFourChooseTwo = array_merge($oneBitCombinations, $twoBitCombinations);
+
+    echo "oneBitCombinationsPlustwentyFourChooseTwo";
+    var_dump($oneBitCombinationsPlustwentyFourChooseTwo);
+}
+
+function getOneBitCombinationsPlustwentyFourChooseTwo($bits) {
+    $oneBitCombinations = generateOneBitCombinations($bits);
+    $twoBitCombinations = generateTwoBitCombinations($bits);
+    $oneBitCombinationsPlustwentyFourChooseTwo = array_merge($oneBitCombinations, $twoBitCombinations);
+
+    return $oneBitCombinationsPlustwentyFourChooseTwo;
+}
 
 
 
+function funClusterAlgorithm() {
+
+    $handle = fopen("./ClusterAlgorithmBitsData1.txt", "r");
+    $lineNum = 0;
+    $nodes = 0;
+    $numberOfBitsPerNode = 0;
+    $nodeArray = array();
+    //$clusters = array();
 
 
-$handle = fopen("./ClusterAlgorithmBitsData1.txt", "r");
-$lineNum = 0;
-$nodes = 0;
-$numberOfBitsPerNode = 0;
-$nodeArray = array();
-//$clusters = array();
+    if ($handle) {
+        while (($line = fgets($handle)) !== false) {
 
+            if(substr($line,0,2) == '//') continue; // ignore commented lines
 
-if ($handle) {
-    while (($line = fgets($handle)) !== false) {
+            $line = str_replace("\n", "", $line);
+            $data = preg_split('/\s+/', $line);
 
-        if(substr($line,0,2) == '//') continue; // ignore commented lines
-
-        $line = str_replace("\n", "", $line);
-        $data = preg_split('/\s+/', $line);
-
-        if ($lineNum == 0) {
-            $nodes = $data[0];
-            $numberOfBitsPerNode = $data[1];
-//            continue;
-        }
-        else {
-            $node = '';
-
-            for ($i = 0; $i < $numberOfBitsPerNode; $i++) {
-                $node .= $data[$i];
+            if ($lineNum == 0) {
+                $nodes = $data[0];
+                $numberOfBitsPerNode = $data[1];
+    //            continue;
             }
+            else {
+                $node = '';
 
-            $nodeArray[] = $node;
+                for ($i = 0; $i < $numberOfBitsPerNode; $i++) {
+                    $node .= $data[$i];
+                }
+
+                $nodeArray[] = $node;
+            }
+    //        $edgeA = $data[0];
+    //        $edgeB = $data[1];
+    //        $edgeWeight = $data[2];
+    //
+    //        $edges[] = array("start" => $edgeA,
+    //            "end" => $edgeB,
+    //            "weight" => $edgeWeight);
+            $lineNum++;
         }
-//        $edgeA = $data[0];
-//        $edgeB = $data[1];
-//        $edgeWeight = $data[2];
-//
-//        $edges[] = array("start" => $edgeA,
-//            "end" => $edgeB,
-//            "weight" => $edgeWeight);
-        $lineNum++;
+    } else {
+        // error opening the file.
+        exit("error opening the file.");
     }
-} else {
-    // error opening the file.
-    exit("error opening the file.");
-}
-fclose($handle);
+    fclose($handle);
 
-echo "nodeArray";
-var_dump($nodeArray);
+    echo "nodeArray";
+    var_dump($nodeArray);
 
+    $testNumbers = array();
 
-$testNumbers = array();
+    $oneBitCombinationsPlustwentyFourChooseTwo = getOneBitCombinationsPlustwentyFourChooseTwo(4);
 
-foreach ($nodeArray AS $testNumber) {
-    foreach ($oneBitCombinationsPlustwentyFourChooseTwo AS $hammingDistance) {
-        $requiredNumber = $hammingDistance ^ $testNumber;
-        $requiredNumber2 = (int)$hammingDistance ^ (int)$testNumber;
-        if (in_array($requiredNumber, $testNumbers)) {
+    foreach ($nodeArray AS $testNumber) {
+        foreach ($oneBitCombinationsPlustwentyFourChooseTwo AS $hammingDistance) {
+            $requiredNumber = $hammingDistance ^ $testNumber;
+            $requiredNumber2 = (int)$hammingDistance ^ (int)$testNumber;
+            if (in_array($requiredNumber, $testNumbers)) {
                 // this is what we are looking for
+            }
         }
     }
+
 }
+
+

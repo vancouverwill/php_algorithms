@@ -23,10 +23,6 @@ class TwoSumProblem
     private $array;
     private $pairCount;
 
-    public function __construct()
-    {
-
-    }
 
 
     public function run($filename, $lowerRangeLimit, $upperRangeLimit)
@@ -52,12 +48,6 @@ class TwoSumProblem
         }
         fclose($handle);
 
-//        $QuickSort = new QuickSort();
-//        $QuickSort->intialize($this->array);
-//        $QuickSort->quick_sort();
-//
-//
-//        $sortedArray = $QuickSort->getSortedArray();
 
         sort($this->array);
 

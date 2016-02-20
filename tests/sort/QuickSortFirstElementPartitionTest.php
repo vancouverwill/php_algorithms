@@ -8,14 +8,13 @@ class QuickSortFirstElementPartitionTest extends \PHPUnit_Framework_TestCase
 {
 
 
-//    public function testIntialize()
-//    {
-//        $sampleArray = array(5, 3, 5, 1, 4, 6 ,9, 7, 5);
-//        $a = new QuickSortFirstElementPartition($sampleArray);
-////        $a->intialize($sampleArray);
-//
-//        $this->assertEquals($sampleArray, $a->getArray());
-//    }
+    public function testIntialize()
+    {
+        $sampleArray = array(5, 3, 5, 1, 4, 6 ,9, 7, 5);
+        $a = new QuickSortFirstElementPartition($sampleArray);
+
+        $this->assertEquals($sampleArray, $a->getArray());
+    }
 
     public function additionProvider()
     {
@@ -36,7 +35,6 @@ class QuickSortFirstElementPartitionTest extends \PHPUnit_Framework_TestCase
     public function testQuickSort($array)
     {
         $a = new QuickSortFirstElementPartition($array);
-//        $a->intialize($array);
         $a->startSort();
         $this->assertEquals(true, $a->isSorted(0, count($array) - 1));
     }

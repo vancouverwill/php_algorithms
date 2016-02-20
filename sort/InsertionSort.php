@@ -34,9 +34,6 @@ class InsertionSort
      */
     public function insertion_sort()
     {
-//        $this->array = $input_array;
-//        $this->size = count($input_array);
-        
         for ($index = 0; $index < $this->size; $index++) {
             for ($j = $index; $j > 0 && $this->array[$j] < $this->array[$j - 1]; $j--) {
                 $this->exch($j, $j -1);

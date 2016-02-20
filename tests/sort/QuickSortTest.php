@@ -16,13 +16,14 @@ class QuickSortTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($sampleArray, $a->getArray());
     }
 
-    public function additionProvider()
+    public function testDataProvider()
     {
         return array(
             array(array(1)),
-//            array(array(1, 0, 0, 0, 0)),   todo this creates an infinite loop and breaks tests. This needs to be examined why
-//            array(array(0, 0, 0, 0, 0, 0, 0)),
-//            array(array(1, 1, 1, 1, 1)),
+            array(array(1, 0, 0)),
+            array(array(1, 0, 0, 0, 0)),
+            array(array(0, 0, 0, 0, 0, 0, 0)),
+            array(array(1, 1, 1, 1, 1)),
             array(array(0, 1, 2, 3, 4)),
             array(array(4, 3, 2, 1, 0)),
             array(array(84, 99, 64, 45, 37))
@@ -31,7 +32,7 @@ class QuickSortTest extends \PHPUnit_Framework_TestCase
 
 
     /**
-     * @dataProvider additionProvider
+     * @dataProvider testDataProvider
      */
     public function testQuickSort($array)
     {
@@ -47,20 +48,19 @@ class QuickSortTest extends \PHPUnit_Framework_TestCase
             array(array(3, 5, 2, 1, 4), 2),
             array(array(5, 3, 2, 1, 4), 4),
             array(array(5, 4, 2, 1, 3), 4),
-            array(array(4, 5, 2, 1, 3), 4),
+            array(array(4, 5, 2, 1, 3), 3),
         );
     }
 
     /**
      * @dataProvider partitionProvider
      */
-    public function testQuickSortPartition($array, $partitionIndex)
+    public function testQuickSortPartition($array, $expectedPartitionIndex)
     {
         $a = new QuickSort();
         $a->intialize($array);
-        $a->intialize($array);
         $temp = $a->partition(0, 4);
 
-        $this->assertEquals($partitionIndex, $temp);
+        $this->assertEquals($expectedPartitionIndex, $temp);
     }
 }

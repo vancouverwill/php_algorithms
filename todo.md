@@ -1,8 +1,12 @@
 TO DO & IDEAS
 ============
 
+* red black tree
 * keyIndexedCounting
 * LSD
+* MSD
+* cluster algorithm
+* test KosarajuSCCnonRecursive - explain what exactly about this is so slow
 
 
 * review final exam for algorithms course. starting from question 13

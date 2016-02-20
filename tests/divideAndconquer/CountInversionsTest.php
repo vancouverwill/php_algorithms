@@ -25,7 +25,6 @@ class CountInversionsTest extends \PHPUnit_Framework_TestCase
     {
         $countInversions = new CountInversions();
         $countInversions->countSortInit($array);
-//        $countInversions->getTotal();
         $this->assertEquals($countInversions->getTotal(), $count);
     }
 

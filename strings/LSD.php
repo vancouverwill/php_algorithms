@@ -26,8 +26,6 @@ class LSD
             $count = new \splFixedArray($R + 1);
             // compute frequency counts
             for ($i = 0; $i < $N; $i++) {
-                $temp = $a[$i]{$d};
-                $temp2 = ord($a[$i]{$d});
                 $count[ord($a[$i]{$d}) + 1] = $count[ord($a[$i]{$d}) + 1] + 1;
             }
 
@@ -38,9 +36,6 @@ class LSD
 
             //distribute
             for ($i = 0; $i < $N; $i++) {
-                $temp = $a[$i];
-                $temp1 = $a[$i]{$d};
-                $temp2 = $count[ord($a[$i]{$d})];
                 $aux[$count[ord($a[$i]{$d})]] =
                     $a[$i];
                 $count[ord($a[$i]{$d})] = $count[ord($a[$i]{$d})] + 1;

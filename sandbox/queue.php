@@ -67,17 +67,19 @@ class Node
     }
 }
 
-//$queue = new Queue();
-//
-//$queue->enqueue("red");
-//$queue->enqueue("orange");
-//$queue->enqueue("yellow");
-//$queue->enqueue("blue");
-//
-//echo $queue->size() . '<br/>';
-//echo $queue->isEmpty() . '<br/>';
-//
-//
-//while (!$queue->isEmpty()) {
-//    echo '' . $queue->dequeue() . '<br/>';
-//}
+
+function show() {
+    $queue = new Queue();
+
+    $queue->enqueue("red");
+    $queue->enqueue("orange");
+    $queue->enqueue("yellow");
+    $queue->enqueue("blue");
+
+    echo $queue->size() . '<br/>';
+    echo $queue->isEmpty() . '<br/>';
+
+    while (!$queue->isEmpty()) {
+        echo '' . $queue->dequeue() . '<br/>';
+    }
+}

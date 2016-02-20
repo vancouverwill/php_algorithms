@@ -18,7 +18,6 @@ class Graph
     {
         $this->V = $v;
         $this->E = 0;
-//        $this->adj = array(array());
 
         $this->adj = new \SplFixedArray($v);
         for ($i = 0; $i < $this->getV(); $i++) {
@@ -29,10 +28,6 @@ class Graph
 
     public function addEdge($v, $w)
     {
-//        $this->adj[$v] []= $w;
-//        $this->adj[$w] []= $v;
-//        $this->E++;
-
         if (!isset($this->adj[$v])) {
             exit("v is " . $v);
         }

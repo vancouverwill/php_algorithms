@@ -16,19 +16,29 @@ class QuickSortGreedyAlgorithmByDifferenceTest extends \PHPUnit_Framework_TestCa
 
     public function testIntialize()
     {
-        $sampleArray = array(5, 3, 5, 1, 4, 6 ,9, 7, 5);
+        $sampleArray = array(
+        array("id" => 1, "weight" => 20, "length" => 10),
+        array("id" => 2, "weight" => 40, "length" => 10),
+        array("id" => 3, "weight" => 20, "length" => 50),
+    );
         $a = new QuickSortGreedyAlgorithmByDifference();
         $a->intialize($sampleArray);
 
-        $this->assertEquals($sampleArray, $a->getArray());
+         $expectedArray = array(
+             array("id" => 1, "weight" => 20, "length" => 10, "priorityByDifference" => 20 - 10),
+             array("id" => 2, "weight" => 40, "length" => 10, "priorityByDifference" => 40 - 10),
+             array("id" => 3, "weight" => 20, "length" => 50, "priorityByDifference" => 20 - 50),
+         );
+
+        $this->assertEquals($expectedArray, $a->getArray());
     }
 
     public function testSort()
     {
         $sample = array(
-               array("id" => 1, "weight" => 20, "length" => 10, "priorityByDifference" => 20 - 10, "priorityByRatio" => 20 / 10),
-               array("id" => 2, "weight" => 40, "length" => 10, "priorityByDifference" => 40 - 10, "priorityByRatio" => 40 / 10),
-               array("id" => 3, "weight" => 20, "length" => 50, "priorityByDifference" => 20 - 50, "priorityByRatio" => 20 / 50),
+               array("id" => 1, "weight" => 20, "length" => 10),
+               array("id" => 2, "weight" => 40, "length" => 10),
+               array("id" => 3, "weight" => 20, "length" => 50),
            );
 
         $a = new QuickSortGreedyAlgorithmByDifference();
@@ -37,8 +47,6 @@ class QuickSortGreedyAlgorithmByDifferenceTest extends \PHPUnit_Framework_TestCa
         $a->quickSort();
 
         $this->assertEquals(true, $a->isSorted());
-
-        echo $a->getArray()[2]["id"];
 
         $this->assertEquals(2,$a->getArray()[0]["id"]);
         $this->assertEquals(3,$a->getArray()[2]["id"]);

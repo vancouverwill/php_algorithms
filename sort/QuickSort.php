@@ -12,11 +12,11 @@ class QuickSort
     protected $array;
     protected $size;
 
-    protected $debug = false;
+    protected $debug = true;
     
     /**
      *  setup the class
-     * @param type $inputArray
+     * @param array $inputArray
      */
     public function intialize($inputArray)
     {
@@ -32,7 +32,7 @@ class QuickSort
     {
  
         if ($this->debug == false) {
-//            shuffle($this->array);
+            shuffle($this->array);
         }
         $this->sort(0, count($this->array) -1);
      
@@ -44,9 +44,7 @@ class QuickSort
         if ($hi <= $lo) {
             return;
         }
-        if ($lo == 5 && $hi == 9) {
-            $temp = 2;
-        }
+
         $j = $this->partition($lo, $hi);
         $this->sort($lo, $j - 1);
         $this->sort($j + 1, $hi);
@@ -62,25 +60,22 @@ class QuickSort
      */
     public function partition($lo, $hi)
     {
-        $i = $lo + 1;
-        $j = $hi;
+        $i = $lo;
+        $j = $hi + 1;
         $comparator = $lo;
 
         while (true) {
             // find item on lo to swap
             // look for item higher than comparator coming from the left, if find item higher then stop this while loop
-            while ($this->less($i, $comparator)) {
-                $i++;
+            for (;$i++, $this->less($i, $comparator);) {
                 if ($i >= $hi) {
                     break;
                 }
-
             }
 
             // find item on hi to swap
             // look for item lower than comparator coming from the right
-            while ($this->less($comparator, $j)) {
-                $j--;
+            for (;$j--, $this->less($comparator, $j);) {
                 if ($j <= $lo) {
                     break;
                 }
@@ -111,12 +106,6 @@ class QuickSort
 
     protected function less($i, $j)
     {
-        if ($i >=  $this->size || $j >=  $this->size) {
-            $temp = "huh";
-            $temp ++;
-        }
-        $temp = "great";
-
         if ($this->array[$i] < $this->array[$j]) {
             return true;
         } else {

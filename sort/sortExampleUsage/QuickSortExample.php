@@ -18,18 +18,12 @@ function test()
     $working_short2 = array( 99, 45, 64);
     $working_short3 = array( 99, 64, 45);
 
-    $arrayEqual = array(0,0,0,0,1,1);
-    $arrayEqual = array(0, 0, 0, 0, 0, 0, 0);
-//    $arrayEqual = array(1, 0, 0, 0, 0);
-
-//    $breaking_example = array(84, 99, 64, 45, 37);
+    $arrayEqual = array(1, 0, 0, 0, 0);
     $breaking_example = array(84, 99, 64, 37, 45);
-    $breaking_example2 = array( 16, 99, 64, 15, 14);
 
 
-//    $obj->intialize($array_full2);
-    $obj->intialize($breaking_example);
-//    $obj->intialize($array_short);
+    $obj->intialize($arrayEqual);
+
     echo 'Initial Array : ';
     $obj->show();
     $obj->quickSort();

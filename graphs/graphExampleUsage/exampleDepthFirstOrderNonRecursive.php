@@ -1,4 +1,6 @@
 <?php
+require_once("../../vendor/autoload.php");
+
 /**
  * Created by PhpStorm.
  * User: Will Melbourne
@@ -6,11 +8,12 @@
  * Time: 8:17 AM
  */
 
-
+use PHP_Algorithms\graphs\DiGraph;
+use PHP_Algorithms\graphs\DepthFirstOrderNonRecursive;
 
 function exampleDepthFirstOrderNonRecursive()
 {
-    $filename = "DiGraphTestData1.txt";
+    $filename = "../DiGraphTestData1.txt";
 //$filename = "KosarajuSCCLargeDataSet.txt";
 
     $handle = fopen($filename, "r");

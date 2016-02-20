@@ -41,12 +41,10 @@
  *
  */
 
-
 require_once(__DIR__ . "/../vendor/autoload.php");
 
 use PHP_Algorithms\collections\priorityQueues\IndexedMinPriorityQueueBinaryHeap;
 use PHP_Algorithms\graphs\WeightedQuickUnionUF;
-
 
 
 $fileName = "./ClusterAlgorithmData6.txt";

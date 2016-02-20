@@ -54,9 +54,6 @@ class MedianMaintenance
 
                 $this->balance();
 
-//                echo $this->showMedian();
-//                echo "<br/>";
-
 
                 $this->sumMedians += $this->showMedian();
 

@@ -65,28 +65,7 @@ class MSD
 
         //distribute
         for ($i = $lo; $i <= $hi; $i++) {
-//            $temp = $a[$i];
-//            $temp1 = $a[$i]{$d};
-//            $temp2 = $count[ord($a[$i]{$d})];
-//            $aux[$count[ord($a[$i]{$d}) + 1]] =
-//                $a[$i];
-//            $count[ord($a[$i]{$d})] = $count[ord($a[$i]{$d})] + 1;
-
-
-
             $c = self::charAt($a[$i], $d);
-            if ($c + 1 >= count($count) || $c + 1 < 0) {
-                $temp = 2 + 2;
-            }
-            if ($count[$c + 1] >= count(self::$aux) || $count[$c + 1] < 0) {
-                $temp = 2;
-            }
-            if ($i >= count($a) || $i < 0) {
-                $temp = 2;
-            }
-//            if (!isset($a[$i])) {
-//                $temp = 2;
-//            }
             self::$aux[$count[$c + 1]]
                 = $a[$i];
             $count[$c + 1] = $count[$c + 1] + 1;
@@ -103,8 +82,6 @@ class MSD
         for ($r = 0; $r < self::$R; $r++) {
             self::sortRecursive($a, $lo + $count[$r], $lo + $count[$r + 1] - 1, $d + 1);
         }
-        $temp = 1;
-//        return $a;
     }
 
 
@@ -121,28 +98,19 @@ class MSD
         }
 
         self::checkNothingNull($a);
-//        return $a;
     }
 
     private static function exch($a, $i, $j)
     {
-        $temp = $a[$i];
+        $oldA = $a[$i];
         $a[$i] = $a[$j];
-        $a[$j] = $temp;
+        $a[$j] = $oldA;
 
         return $a;
     }
 
     private static function less($a, $b, $d)
     {
-        $temp = $d;
-        $temp1 = $a{$d};
-        $temp2 = ord($a{$d});
-
-        $tempA = $d;
-        $tempA1 = $b{$d};
-        $tempA2 = ord($b{$d});
-
         return strcmp(substr($a, $d), substr($b, $d)) < 0;
 
 
@@ -164,7 +132,7 @@ class MSD
 }
 
 
-$students = array("Johny", "Kathy", "Chary", "Willy", "Billy", "James");
+$students = array("Johny", "Williamslongname", "Kathy", "Adrianalsohasalongtestname", "Chary", "Willy", "Billy", "James");
 
 $array = MSD::sort($students, 5);
 

@@ -103,6 +103,10 @@ class QuickSortFirstElementPartition
         }
         return true;
     }
+
+    public function getArray() {
+        return $this->array;
+    }
 }
 
 

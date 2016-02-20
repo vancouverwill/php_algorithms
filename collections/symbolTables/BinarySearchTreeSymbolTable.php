@@ -9,10 +9,6 @@
  *
  * Note it is NOT balanced like a Red Black Tree so potentially it could be not optimal depending which order the data is entered
  *
- * example in JAVA : http://algs4.cs.princeton.edu/32bst/BST.java.html
- *
- * explanation : http://algs4.cs.princeton.edu/32bst/
- *
  **/
 namespace PHP_Algorithms\collections\symbolTables;
 
@@ -126,8 +122,9 @@ class BinarySearchTreeSymbolTable
         $cmp = $this->compareTo($key, $nodeX->getKey());
         if ($cmp < 0) {
             $nodeX->left = $this->putRecursive($nodeX->left, $key, $val);
-        } elseif ($cmp > 0) $nodeX->right = $this->putRecursive($nodeX->right, $key, $val);
-        else {
+        } elseif ($cmp > 0) {
+            $nodeX->right = $this->putRecursive($nodeX->right, $key, $val);
+        } else {
             $nodeX->val = $val;
         }
 

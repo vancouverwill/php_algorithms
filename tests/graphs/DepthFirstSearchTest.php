@@ -17,7 +17,6 @@ class DepthFirstSearchTest extends \PHPUnit_Framework_TestCase
         $graph->addEdge(0, 5);
         $graph->addEdge(2, 1);
         $graph->addEdge(2, 3);
-//        $graph->addEdge(2, 4);
         $graph->addEdge(3, 5);
 
         echo $graph->getE();

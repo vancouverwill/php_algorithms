@@ -6,7 +6,7 @@
  * php KosarajuSCCnonRecursive.php
  *
  *
- * Here we will Kosaraju’s Two-­‐Pass Algoritmh
+ * Here we will Kosaraju’s Two-­‐Pass Algorithm
  * to calculate strongly connected components
  * Strongly connected components in a directed graph are directed cycles within the graph
  *
@@ -33,9 +33,7 @@
  */
 namespace PHP_Algorithms\graphs;
 
-require_once(__DIR__ . "/./DiGraph.php");
-//require_once("./DepthFirstOrder.php");
-require_once(__DIR__ . "/./DepthFirstOrderNonRecursive.php");
+require_once(__DIR__ . "/../vendor/autoload.php");
 
 
 class KosarajuSCCnonRecursive
@@ -144,62 +142,67 @@ class KosarajuSCCnonRecursive
     }
 }
 
+
+
+
+function testKosarajuSCCnonRecursive($filename) {
+
+    $handle = fopen($filename, "r");
+    $uniqueNumbers = array();
+    if ($handle) {
+        while (($line = fgets($handle)) !== false) {
+            $line = str_replace("\n", "", $line);
+            $vertices = preg_split('/\s+/', $line);
+            foreach ($vertices as $vertice) {
+                $uniqueNumbers[(int)$vertice] = true;
+            }
+        }
+    } else {
+        // error opening the file.
+        "no file exists";
+    }
+    fclose($handle);
+
+    echo 'we have ' . count($uniqueNumbers) . ' unique numbers' . PHP_EOL;
+
+    $digraph = new DiGraph(count($uniqueNumbers));
+
+
+
+    $handle = fopen($filename, "r");
+
+    if ($handle) {
+        while (($line = fgets($handle)) !== false) {
+            $line = str_replace("\n", "", $line);
+            $vertices = preg_split('/\s+/', $line);
+            $digraph->addEdge((int)$vertices[0] - 1, (int)$vertices[1] - 1);
+        }
+    } else {
+        // error opening the file.
+        "no file exists";
+    }
+    fclose($handle);
+
+
+    $kosaraju = new KosarajuSCCnonRecursive($digraph);
+
+
+    echo "count is " . $kosaraju->count() . "<br/>" . "<br/>";
+
+    $count = 0;
+
+    foreach ($kosaraju->stronglyConnectedComponents as $stronglyConnectedComponents) {
+        echo $stronglyConnectedComponents . ",";
+
+        if ($count > 5) {
+            break;
+        }
+    }
+}
+
+
+$filename = "DiGraphTestData1.txt";
 $filename = "DiGraphTestData1.txt";
 //$filename = "KosarajuSCCLargeDataSet.txt";
 
-//echo "start";
-
-
-
-$handle = fopen($filename, "r");
-$uniqueNumbers = array();
-if ($handle) {
-    while (($line = fgets($handle)) !== false) {
-        $line = str_replace("\n", "", $line);
-        $vertices = preg_split('/\s+/', $line);
-        foreach ($vertices as $vertice) {
-            $uniqueNumbers[(int)$vertice] = true;
-        }
-    }
-} else {
-    // error opening the file.
-    "no file exists";
-}
-fclose($handle);
-
-echo 'we have ' . count($uniqueNumbers) . ' unique numbers' . PHP_EOL;
-//exit;
-
-$digraph = new DiGraph(count($uniqueNumbers));
-
-
-
-$handle = fopen($filename, "r");
-
-if ($handle) {
-    while (($line = fgets($handle)) !== false) {
-        $line = str_replace("\n", "", $line);
-        $vertices = preg_split('/\s+/', $line);
-        $digraph->addEdge((int)$vertices[0] - 1, (int)$vertices[1] - 1);
-    }
-} else {
-    // error opening the file.
-    "no file exists";
-}
-fclose($handle);
-
-
-$kosaraju = new KosarajuSCCnonRecursive($digraph);
-
-
-echo "count is " . $kosaraju->count() . "<br/>" . "<br/>";
-
-$count = 0;
-
-foreach ($kosaraju->stronglyConnectedComponents as $stronglyConnectedComponents) {
-    echo $stronglyConnectedComponents . ",";
-
-    if ($count > 5) {
-        break;
-    }
-}
+testKosarajuSCCnonRecursive($filename);

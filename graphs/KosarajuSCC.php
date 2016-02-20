@@ -104,55 +104,62 @@ class KosarajuSCC
     }
 }
 
+
+
+
+function testKosarajuSCC($filename) {
+
+    $handle = fopen($filename, "r");
+    $uniqueNumbers = array();
+    if ($handle) {
+        while (($line = fgets($handle)) !== false) {
+            $line = str_replace("\n", "", $line);
+            $vertices = preg_split('/\s+/', $line);
+            foreach ($vertices as $vertice) {
+                $uniqueNumbers[(int)$vertice] = true;
+            }
+        }
+    } else {
+        // error opening the file.
+        "no file exists";
+    }
+    fclose($handle);
+
+    $digraph = new DiGraph(count($uniqueNumbers));
+
+    $handle = fopen($filename, "r");
+
+    if ($handle) {
+        while (($line = fgets($handle)) !== false) {
+            $line = str_replace("\n", "", $line);
+            $vertices = preg_split('/\s+/', $line);
+            $digraph->addEdge((int)$vertices[0] - 1, (int)$vertices[1] - 1);
+        }
+    } else {
+        // error opening the file.
+        "no file exists";
+    }
+    fclose($handle);
+
+
+    $kosaraju = new KosarajuSCC($digraph);
+
+
+    echo "count is " . $kosaraju->count() . "<br/>" . "<br/>";
+
+    $count = 0;
+
+    foreach ($kosaraju->stronglyConnectedComponents as $stronglyConnectedComponents) {
+        echo $stronglyConnectedComponents . ",";
+
+        if ($count > 5) {
+            break;
+        }
+    }
+}
+
+
 $filename = "DiGraphTestData1.txt";
 //$filename = "KosarajuSCCLargeDataSet.txt";
 
-
-
-$handle = fopen($filename, "r");
-$uniqueNumbers = array();
-if ($handle) {
-    while (($line = fgets($handle)) !== false) {
-        $line = str_replace("\n", "", $line);
-        $vertices = preg_split('/\s+/', $line);
-        foreach ($vertices as $vertice) {
-            $uniqueNumbers[(int)$vertice] = true;
-        }
-    }
-} else {
-    // error opening the file.
-    "no file exists";
-}
-fclose($handle);
-
-$digraph = new DiGraph(count($uniqueNumbers));
-
-$handle = fopen($filename, "r");
-
-if ($handle) {
-    while (($line = fgets($handle)) !== false) {
-        $line = str_replace("\n", "", $line);
-        $vertices = preg_split('/\s+/', $line);
-        $digraph->addEdge((int)$vertices[0] - 1, (int)$vertices[1] - 1);
-    }
-} else {
-    // error opening the file.
-    "no file exists";
-}
-fclose($handle);
-
-
-$kosaraju = new KosarajuSCC($digraph);
-
-
-echo "count is " . $kosaraju->count() . "<br/>" . "<br/>";
-
-$count = 0;
-
-foreach ($kosaraju->stronglyConnectedComponents as $stronglyConnectedComponents) {
-    echo $stronglyConnectedComponents . ",";
-
-    if ($count > 5) {
-        break;
-    }
-}
+testKosarajuSCC($filename);

@@ -6,10 +6,12 @@
  * @param $lowerPointer
  * @param $higherPointer
  * @return bool
+ *
+ * set counter as half of size of array
+ * recursive swap first and last
+ * when 1 or 0 left in between then finished
  */
-//set counter as half of size of array
-//recursive swap first and last
-//when 1 or 0 left in between then finished
+
 
 namespace PHP_Algorithms\sandbox;
 

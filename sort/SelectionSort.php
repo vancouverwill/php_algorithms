@@ -35,9 +35,6 @@ class SelectionSort
      */
     public function selectionSort()
     {
-//        $this->array = $input_array;
-//        $this->size = count($input_array);
-                
         for ($index = 0; $index < $this->size; $index++) {
             $min = $index;
             for ($j = $index + 1; $j < $this->size; $j++) {
@@ -71,10 +68,6 @@ class SelectionSort
     
         private function exch($i, $j)
         {
-   //        var_dump($i);
-   //        var_dump($j);
-   //        var_dump($this->array);
-
             $swap = $this->array[$i];
             $this->array[$i] = $this->array[$j];
             $this->array[$j] = $swap;

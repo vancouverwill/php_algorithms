@@ -38,11 +38,7 @@ fclose($handle);
 
 $quickSort = new \PHP_Algorithms\sort\QuickSortFirstElementPartition($unsortedArray);
 
-//$quickSort->displayArray();
-
 $quickSort->startSort();
-
-//$quickSort->displayArray();
 
 var_dump($quickSort->getNoComparisons());
 
@@ -51,11 +47,7 @@ var_dump($quickSort->getNoComparisons());
 
 $quickSortLAst = new \PHP_Algorithms\sort\QuickSortLastElementPartition($unsortedArray);
 
-//$quickSortLAst->displayArray();
-
 $quickSortLAst->startSort();
-
-//$quickSortLAst->displayArray();
 
 var_dump($quickSortLAst->getNoComparisons());
 
@@ -63,10 +55,7 @@ var_dump($quickSortLAst->getNoComparisons());
 
 $quickSortMedian = new \PHP_Algorithms\sort\QuickSortMedianElementPartition($unsortedArray);
 
-//$quickSortMedian->displayArray();
 
 $quickSortMedian->startSort();
-
-//$quickSortMedian->displayArray();
 
 var_dump($quickSortMedian->getNoComparisons());

@@ -77,7 +77,6 @@ class QuickSortLastElementPartition
 
 function lastTest()
 {
-//$array = array(20, 15, 1, 4, 6, 2);
     $array= array(10,20,4,3,5,19,11,12,1,7,8,2);
 
     $sort = new QuickSortLastElementPartition($array);
