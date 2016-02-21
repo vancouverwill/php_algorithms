@@ -12,7 +12,7 @@ class SuffixReplacementGrammarCaseTestCase
     private $N; /** @var int number of rules */
     private $start; /** @var string starting point string */
     private $goal;  /** @var string desired goal string */
-    private $debug = true;
+    private $debug = false;
 
 
     public function __construct($numberOfRules, $start, $goal)
@@ -161,33 +161,36 @@ class Rule
 
 class CurrentStringState
 {
-    private $route; /** @var  Queue queue of rules necessary to get to this state */
+    private $routeStack; /** @var  Queue queue of rules necessary to get to this state */
     private $stringState; /** @var String current string state */
 
 
     public function __construct($previousState = null, $rule = null, $stringState = null)
     {
         if ($previousState == null) {
-            $this->route = new SplQueue();
+            $this->routeStack = array();
             $this->stringState = $stringState;
         } else {
-            $this->route = clone $previousState->getRoute();
-            $this->route->enqueue($rule);
+            $this->routeStack = $previousState->getRoute();
+            array_push($this->routeStack, $rule);
             $this->stringState = $rule->transform($previousState->getStringState());
         }
     }
 
+    public function goBackOneStep() {
+        array_pop($this->routeStack);
+    }
 
     public function getRoute()
     {
-        return $this->route;
+        return $this->routeStack;
     }
 
     public function returnRouteString()
     {
         $string = "";
-        while (!$this->route->isEmpty()) {
-            $rule = $this->route->dequeue();
+
+        foreach($this->routeStack AS $rule) {
             $string .= $rule->getSuffix() . "->" . $rule->getReplacementSuffix() . " ";
         }
         return $string;
@@ -206,7 +209,7 @@ class CurrentStringState
 
     public function getDistance()
     {
-        return count($this->route);
+        return count($this->routeStack);
     }
 }
 
@@ -260,13 +263,12 @@ function setupAndRun($filename)
 }
 
 
-//print "please enter the test data filename relative to this file to get started" . PHP_EOL;
-//
-//$fh = fopen('php://stdin','r') or die($php_errormsg);
-//while($s = fgets($fh,1024)) {
-//    print "You typed: $s";
-//    setupAndRun(trim($s));
-//    exit;
-//}
+print "please enter the test data filename relative to this file to get started" . PHP_EOL;
 
-setupAndRun("suffixRules.txt");
+$fh = fopen('php://stdin','r') or die($php_errormsg);
+while($s = fgets($fh,1024)) {
+    print "You typed: $s";
+    setupAndRun(trim($s));
+    exit;
+}
+
