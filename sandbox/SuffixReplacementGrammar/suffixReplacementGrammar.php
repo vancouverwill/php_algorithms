@@ -11,12 +11,13 @@ class SuffixReplacementGrammarCaseTestCase
     private $rules; /** @var array array of rules */
     private $N; /** @var int number of rules */
     private $start; /** @var string starting point string */
-    private $goal; /** @var String desired goal string */
+    private $goal;  /** @var string desired goal string */
+    private $debug = true;
 
 
-    public function __construct($numberOrRules, $start, $goal)
+    public function __construct($numberOfRules, $start, $goal)
     {
-        $this->N = $numberOrRules;
+        $this->N = $numberOfRules;
         $this->start = $start;
         $this->goal = $goal;
         $this->rules = array();
@@ -28,6 +29,14 @@ class SuffixReplacementGrammarCaseTestCase
     }
 
 
+    /**
+     * approach 1 - use regular queue to enqueue steps i.e. BFS
+     * A BFS search progressively outwards so the first time we reach the goal we know it is the fastest route.
+     *
+     * Whereas if we use a DFS we have to test every possible route to reach the goal to determine which was the fastest route to the goal.
+     *
+     *
+     */
     public function tryToReachGoal()
     {
         $q = new SplQueue();
@@ -76,6 +85,9 @@ class SuffixReplacementGrammarCaseTestCase
                     if (!isset($marked[$newStringState->getStringState()])) {
                         if ($newStringState->getStringState() == $this->goal) {
                             $smallestDistance = $newStringState->getDistance();
+                            if ($this->debug) {
+                                $this->showRoute($newStringState);
+                            }
                         }
 
                         $q->enqueue($newStringState);
@@ -98,13 +110,17 @@ class SuffixReplacementGrammarCaseTestCase
         return $this->N;
     }
 
+    public function showRoute($stringState) {
+        echo $this->start . " " . $stringState->returnRouteString();
+    }
+
 }
 
 
 class Rule
 {
     private $suffix;
-    private $replacemnetSuffix;
+    private $replacementSuffix;
     private $length;
 
 
@@ -114,7 +130,7 @@ class Rule
             throw new \InvalidArgumentException("suffix and replacement must be of the same length");
         }
         $this->suffix = $suffix;
-        $this->replacemnetSuffix = $replacementSuffix;
+        $this->replacementSuffix = $replacementSuffix;
 
         $this->length = strlen($suffix);
     }
@@ -127,12 +143,21 @@ class Rule
 
     public function transform($string)
     {
-        $result = substr_replace($string, $this->replacemnetSuffix, -$this->length);
+        $result = substr_replace($string, $this->replacementSuffix, -$this->length);
         return $result;
+    }
+
+    public function getSuffix() {
+        return $this->suffix;
+    }
+
+    public function getReplacementSuffix() {
+        return $this->replacementSuffix;
     }
 
 
 }
+
 
 class CurrentStringState
 {
@@ -156,6 +181,16 @@ class CurrentStringState
     public function getRoute()
     {
         return $this->route;
+    }
+
+    public function returnRouteString()
+    {
+        $string = "";
+        while (!$this->route->isEmpty()) {
+            $rule = $this->route->dequeue();
+            $string .= $rule->getSuffix() . "->" . $rule->getReplacementSuffix() . " ";
+        }
+        return $string;
     }
 
 
@@ -197,8 +232,8 @@ function setupAndRun($filename)
             if (ctype_digit($pieces[count($pieces) - 1]) == true) {
                 $start = $pieces[0];
                 $goal = $pieces[1];
-                $numberOrRules = $pieces[2];
-                $tempTestCase = new SuffixReplacementGrammarCaseTestCase($numberOrRules, $start, $goal);
+                $numberOfRules = $pieces[2];
+                $tempTestCase = new SuffixReplacementGrammarCaseTestCase($numberOfRules, $start, $goal);
                 $numberOfTestCases++;
                 $countRules = 0;
             } else {
@@ -208,9 +243,7 @@ function setupAndRun($filename)
                 $tempTestCase->addRule($rule);
                 $countRules++;
                 if ($countRules >= $tempTestCase->getN()) {
-//                    $dist = $tempTestCase->tryToReachGoal();
                     $dist = $tempTestCase->tryToReachGoalWithCurrentStringState();
-
                     echo "Case " . $numberOfTestCases . ": " . $dist . PHP_EOL;
                     unset($tempTestCase);
                 }
@@ -227,11 +260,13 @@ function setupAndRun($filename)
 }
 
 
-print "please enter the test data filename relative to this file to get started" . PHP_EOL;
+//print "please enter the test data filename relative to this file to get started" . PHP_EOL;
+//
+//$fh = fopen('php://stdin','r') or die($php_errormsg);
+//while($s = fgets($fh,1024)) {
+//    print "You typed: $s";
+//    setupAndRun(trim($s));
+//    exit;
+//}
 
-$fh = fopen('php://stdin','r') or die($php_errormsg);
-while($s = fgets($fh,1024)) {
-    print "You typed: $s";
-    setupAndRun(trim($s));
-    exit;
-}
+setupAndRun("suffixRules.txt");
