@@ -12,7 +12,7 @@ class SuffixReplacementGrammarCaseTestCase
     private $N; /** @var int number of rules */
     private $start; /** @var string starting point string */
     private $goal;  /** @var string desired goal string */
-    private $debug = false;
+    private $debug = true;
 
 
     public function __construct($numberOfRules, $start, $goal)
@@ -177,10 +177,6 @@ class CurrentStringState
         }
     }
 
-    public function goBackOneStep() {
-        array_pop($this->routeStack);
-    }
-
     public function getRoute()
     {
         return $this->routeStack;
@@ -271,4 +267,3 @@ while($s = fgets($fh,1024)) {
     setupAndRun(trim($s));
     exit;
 }
-

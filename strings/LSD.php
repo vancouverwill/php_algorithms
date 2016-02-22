@@ -1,6 +1,13 @@
 <?php
 /**
-* LSD - Least Significant Digit string sortings algorithm
+* LSD - Least Significant Digit string sorting algorithm
+ *
+ * sort an array of strings where each string has equal length
+ * start on least significant digit and use key indexed sorting on the last digit of every string
+ * then progressively move in one character at a time to we get to the first character.
+ *
+ * this works ONLY because key indexed counting is a STABLE sorting algorithm
+ *
 *
 **/
 

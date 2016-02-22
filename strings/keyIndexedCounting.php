@@ -1,4 +1,17 @@
 <?php
+/**
+ *
+ * key indexed counting is an extremely effective way to sort where there is a small size set of keys to sort over.
+ * It is 4 linear passes of the data
+ *
+ * 1 - count number of each key
+ * 2 - starting from 0 progressively go through each key and assign each keys starting index by adding count of that key to previous key's starting index
+ * 3 - distribute keys into a temporary auxiliary array, by putting key at index determined in step 2 then adding one to that index so the next time the same key comes up it will be in correct place
+ * 4 - copy back to original array
+ *
+ *
+ * key indexed counting works well with a small set of keys and thus works well for sorting characters or strings because with ASCII characters there are only 256 characters
+ */
 
 namespace PHP_Algorithms\strings;
 
@@ -23,7 +36,7 @@ class Student
 
 /**
 * @var array $a
-* @var array $r
+* @var array $r number of keys
  * @return array
 *
 **/
