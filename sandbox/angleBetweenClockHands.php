@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * Created by PhpStorm.
  * User: Will Melbourne
@@ -7,26 +8,7 @@
  */
 
 
-function angleBetweenHands( $a) {
-    $array = explode(":", $a);
-    $hours = $array[0];
-    $minutes = $array[1];
-if ($hours > 12) {
-$hours = $hours - 12;
-}
-$hoursDegree = $hours * 30;
-
-$minutesDegree = ($minutes / 60) * 360;
-
-$difference = $hoursDegree - $minutesDegree;
-
-if ($difference < 0) $difference = 360 + $difference;
-
-return $difference;
-
-}
-
-function angleBetweenHandsAttempt2( $a) {
+function angleBetweenHands(string $a) : float {
     $array = explode(":", $a);
     $hours = $array[0];
     $minutes = $array[1];
@@ -44,11 +26,9 @@ function angleBetweenHandsAttempt2( $a) {
         $difference =  $minutesDegree - $hoursDegree;
     }
 
-//    if ($difference < 0) $difference = 360 + $difference;
-
     if ($difference > 180) $difference = 360 - $difference;
 
     return $difference;
 }
 
-//echo angleBetweenHands("21:30");
+echo angleBetweenHands("09:30");
