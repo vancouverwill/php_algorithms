@@ -1,5 +1,9 @@
 
 
+setup by running
+
+`composer install`
+
 
 run tests by
 
