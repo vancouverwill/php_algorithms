@@ -3,6 +3,11 @@ namespace PHP_Algorithms\graphs;
 
 use SebastianBergmann\Exporter\Exception;
 
+/**
+*
+* Useful for joining and keeping track of disconnected components
+*
+**/
 class WeightedQuickUnionUF
 {
     private $id; // @array of integers parent of i
@@ -57,6 +62,7 @@ class WeightedQuickUnionUF
 
     /**
      * Returns the component identifier for the component containing site
+     * Worse case O(n)
      * @param p the integer representing one site
      * @return the component identifier for the component containing site
      */
@@ -78,6 +84,9 @@ class WeightedQuickUnionUF
         return $this->find($p) === $this->find($q);
     }
 
+    /** 
+    * Worse case O(n)
+    */
     public function union($p, $q)
     {
         $rootP = $this->find($p);
